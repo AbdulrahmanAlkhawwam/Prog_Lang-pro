@@ -22,11 +22,6 @@ extension AppResponsive on BuildContext {
 
   double get width => MediaQuery.sizeOf(this).width;
 
-  String get deviceMode =>
-      MediaQuery.orientationOf(this) == Orientation.landscape
-          ? "landscape"
-          : "portrait";
-
   double get bottomPadding => MediaQuery.paddingOf(this).bottom;
 
   double get bottomInsets => MediaQuery.viewInsetsOf(this).bottom;
@@ -42,29 +37,29 @@ extension AppSnackbar on BuildContext {
     ScaffoldMessenger.of(this).showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
-        backgroundColor: colors.primaryContainer.withOpacity(0.7),
+        backgroundColor: colors.primaryContainer,
         shape: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(circle),
-          borderSide: BorderSide(color: colors.primary, width: 1),
+          borderRadius: BorderRadius.circular(appBor),
+          borderSide: BorderSide(color: Colors.transparent, width: inputBor),
         ),
         duration: const Duration(milliseconds: 1500),
         content: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // SvgPicture.asset(
-            //   Res.success,
-            //   width: 32,
-            //   color: colors.primary,
-            // ),
-            // const SizedBox(width: 8),
+            Icon(
+              Icons.check_circle_outline,
+              weight: 32,
+              color: colors.onPrimaryContainer,
+            ),
+            const SizedBox(width: 8),
             Expanded(
               child: Text(
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.start,
                 massage ?? "Success",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: textTheme.bodyMedium?.copyWith(
-                  color: colors.primary,
+                  color: colors.onPrimaryContainer,
                 ),
               ),
             )
@@ -79,29 +74,29 @@ extension AppSnackbar on BuildContext {
     ScaffoldMessenger.of(this).showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
-        backgroundColor: colors.errorContainer.withOpacity(0.7),
+        backgroundColor: colors.errorContainer,
         shape: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(circle),
-          borderSide: BorderSide(color: colors.error, width: 1),
+          borderRadius: BorderRadius.circular(appBor),
+          borderSide: BorderSide(color: Colors.transparent, width: inputBor),
         ),
         duration: const Duration(milliseconds: 1500),
         content: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // SvgPicture.asset(
-            //   Res.error,
-            //   width: 32,
-            //   color: colors.error,
-            // ),
+            Icon(
+              Icons.error_outline,
+              weight: 32,
+              color: colors.onErrorContainer,
+            ),
             const SizedBox(width: 8),
             Expanded(
               child: Text(
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.start,
                 massage ?? "Error",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: textTheme.bodyMedium?.copyWith(
-                  color: colors.error,
+                  color: colors.onErrorContainer,
                 ),
               ),
             )

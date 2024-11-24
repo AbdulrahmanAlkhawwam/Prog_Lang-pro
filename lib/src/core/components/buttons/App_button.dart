@@ -7,7 +7,6 @@ import '../../utils/app_context.dart';
 
 class AppButton extends StatelessWidget {
   final Function()? onPressed;
-  final String? massage;
   final bool isLoading;
   final Widget? child;
   final String text;
@@ -17,7 +16,6 @@ class AppButton extends StatelessWidget {
     required this.isLoading,
     required this.text,
     this.onPressed,
-    this.massage,
     this.child,
   });
 
@@ -33,7 +31,7 @@ class AppButton extends StatelessWidget {
             color: onPressed == null
                 ? context.colors.outline
                 : context.colors.primaryContainer,
-            borderRadius: BorderRadius.circular(curved),
+            borderRadius: BorderRadius.circular(curvedBor),
           ),
           child: Material(
             type: MaterialType.button,
@@ -67,7 +65,7 @@ class AppButton extends StatelessWidget {
                 highlightColor: context.colors.surface.withOpacity(0.25),
                 enabled: true,
                 child: const Skeleton(
-                  borderRadius: curved,
+                  borderRadius: curvedBor,
                   height: 56,
                   width: 300,
                 ),

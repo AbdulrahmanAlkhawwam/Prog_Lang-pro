@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../utils/app_context.dart';
 
-class InputField extends StatelessWidget {
+class AppInput extends StatelessWidget {
   final Function()? onTap;
   final Function(dynamic)? onChanged;
   final FormFieldValidator<dynamic>? validator;
@@ -18,7 +18,7 @@ class InputField extends StatelessWidget {
   final String? helperText;
   final bool isEnabled;
 
-  const InputField({
+  const AppInput({
     super.key,
     required this.isEnabled,
     this.controller,
