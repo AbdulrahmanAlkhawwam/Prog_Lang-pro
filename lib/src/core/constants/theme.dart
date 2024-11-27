@@ -26,7 +26,7 @@ class AppTheme {
     return InputDecorationTheme(
       disabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(appBor),
-        borderSide: BorderSide(color: colors.outline, width: inputBor),
+        borderSide: BorderSide(color: Colors.transparent, width: inputBor),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(circle),
@@ -56,7 +56,6 @@ class AppTheme {
     return TextButtonThemeData(
       style: ButtonStyle(
         alignment: Alignment.center,
-        fixedSize: const WidgetStatePropertyAll(Size(300, 56)),
         shape: const WidgetStatePropertyAll(StadiumBorder()),
         textStyle: WidgetStatePropertyAll(_textTheme(colors).bodySmall),
       ),

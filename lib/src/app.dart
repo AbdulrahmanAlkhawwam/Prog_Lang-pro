@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:program_language_project/src/features/screens/shop/shops_screen.dart';
 
 import '../src/core/constants/theme.dart';
-import '../src/features/test_screen.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -11,7 +11,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      home: TestScreen(),
+      home: ShopsScreen(),
     );
   }
 }
