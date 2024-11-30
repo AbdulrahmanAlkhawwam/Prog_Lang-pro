@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../components/widgets/skeleton.dart';
-import '../../constants/styles.dart';
-import '../../utils/app_context.dart';
+import './skeleton.dart';
+import '../constants/styles.dart';
+import '../utils/app_context.dart';
 
 class AppButton extends StatelessWidget {
   final Function()? onPressed;

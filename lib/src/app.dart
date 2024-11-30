@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:program_language_project/src/features/screens/shop/shops_screen.dart';
 
+import '../src/features/screens/main/main_screen.dart';
 import '../src/core/constants/theme.dart';
 
 class App extends StatelessWidget {
@@ -11,7 +11,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      home: ShopsScreen(),
+      home: MainScreen(),
     );
   }
 }

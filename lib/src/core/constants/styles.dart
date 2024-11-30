@@ -1,5 +1,3 @@
-const circle = 25.5;
-const semicircle = 30.0;
 const inputBor = 3.0;
 const appBor = 12.0;
 const curvedBor = 100.0;

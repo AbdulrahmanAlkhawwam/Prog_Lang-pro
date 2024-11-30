@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/app_context.dart';
+import '../utils/app_context.dart';
 
 class BoundedListView extends StatelessWidget {
   final EdgeInsets? padding;

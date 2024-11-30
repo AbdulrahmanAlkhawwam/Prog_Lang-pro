@@ -7,7 +7,7 @@ import 'package:http/http.dart';
 
 import '../constants/strings.dart';
 import '../errors/exceptions.dart';
-import 'storage_helper.dart';
+import './storage_helper.dart';
 
 abstract class HttpHelper {
   Future get(
@@ -179,10 +179,10 @@ class HttpHelperImpl extends HttpHelper {
   }
 
   Map<String, String> _makeHeaders({Map? extraHeaders}) => {
-        "Accept": "application/json",
+        // "Accept": "application/json",
         "Content-Type": "application/json",
         "Accept-Language": locale,
-        "x-app-client": Platform.isAndroid ? "android" : "ios",
+        // "x-app-client": Platform.isAndroid ? "android" : "ios",
         if (token.isNotEmpty) "Authorization": token,
         ...?extraHeaders,
       };

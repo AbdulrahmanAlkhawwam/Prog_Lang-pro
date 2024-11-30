@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants/styles.dart';
 import '../../../core/utils/app_context.dart';
 import '../../models/shop.dart';
 
@@ -16,15 +17,15 @@ class ShopsItem extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: context.colors.onPrimary,
+        borderRadius: BorderRadius.circular(appBor),
+        color: context.colors.surfaceContainer,
       ),
       child: Column(
         children: [
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(appBor),
                 color: context.colors.outline,
               ),
               // TODO : FIX THIS
@@ -35,7 +36,8 @@ class ShopsItem extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 9),
             child: Text(
               shop.name.toUpperCase(),
-              style: context.textTheme.labelSmall,
+              style: context.textTheme.labelSmall
+                  ?.copyWith(color: context.colors.onPrimaryContainer),
             ),
           )
         ],

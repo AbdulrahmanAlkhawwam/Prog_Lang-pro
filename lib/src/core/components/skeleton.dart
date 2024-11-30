@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/app_context.dart';
+import '../utils/app_context.dart';
 
 class Skeleton extends StatelessWidget {
   final double width;
