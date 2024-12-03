@@ -5,7 +5,7 @@ import '../../utils/app_context.dart';
 class AppInput extends StatelessWidget {
   final Function()? onTap;
   final Function(dynamic)? onChanged;
-  final FormFieldValidator<dynamic>? validator;
+  final FormFieldValidator<String>? validator;
   final String? validate;
   final TextEditingController? controller;
   final IconButton? suffixIconButton;
