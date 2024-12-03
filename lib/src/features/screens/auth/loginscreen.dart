@@ -12,7 +12,7 @@ class Loginscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: BoundedListView(
         children: [
           Expanded(child: SvgPicture.asset(Res.login)),
           Expanded(
