@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import '../../../core/helpers/http_helper.dart';
 import '../../models/user.dart';
 
@@ -20,8 +22,9 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
             "phone": phoneNumber.substring(1),
             "password": password,
           },
-        ) as Map<String, dynamic>;
-        return UserModel.fromJson(response);
+        ) ;
+        final data = json.decode(response);
+        return UserModel.fromJson(data);
       },
     );
   }
