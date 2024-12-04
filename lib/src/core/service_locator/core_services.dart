@@ -39,7 +39,7 @@ Future<void> initializeCoreServices(GetIt sl, {required bool firstInit}) async {
     sl.registerLazySingleton<HttpHelper>(
       () => HttpHelperImpl(
         host: Env.host,
-        basePath: "/api/v1",
+        basePath: "/api",
         client: http.Client(),
         storage: sl(),
       ),
