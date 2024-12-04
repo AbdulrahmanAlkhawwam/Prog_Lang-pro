@@ -48,7 +48,7 @@ class AppTheme {
           _textTheme(colors).bodySmall?.copyWith(color: colors.onSurface),
       hintStyle:
           _textTheme(colors).bodySmall?.copyWith(color: colors.onSurface),
-      errorStyle: _textTheme(colors).bodySmall?.copyWith(color: colors.error),
+      errorStyle: _textTheme(colors).labelSmall?.copyWith(color: colors.error),
     );
   }
 
