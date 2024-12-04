@@ -4,8 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:program_language_project/src/core/utils/app_context.dart';
 
-import '../../../core/components/buttons/App_button.dart';
-import '../../../core/components/inters/app_input.dart';
+import '../../../core/components/app_button.dart';
+import '../../../core/components/app_input.dart';
 import '../../../core/constants/res.dart';
 import '../../mangers/auth/auth_bloc.dart';
 
