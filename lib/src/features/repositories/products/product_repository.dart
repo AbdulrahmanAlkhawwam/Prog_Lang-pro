@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../core/errors/failures.dart';
-import '../../datasources/products/products_remote_datasource.dart';
+import '../../datasources/products/product_remote_datasource.dart';
 import '../../models/product.dart';
 
 class ProductRepository {
-  final ProductsRemoteDatasource datasource ;
+  final ProductRemoteDatasource datasource ;
 
   ProductRepository({required this.datasource});
 

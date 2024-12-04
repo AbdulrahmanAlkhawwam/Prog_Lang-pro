@@ -1,25 +1,24 @@
-part of 'test_bloc.dart';
+part of 'product_bloc.dart';
 
-enum TestStatus {init , error, success, loading }
+enum ProductStatus { init, error, success, loading }
 
-@immutable
-class TestState {
-  TestStatus status;
+class ProductState {
+  ProductStatus status;
   List<Product>? products;
   String? message;
 
-  TestState({
-    this.status =TestStatus.init,
+  ProductState({
+    this.status = ProductStatus.init,
     this.message,
     this.products,
   });
 
-  TestState copyWith({
-    TestStatus? status,
+  ProductState copyWith({
+    ProductStatus? status,
     String? message,
     List<Product>? products,
   }) {
-    return TestState(
+    return ProductState(
       message: message ?? this.message,
       status: status ?? this.status,
       products: products ?? this.products,

@@ -10,6 +10,7 @@ class AppTheme {
   static ThemeData get darkTheme => _theme(darkColorScheme);
 
   static _theme(ColorScheme colors) => ThemeData(
+        canvasColor: colors.surfaceContainer,
         scaffoldBackgroundColor: colors.surface,
         colorScheme: colors,
         primaryColor: colors.primary,
@@ -56,12 +57,11 @@ class AppTheme {
 
   static _bottomNavigationBarTheme(ColorScheme colors) {
     return BottomNavigationBarThemeData(
-      elevation: 25,
+      elevation: 40,
       selectedItemColor: colors.primary,
-      unselectedItemColor: colors.onSurface,
+      unselectedItemColor: colors.onSurface.withOpacity(0.5),
       showSelectedLabels: false,
       showUnselectedLabels: false,
-      backgroundColor: colors.surfaceContainer,
     );
   }
 

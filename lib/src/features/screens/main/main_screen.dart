@@ -11,9 +11,7 @@ class MainScreen extends StatelessWidget {
     return Scaffold(
       body: ShopsScreen(),
       bottomNavigationBar: AppBottomBar(
-        onTap: (index) {
-          print(index);
-        },
+        onTap: (index) {},
       ),
     );
   }
