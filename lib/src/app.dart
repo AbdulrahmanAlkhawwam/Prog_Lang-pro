@@ -4,7 +4,6 @@ import 'package:program_language_project/src/features/mangers/test_bloc.dart';
 
 import '../src/features/screens/main/main_screen.dart';
 import '../src/core/constants/theme.dart';
-import 'core/service_locator/service_locator.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

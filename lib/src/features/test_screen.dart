@@ -16,9 +16,9 @@ class TestScreen extends StatelessWidget {
         children: [
           // SvgPicture.asset(Res.unknownUserLight),
           Divider(),
-          AppInput(
-            isEnabled: true,
-          ),
+          // AppInput(
+          //   isEnabled: true,
+          // ),
           Divider(),
           AppButton(
             isLoading: false,
