@@ -16,8 +16,6 @@ abstract class DatabaseHelper {
 
   Future<int> delete(String table, {String? where, List? args});
 
-  Future<dynamic> sum(String column, String table);
-
   Future<void> close();
 }
 
@@ -90,10 +88,4 @@ class DatabaseHelperImpl implements DatabaseHelper {
     // )""",
     // );
   }
-
-  @override
-  Future sum(String column, String table) async =>
-      // (await _db.rawQuery("SELECT SUM($column) AS result FROM $table"))
-      //     .firstOrNull?["result"] ??
-      0;
 }

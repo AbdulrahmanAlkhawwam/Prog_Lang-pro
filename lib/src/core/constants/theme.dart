@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/material.dart';
 
 import './colors.dart';
 import './styles.dart';
@@ -17,6 +17,7 @@ class AppTheme {
         textTheme: _textTheme(colors),
         textButtonTheme: _textButtonTheme(colors),
         inputDecorationTheme: _inputDecorationTheme(colors),
+        bottomNavigationBarTheme: _bottomNavigationBarTheme(colors),
         iconButtonTheme: const IconButtonThemeData(
           style: ButtonStyle(fixedSize: WidgetStatePropertyAll(Size(24, 24))),
         ),
@@ -24,31 +25,43 @@ class AppTheme {
 
   static InputDecorationTheme _inputDecorationTheme(ColorScheme colors) {
     return InputDecorationTheme(
+      filled: true,
+      fillColor: colors.surfaceContainer,
       disabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(appBor),
-        borderSide: BorderSide(color: colors.outline, width: inputBor),
+        borderSide: BorderSide(color: Colors.transparent, width: inputBor),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(circle),
+        borderRadius: BorderRadius.circular(appBor),
         borderSide: BorderSide(color: Colors.transparent, width: inputBor),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(circle),
+        borderRadius: BorderRadius.circular(appBor),
         borderSide: BorderSide(color: Colors.transparent, width: inputBor),
       ),
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(circle),
+        borderRadius: BorderRadius.circular(appBor),
         borderSide: BorderSide(color: Colors.transparent, width: inputBor),
       ),
       focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(circle),
+        borderRadius: BorderRadius.circular(appBor),
         borderSide: BorderSide(color: Colors.transparent, width: inputBor),
       ),
       labelStyle:
           _textTheme(colors).bodySmall?.copyWith(color: colors.onSurface),
-      hintStyle:
-          _textTheme(colors).bodySmall?.copyWith(color: colors.onSurface),
-      errorStyle: _textTheme(colors).bodySmall?.copyWith(color: colors.error),
+      hintStyle: _textTheme(colors).bodySmall?.copyWith(color: colors.outline),
+      errorStyle: _textTheme(colors).labelSmall?.copyWith(color: colors.error),
+    );
+  }
+
+  static _bottomNavigationBarTheme(ColorScheme colors) {
+    return BottomNavigationBarThemeData(
+      elevation: 25,
+      selectedItemColor: colors.primary,
+      unselectedItemColor: colors.onSurface,
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
+      backgroundColor: colors.surfaceContainer,
     );
   }
 
@@ -56,7 +69,6 @@ class AppTheme {
     return TextButtonThemeData(
       style: ButtonStyle(
         alignment: Alignment.center,
-        fixedSize: const WidgetStatePropertyAll(Size(300, 56)),
         shape: const WidgetStatePropertyAll(StadiumBorder()),
         textStyle: WidgetStatePropertyAll(_textTheme(colors).bodySmall),
       ),

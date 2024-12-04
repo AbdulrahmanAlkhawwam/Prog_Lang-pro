@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:program_language_project/src/features/screens/register_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:program_language_project/src/features/mangers/test_bloc.dart';
 
+import '../src/features/screens/main/main_screen.dart';
 import '../src/core/constants/theme.dart';
-import '../src/features/test_screen.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -12,8 +13,13 @@ class App extends StatelessWidget {
     return MaterialApp(
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      // themeMode: ThemeMode.light,
-      home: RegisterScreen(),
+      home: BlocProvider<TestBloc>(
+        create: (_) {
+          sl.get<TestBloc>().add(GetProducts());
+          return sl.get<TestBloc>();
+        },
+        child: MainScreen(),
+      ),
     );
   }
 }

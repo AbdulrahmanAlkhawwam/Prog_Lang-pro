@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/app_context.dart';
+import '../utils/app_context.dart';
 
 class AppInput extends StatelessWidget {
   final Function()? onTap;
   final Function(dynamic)? onChanged;
   final FormFieldValidator<String>? validator;
-  final String? validate;
   final TextEditingController? controller;
   final IconButton? suffixIconButton;
   final Icon? suffixIcon;
@@ -30,8 +29,6 @@ class AppInput extends StatelessWidget {
     this.prefixIcon,
     this.onChanged,
     this.onTap,
-    this.validate,
-    this.validator,
     this.keyboardType,
     this.helperText,
   });
@@ -41,10 +38,7 @@ class AppInput extends StatelessWidget {
     return TextFormField(
       cursorHeight: 25,
       keyboardType: keyboardType ?? TextInputType.text,
-      validator: isEnabled
-          ? validator ??
-              (value) => (value == null || value.isEmpty) ? validate : null
-          : null,
+      validator: isEnabled ? validator : null,
       autocorrect: true,
       onTap: onTap,
       onChanged: onChanged,
