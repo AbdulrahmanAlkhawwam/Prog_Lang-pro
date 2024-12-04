@@ -23,6 +23,9 @@ class LoginScreen extends StatelessWidget {
         if (state.status == AuthStatus.error) {
           context.showErrorSnackBar(massage: state.message.toString());
         }
+        if (state.status == AuthStatus.success) {
+          context.showSuccessSnackBar();
+        }
       },
       builder: (context, state) {
         return Scaffold(
