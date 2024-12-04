@@ -18,7 +18,6 @@ class ShopsList extends StatelessWidget {
         place: Location(
           latitudes: 0000.0000,
           longitudes: 0000.000,
-          locationDescription: "locationDescription",
         ),
         status: "OPENED",
         // imageId: "/",
@@ -32,9 +31,9 @@ class ShopsList extends StatelessWidget {
         id: "12345566",
         name: "al sultan",
         place: Location(
-            latitudes: 0000.0000,
-            longitudes: 0000.000,
-            locationDescription: "locationDescription"),
+          latitudes: 0000.0000,
+          longitudes: 0000.000,
+        ),
         status: "OPENED",
         // imageId: "kfjv31242oef",
         category: Category(
@@ -47,9 +46,9 @@ class ShopsList extends StatelessWidget {
         id: "12345566",
         name: "al sultan",
         place: Location(
-            latitudes: 0000.0000,
-            longitudes: 0000.000,
-            locationDescription: "locationDescription"),
+          latitudes: 0000.0000,
+          longitudes: 0000.000,
+        ),
         status: "OPENED",
         // imageId: "kfjv31242oef",
         category: Category(
