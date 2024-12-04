@@ -31,6 +31,7 @@ class AppInput extends StatelessWidget {
     this.onTap,
     this.keyboardType,
     this.helperText,
+    this.validator,
   });
 
   @override

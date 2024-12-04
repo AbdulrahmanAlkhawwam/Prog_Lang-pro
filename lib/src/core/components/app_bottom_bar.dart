@@ -18,9 +18,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
   BottomNavigationBar build(BuildContext context) {
     return BottomNavigationBar(
       onTap: (value) {
-        setState(() {
-          index = value;
-        });
+        setState(() => index = value);
         widget.onTap(value);
       },
       currentIndex: index,

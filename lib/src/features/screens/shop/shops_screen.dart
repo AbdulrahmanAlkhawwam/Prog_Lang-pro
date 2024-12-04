@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:program_language_project/src/core/utils/app_context.dart';
+import 'package:program_language_project/src/features/screens/auth/register_screen.dart';
 
 import '../../../core/components/search_input.dart';
 import '../../widgets/shop/shops_list.dart';
+import '../auth/login_screen.dart';
 
 class ShopsScreen extends StatelessWidget {
   ShopsScreen({super.key});
@@ -15,7 +18,11 @@ class ShopsScreen extends StatelessWidget {
       child: Column(
         children: [
           SearchInput(
-            onTap: () {},
+            // onTap: () {
+              // context.push(MaterialPageRoute(
+              //   builder: (context) => RegisterScreen(),
+              // ));
+            // },
             hint: "Search",
             onChanged: null,
             controller: null,

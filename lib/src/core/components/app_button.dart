@@ -7,6 +7,10 @@ import '../utils/app_context.dart';
 
 class AppButton extends StatelessWidget {
   final Function()? onPressed;
+  final Color? background;
+  final Color? splash;
+  final Color? textColor;
+
   final bool isLoading;
   final Widget? child;
   final String text;
@@ -15,7 +19,10 @@ class AppButton extends StatelessWidget {
     super.key,
     required this.isLoading,
     required this.text,
+    this.background,
+    this.textColor,
     this.onPressed,
+    this.splash,
     this.child,
   });
 
@@ -30,7 +37,7 @@ class AppButton extends StatelessWidget {
           decoration: BoxDecoration(
             color: onPressed == null
                 ? context.colors.outline
-                : context.colors.primaryContainer,
+                : background ?? context.colors.primaryContainer,
             borderRadius: BorderRadius.circular(curvedBor),
           ),
           child: Material(
@@ -41,7 +48,7 @@ class AppButton extends StatelessWidget {
             child: InkWell(
               splashColor: onPressed == null
                   ? context.colors.outline
-                  : context.colors.primary,
+                  : splash ?? context.colors.primary,
               onTap: !isLoading ? onPressed : null,
               child: Container(
                 alignment: Alignment.center,
@@ -59,18 +66,17 @@ class AppButton extends StatelessWidget {
             ),
           ),
         ),
-        isLoading
-            ? Shimmer.fromColors(
-                baseColor: context.colors.primaryContainer.withOpacity(0.75),
-                highlightColor: context.colors.surface.withOpacity(0.25),
-                enabled: true,
-                child: const Skeleton(
-                  borderRadius: curvedBor,
-                  height: 56,
-                  width: 300,
-                ),
-              )
-            : const SizedBox()
+        if (isLoading && onPressed != null)
+          Shimmer.fromColors(
+            baseColor: context.colors.primaryContainer.withOpacity(0.75),
+            highlightColor: context.colors.surface.withOpacity(0.25),
+            enabled: true,
+            child: const Skeleton(
+              borderRadius: curvedBor,
+              height: 56,
+              width: 300,
+            ),
+          )
       ],
     );
   }

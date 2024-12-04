@@ -11,8 +11,8 @@ class SearchInput extends StatelessWidget {
 
   const SearchInput({
     super.key,
-    required this.onTap,
-    required this.onChanged,
+    this.onTap,
+    this.onChanged,
     required this.controller,
     required this.hint,
   });
@@ -33,18 +33,25 @@ class SearchInput extends StatelessWidget {
           ),
         ],
       ),
-      child: SearchBar(
-        onTap: onTap,
-        hintText: hint,
-        onChanged: onChanged,
-        controller: controller,
-        elevation: WidgetStatePropertyAll(0),
-        backgroundColor: WidgetStatePropertyAll(Colors.transparent),
-        textStyle: WidgetStatePropertyAll(context.textTheme.bodySmall),
-        hintStyle: WidgetStatePropertyAll(
-          context.textTheme.bodySmall?.copyWith(color: context.colors.outline),
+      child: Stack(children: [
+        SearchBar(
+          hintText: hint,
+          onChanged: onChanged,
+          controller: controller,
+          elevation: WidgetStatePropertyAll(0),
+          backgroundColor: WidgetStatePropertyAll(Colors.transparent),
+          textStyle: WidgetStatePropertyAll(context.textTheme.bodySmall),
+          hintStyle: WidgetStatePropertyAll(
+            context.textTheme.bodySmall
+                ?.copyWith(color: context.colors.outline),
+          ),
         ),
-      ),
+        if (onTap != null)
+          InkWell(
+            borderRadius: BorderRadius.circular(curvedBor),
+            onTap: onTap,
+          )
+      ]),
     );
   }
 }
