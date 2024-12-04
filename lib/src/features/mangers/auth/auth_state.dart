@@ -5,20 +5,25 @@ enum AuthStatus { init, error, success, loading }
 @immutable
 class AuthState {
   final AuthStatus status;
-  final String? message;
+  final User? user;
+
+  final Message? message;
 
   const AuthState({
     required this.status,
+    this.user,
     this.message,
   });
 
   AuthState copyWith({
     AuthStatus? status,
-    String? message,
+    User? user,
+    Message? message,
   }) {
     return AuthState(
-      status: status ?? this.status,
       message: message ?? this.message,
+      status: status ?? this.status,
+      user: user ?? this.user,
     );
   }
 }

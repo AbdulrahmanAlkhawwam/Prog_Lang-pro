@@ -1,7 +1,8 @@
-import 'package:program_language_project/src/core/helpers/http_helper.dart';
+import '../../../core/helpers/http_helper.dart';
+import '../../models/user.dart';
 
 abstract class AuthRemoteDatasource {
-  Future<void> login(String phoneNumber, String password);
+  Future<UserModel> login(String phoneNumber, String password);
 }
 
 class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
@@ -10,10 +11,18 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
   AuthRemoteDatasourceImpl({required this.http});
 
   @override
-  Future<void> login(String phoneNumber, String password) async {
-    final response = await http.handleApiCall(
-      () => http
-          .post("/login", body: {"phone": phoneNumber, "password": password}),
+  Future<UserModel> login(String phoneNumber, String password) async {
+    return await http.handleApiCall(
+      () async {
+        final response = await http.post(
+          "/login",
+          body: {
+            "phone": phoneNumber.substring(1),
+            "password": password,
+          },
+        ) as Map<String, dynamic>;
+        return UserModel.fromJson(response);
+      },
     );
   }
 }

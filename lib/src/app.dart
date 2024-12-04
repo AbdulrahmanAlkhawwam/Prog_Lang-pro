@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:program_language_project/src/features/mangers/auth/auth_bloc.dart';
 // import 'package:program_language_project/src/features/mangers/test_bloc.dart';
-import 'package:program_language_project/src/features/screens/auth/loginscreen.dart';
+import 'package:program_language_project/src/features/screens/auth/login_screen.dart';
 
 import '../src/core/constants/theme.dart';
 import '../src/features/test_screen.dart';
@@ -24,7 +24,7 @@ class App extends StatelessWidget {
         BlocProvider(
           create: (_) => sl.get<AuthBloc>(),
         )
-      ], child: Loginscreen()),
+      ], child: LoginScreen()),
     );
   }
 }

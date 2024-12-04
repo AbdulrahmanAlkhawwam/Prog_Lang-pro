@@ -197,7 +197,7 @@ class HttpHelperImpl extends HttpHelper {
 
   @override
   Uri makeUri(String path, {Map<String, String>? queryParameters}) =>
-      Uri.https(host, [basePath, path].join(), queryParameters);
+      Uri.http(host, [basePath, path].join(), queryParameters);
 
   @override
   Future<void> close() async {
