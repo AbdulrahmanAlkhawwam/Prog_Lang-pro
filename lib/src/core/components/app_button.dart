@@ -59,7 +59,7 @@ class AppButton extends StatelessWidget {
                       style: context.textTheme.titleSmall?.copyWith(
                         color: onPressed == null
                             ? context.colors.surface
-                            : context.colors.onPrimaryContainer,
+                            : textColor ?? context.colors.onPrimaryContainer,
                       ),
                     ),
               ),
