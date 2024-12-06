@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/components/app_button.dart';
 import '../../../core/components/app_input.dart';
 import '../../../core/components/bounded_list_view.dart';
 import '../../../core/constants/res.dart';
+import '../../../core/utils/app_context.dart';
+import '../../mangers/auth/bloc/auth_bloc.dart';
+import '../../mangers/auth/cubit/auth_pres_cubit.dart';
+import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -20,120 +25,99 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   final globalKey = GlobalKey<FormState>();
+  bool confirm = false;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Column(
-      children: [
-        Expanded(flex: 2, child: SvgPicture.asset(Res.register)),
-        Expanded(
-          flex: 3,
-          child: Form(
-            key: globalKey,
-            child: BoundedListView(
-              padding: EdgeInsets.symmetric(horizontal: 36),
-              children: [
-                const Spacer(),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8),
-                  child: AppInput(
-                    controller: fNameController,
-                    isEnabled: true,
-                    hint: 'First Name',
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'first name must be entered';
-                      } else if (value.length > 20 || value.length < 2) {
-                        return "first name must be between 2 and 20 letters";
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return Scaffold(
+            body: Column(
+          children: [
+            Expanded(flex: 2, child: SvgPicture.asset(Res.register)),
+            Expanded(
+              flex: 3,
+              child: Form(
+                key: globalKey,
+                child: BoundedListView(
+                  padding: EdgeInsets.symmetric(horizontal: 36),
+                  children: [
+                    const Spacer(),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: AppInput(
+                        controller: fNameController,
+                        isEnabled: true,
+                        hint: 'First Name',
+                        validator: (value) => context
+                            .read<AuthPresCubit>()
+                            .nameValidate(value, "first"),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    AppInput(
+                      controller: lNameController,
+                      isEnabled: true,
+                      hint: 'Last Name',
+                      validator: (value) => context
+                          .read<AuthPresCubit>()
+                          .nameValidate(value, "last"),
+                    ),
+                    const SizedBox(height: 16),
+                    AppInput(
+                      controller: phoneController,
+                      isEnabled: true,
+                      hint: 'phone number',
+                      validator: (value) =>
+                          context.read<AuthPresCubit>().phoneValidate(value),
+                    ),
+                    const SizedBox(height: 16),
+                    AppInput(
+                      controller: passwordController,
+                      onChanged: (value) =>
+                          value == confirmPasswordController.text
+                              ? setState(() => confirm = true)
+                              : setState(() => confirm = false),
+                      isEnabled: true,
+                      hint: 'password',
+                      validator: (value) =>
+                          context.read<AuthPresCubit>().passwordValidate(value),
+                    ),
+                    const SizedBox(height: 16),
+                    AppInput(
+                      controller: confirmPasswordController,
+                      isEnabled: passwordController.text != '',
+                      hint: 'confirm password',
+                      onChanged: (value) => value == passwordController.text
+                          ? setState(() => confirm = true)
+                          : setState(() => confirm = false),
+                    ),
+                    const SizedBox(height: 12),
+                    const Spacer(),
+                    AppButton(
+                      isLoading: false,
+                      text: 'register',
+                      onPressed: confirm
+                          ? () {
+                              if (globalKey.currentState!.validate()) {}
+                            }
+                          : null,
+                    ),
+                    TextButton(
+                      onPressed: () => context.pushReplacement(
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      ),
+                      child: Text("I have already account"),
+                    ),
+                    const Spacer(),
+                  ],
                 ),
-                const SizedBox(height: 16),
-                AppInput(
-                  controller: lNameController,
-                  isEnabled: true,
-                  hint: 'Last Name',
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'last name must be entered';
-                    } else if (value.length > 20 || value.length < 2) {
-                      return "last name must be between 2 and 20 letters";
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
-                const SizedBox(height: 16),
-                AppInput(
-                  controller: phoneController,
-                  isEnabled: true,
-                  hint: 'phone number',
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'phone number must be entered';
-                    } else if (value.substring(0, 2) != "09" ||
-                        value.length != 10) {
-                      return 'phone number must be 09********';
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
-                const SizedBox(height: 16),
-                AppInput(
-                  controller: passwordController,
-                  isEnabled: true,
-                  hint: 'password',
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'password must be entered';
-                    } else if (value.length > 20 || value.length < 8) {
-                      return "password must be between 8 and 20 letters";
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
-                const SizedBox(height: 16),
-                AppInput(
-                  controller: confirmPasswordController,
-                  isEnabled: true,
-                  hint: 'confirm password',
-                  onChanged: (value) {
-                    if (value == passwordController.text) {
-                      // TODO : fix border to be green or red color
-                    }
-                  },
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "confirm password can't be empty";
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
-                const Spacer(),
-                AppButton(
-                  isLoading: false,
-                  text: 'register',
-                  onPressed: () {
-                    if (globalKey.currentState!.validate()) {}
-                  },
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text("I have already account"),
-                ),
-                const Spacer(),
-              ],
+              ),
             ),
-          ),
-        ),
-      ],
-    ));
+          ],
+        ));
+      },
+    );
   }
 }

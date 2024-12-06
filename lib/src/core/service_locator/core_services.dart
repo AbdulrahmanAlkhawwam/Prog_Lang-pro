@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart' as http;
 
 import '../constants/env.dart';
 import '../helpers/database_helper.dart';
@@ -29,8 +29,6 @@ Future<void> initializeCoreServices(GetIt sl, {required bool firstInit}) async {
       () => db,
       dispose: (db) => db.close(),
     );
-
-    // sl.registerLazySingleton<UrlHelper>(() => UrlHelperImpl());
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
     sl.registerLazySingleton(() => preferences);

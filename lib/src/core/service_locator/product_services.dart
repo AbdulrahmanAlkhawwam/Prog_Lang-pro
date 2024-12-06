@@ -1,7 +1,8 @@
 import 'package:get_it/get_it.dart';
-import 'package:program_language_project/src/features/datasources/products/product_remote_datasource.dart';
-import 'package:program_language_project/src/features/mangers/product_bloc.dart';
-import 'package:program_language_project/src/features/repositories/products/product_repository.dart';
+
+import '../../features/datasources/products/product_remote_datasource.dart';
+import '../../features/mangers/products/product_bloc.dart';
+import '../../features/repositories/products/product_repository.dart';
 
 Future<void> initializeProductServices(GetIt sl) async {
   sl.registerLazySingleton<ProductRemoteDatasource>(

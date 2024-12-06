@@ -23,13 +23,22 @@ class _AppBottomBarState extends State<AppBottomBar> {
       },
       currentIndex: index,
       items: [
-        BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: home),
         BottomNavigationBarItem(
-            icon: Icon(Icons.storefront_outlined), label: shops),
+          icon: Icon(Icons.home_outlined),
+          label: home,
+        ),
         BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag_outlined), label: purchase),
+          icon: Icon(Icons.storefront_outlined),
+          label: shops,
+        ),
         BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart_outlined), label: cart),
+          icon: Icon(Icons.shopping_bag_outlined),
+          label: purchase,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.shopping_cart_outlined),
+          label: cart,
+        ),
       ],
     );
   }

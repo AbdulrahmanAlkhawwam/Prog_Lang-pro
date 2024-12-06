@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:program_language_project/src/core/components/bounded_list_view.dart';
-import 'package:program_language_project/src/core/utils/app_context.dart';
 
 import '../../../core/components/app_button.dart';
 import '../../../core/components/app_input.dart';
+import '../../../core/components/bounded_list_view.dart';
 import '../../../core/constants/res.dart';
-import '../../mangers/auth/auth_bloc.dart';
+import '../../../core/utils/app_context.dart';
+import '../../mangers/auth/bloc/auth_bloc.dart';
+import '../../mangers/auth/cubit/auth_pres_cubit.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -45,31 +46,16 @@ class LoginScreen extends StatelessWidget {
                       hint: 'Phone number',
                       keyboardType: TextInputType.phone,
                       controller: phoneController,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "phone number must be not empty";
-                        } else if (value.length != 10 ||
-                            value.substring(0, 2) != "09") {
-                          return "phone number format must be 09********";
-                        } else {
-                          return null;
-                        }
-                      },
+                      validator: (value) =>
+                          context.read<AuthPresCubit>().phoneValidate(value),
                     ),
                     const SizedBox(height: 16),
                     AppInput(
                       isEnabled: true,
                       hint: 'password',
                       controller: passwordController,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "password must be not empty";
-                        } else if (value.length > 20 || value.length < 8) {
-                          return "password must be between 8 and 20";
-                        } else {
-                          return null;
-                        }
-                      },
+                      validator: (value) =>
+                          context.read<AuthPresCubit>().passwordValidate(value),
                     ),
                     const Spacer(),
                     AppButton(

@@ -14,6 +14,8 @@ extension AppNavigation on BuildContext {
 extension AppTheme on BuildContext {
   ColorScheme get colors => Theme.of(this).colorScheme;
 
+  bool get isDark => Theme.of(this).brightness == Brightness.dark;
+
   TextTheme get textTheme => Theme.of(this).textTheme;
 }
 

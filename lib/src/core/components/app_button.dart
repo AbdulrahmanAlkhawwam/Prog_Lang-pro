@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-import './skeleton.dart';
 import '../constants/styles.dart';
 import '../utils/app_context.dart';
+import 'skeleton.dart';
 
 class AppButton extends StatelessWidget {
   final Function()? onPressed;
   final Color? background;
-  final Color? splash;
   final Color? textColor;
-
+  final Color? splash;
   final bool isLoading;
   final Widget? child;
   final String text;
@@ -21,8 +20,8 @@ class AppButton extends StatelessWidget {
     required this.text,
     this.background,
     this.textColor,
-    this.onPressed,
     this.splash,
+    this.onPressed,
     this.child,
   });
 
@@ -59,7 +58,7 @@ class AppButton extends StatelessWidget {
                       style: context.textTheme.titleSmall?.copyWith(
                         color: onPressed == null
                             ? context.colors.surface
-                            : context.colors.onPrimaryContainer,
+                            : textColor ?? context.colors.onPrimaryContainer,
                       ),
                     ),
               ),

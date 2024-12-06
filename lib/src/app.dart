@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../src/features/screens/main/main_screen.dart';
-import '../src/core/constants/theme.dart';
+import 'core/constants/theme.dart';
 import 'core/service_locator/service_locator.dart';
-import 'features/mangers/auth/auth_bloc.dart';
-import 'features/mangers/product_bloc.dart';
+import 'features/mangers/auth/cubit/auth_pres_cubit.dart';
+import 'features/screens/main/main_screen.dart';
+import 'features/mangers/auth/bloc/auth_bloc.dart';
+import 'features/mangers/products/product_bloc.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -21,10 +22,18 @@ class App extends StatelessWidget {
             create: (_) => sl.get<ProductBloc>()..add(GetProducts()),
           ),
           BlocProvider(
-            create: (context) => sl.get<AuthBloc>(),
+            create: (_) => sl.get<AuthBloc>(),
+            lazy: false,
+          ),
+          BlocProvider(
+            create: (_) => sl.get<AuthPresCubit>(),
           ),
         ],
-        child: MainScreen(),
+        child: Builder(
+          builder: (context) {
+            return MainScreen();
+          },
+        ),
       ),
     );
   }

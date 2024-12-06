@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import '../../../core/utils/message.dart';
-import '../../models/user.dart';
-import '../../repositories/auth/auth_repository.dart';
+import '../../../../core/utils/message.dart';
+import '../../../models/user.dart';
+import '../../../repositories/auth/auth_repository.dart';
 
 part 'auth_event.dart';
 
