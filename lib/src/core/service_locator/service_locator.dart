@@ -6,8 +6,8 @@ import './product_services.dart';
 
 final sl = GetIt.instance;
 
-Future<void> initializeApp({bool firstInit = true}) async {
-  await initializeCoreServices(sl, firstInit: firstInit);
+Future<void> initializeApp() async {
+  await initializeCoreServices(sl);
   await initializeAuthServices(sl);
   await initializeProductServices(sl);
 }

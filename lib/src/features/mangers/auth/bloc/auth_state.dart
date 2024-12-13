@@ -1,16 +1,20 @@
 part of 'auth_bloc.dart';
 
-enum AuthStatus { init, error, success, loading }
+enum AuthStatus {
+  init,
+  loading,
+  authorized,
+  unauthorized,
+}
 
 @immutable
 class AuthState {
   final AuthStatus status;
   final User? user;
-
   final Message? message;
 
   const AuthState({
-    required this.status,
+    this.status = AuthStatus.init,
     this.user,
     this.message,
   });
