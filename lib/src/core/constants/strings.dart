@@ -14,3 +14,4 @@ const home = "home";
 const shops = "shops";
 const purchase = "purchase";
 const cart = "cart";
+const user = "userProfile";

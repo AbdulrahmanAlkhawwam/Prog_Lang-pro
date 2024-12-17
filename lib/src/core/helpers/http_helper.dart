@@ -181,7 +181,7 @@ class HttpHelperImpl extends HttpHelper {
   Map<String, String> _makeHeaders({Map? extraHeaders}) => {
         "Content-Type": "application/json",
         "Accept-Language": locale,
-        if (token.isNotEmpty) "Authorization": token,
+        if (token.isNotEmpty) "Authorization": "Bearer $token",
         ...?extraHeaders,
       };
 

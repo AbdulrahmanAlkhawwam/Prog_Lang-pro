@@ -10,6 +10,10 @@ abstract class AuthRemoteDatasource {
     String password,
     String phoneNumber,
   );
+
+  Future<void> logout();
+
+  Future<UserModel> me();
 }
 
 class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
@@ -32,6 +36,20 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
       },
     );
   }
+
+  @override
+  Future<UserModel> me() async {
+    return await http.handleApiCall(
+      () async {
+        final response = await http.get("/profile") as Map<String, dynamic>;
+        return UserModel.fromJson(response);
+      },
+    );
+  }
+
+  @override
+  Future<void> logout() async =>
+      await http.handleApiCall(() async => await http.post("/logout"));
 
   @override
   Future<UserModel> register(

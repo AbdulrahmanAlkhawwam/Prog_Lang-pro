@@ -39,6 +39,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
           icon: Icon(Icons.shopping_cart_outlined),
           label: cart,
         ),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.perm_identity_rounded), label: user),
       ],
     );
   }
