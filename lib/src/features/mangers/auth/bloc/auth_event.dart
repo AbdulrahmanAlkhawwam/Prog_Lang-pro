@@ -15,3 +15,9 @@ class Login extends AuthEvent {
 }
 
 class CheckAuth extends AuthEvent {}
+
+class OTP extends AuthEvent {
+  final String passkey;
+
+  OTP({required this.passkey});
+}

@@ -17,6 +17,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({required this.repository}) : super(AuthState()) {
     on<Login>(_login);
     on<CheckAuth>(_checkAuth);
+    on<OTP>(_checkOtp);
   }
 
   FutureOr<void> _login(Login event, Emitter<AuthState> emit) async {
@@ -51,4 +52,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _saveToken(String token) => repository.saveToken(token);
+
+  FutureOr<void> _checkOtp(OTP event, Emitter<AuthState> emit) async {
+    emit(state.copyWith(status: AuthStatus.loading));
+    final response = await repository.otp(event.passkey);
+    response.fold(
+        (failure) => emit(state.copyWith(
+              status: AuthStatus.unauthorized,
+              message: Message.fromFailure(failure),
+            )),
+        (result) => emit(state.copyWith(
+            status: result ? AuthStatus.authorized : AuthStatus.unauthorized)));
+  }
 }
