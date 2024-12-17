@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:program_language_project/src/core/components/widgets/skeleton.dart';
 import 'package:program_language_project/src/core/utils/app_context.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../core/components/skeleton.dart';
+
 class ShopDetailsScreen extends StatelessWidget {
   List<String> _tabs = [];
+
   ShopDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        // --fromApi function-- is a test empty function that should return an object from shop class 
+        // --fromApi function-- is a test empty function that should return an object from shop class
         // and put the result in snapshot
         future: fromApi(),
         builder: (context, snapshot) {
@@ -52,7 +54,8 @@ class ShopDetailsScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "market name", //market name should load from api
+                                    "market name",
+                                    //market name should load from api
                                     style: TextStyle(
                                       color: context.colors.onSurface,
                                       fontWeight: FontWeight.w700,
@@ -63,7 +66,8 @@ class ShopDetailsScreen extends StatelessWidget {
                                     padding: const EdgeInsets.only(
                                         top: 4, bottom: 16),
                                     child: Text(
-                                      "Market description Market description Market description", //market description from api
+                                      "Market description Market description Market description",
+                                      //market description from api
                                       style: TextStyle(
                                         color: context.colors.onSurface,
                                         fontWeight: FontWeight.w400,
@@ -79,7 +83,8 @@ class ShopDetailsScreen extends StatelessWidget {
                                       ),
                                       SizedBox(width: 14),
                                       Text(
-                                        "Market place", //market place should load from api
+                                        "Market place",
+                                        //market place should load from api
                                         style: TextStyle(
                                           color:
                                               context.colors.primaryContainer,
@@ -100,7 +105,8 @@ class ShopDetailsScreen extends StatelessWidget {
                                         ),
                                         SizedBox(width: 14),
                                         Text(
-                                          "Market state", //Market state should load from api
+                                          "Market state",
+                                          //Market state should load from api
                                           style: TextStyle(
                                             color:
                                                 context.colors.primaryContainer,
@@ -118,7 +124,8 @@ class ShopDetailsScreen extends StatelessWidget {
                                       ),
                                       SizedBox(width: 14),
                                       Text(
-                                        "Market category", //Market category should load from api
+                                        "Market category",
+                                        //Market category should load from api
                                         style: TextStyle(
                                           color:
                                               context.colors.primaryContainer,
@@ -199,7 +206,8 @@ class ShopDetailsScreen extends StatelessWidget {
                                             padding: const EdgeInsets.only(
                                                 top: 9, bottom: 22),
                                             child: Text(
-                                              "product Name", //product name that should load from api
+                                              "product Name",
+                                              //product name that should load from api
                                               style: TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.w700,
@@ -216,7 +224,8 @@ class ShopDetailsScreen extends StatelessWidget {
                                               ),
                                               SizedBox(width: 14),
                                               Text(
-                                                "product ingredients", //product ingredients that should load from api
+                                                "product ingredients",
+                                                //product ingredients that should load from api
                                                 style: TextStyle(
                                                   color: context
                                                       .colors.primaryContainer,
@@ -238,7 +247,8 @@ class ShopDetailsScreen extends StatelessWidget {
                                                 ),
                                                 SizedBox(width: 14),
                                                 Text(
-                                                  "Market name", //Market name that should load from api
+                                                  "Market name",
+                                                  //Market name that should load from api
                                                   style: TextStyle(
                                                     color: context.colors
                                                         .primaryContainer,
@@ -257,7 +267,8 @@ class ShopDetailsScreen extends StatelessWidget {
                                               ),
                                               SizedBox(width: 14),
                                               Text(
-                                                "product price", //product price that should load from api
+                                                "product price",
+                                                //product price that should load from api
                                                 style: TextStyle(
                                                   color: context
                                                       .colors.primaryContainer,

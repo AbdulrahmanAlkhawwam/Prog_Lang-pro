@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:program_language_project/src/features/screens/auth/otp_screen.dart';
 
 import '../../../core/components/app_button.dart';
 import '../../../core/components/app_input.dart';
@@ -33,7 +34,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return BlocProvider(
       create: (context) => sl.get<AuthBloc>(),
       child: BlocConsumer<AuthBloc, AuthState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state.status == AuthStatus.authorized) {
+            context.push(MaterialPageRoute(builder: (context) => OtpScreen()));
+          }
+        },
         builder: (context, state) {
           return Scaffold(
               body: Column(
@@ -100,11 +105,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       const SizedBox(height: 12),
                       const Spacer(),
                       AppButton(
-                        isLoading: false,
+                        isLoading: state.status == AuthStatus.loading,
                         text: 'register',
                         onPressed: confirm
                             ? () {
-                                if (globalKey.currentState!.validate()) {}
+                                if (globalKey.currentState!.validate()) {
+                                  context.read<AuthBloc>().add(
+                                        Register(
+                                          firstName: fNameController.text,
+                                          lastName: lNameController.text,
+                                          phoneNumber: phoneController.text,
+                                          password: passwordController.text,
+                                        ),
+                                      );
+                                }
                               }
                             : null,
                       ),

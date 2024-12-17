@@ -37,7 +37,7 @@ class App extends StatelessWidget {
             builder: (context, state) {
               return state.status == AuthStatus.authorized
                   ? MainScreen()
-                  : OtpScreen();
+                  : LoginScreen();
             },
           ),
         ),

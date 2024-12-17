@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:program_language_project/src/core/utils/app_context.dart';
-import 'package:program_language_project/src/features/screens/user/User_Profile_Screen.dart';
 
 import '../../../core/components/app_bottom_bar.dart';
-import '../../../core/service_locator/service_locator.dart';
-import '../../mangers/auth/auth_bloc.dart';
+import '../../../core/utils/app_context.dart';
 import '../shop/shops_screen.dart';
+import '../user/User_Profile_Screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
