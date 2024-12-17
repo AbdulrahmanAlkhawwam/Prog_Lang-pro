@@ -17,6 +17,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({required this.repository})
       : super(AuthState(status: AuthStatus.init)) {
     on<Login>(_login);
+    on<Logout>(_logout);
+    on<Me>(_getMyProfile);
   }
 
   FutureOr<void> _login(Login event, Emitter<AuthState> emit) async {
@@ -27,5 +29,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           status: AuthStatus.error, message: Message.fromFailure(failure))),
       (user) => emit(state.copyWith(status: AuthStatus.success, user: user)),
     );
+  }
+
+  FutureOr<void> _getMyProfile(Me event, Emitter<AuthState> emit) async {
+    emit(state.copyWith(status: AuthStatus.loading));
+    final response = await repository.me();
+    response.fold(
+      (failure) => emit(state.copyWith(
+          status: AuthStatus.error, message: Message.fromFailure(failure))),
+      (user) => emit(state.copyWith(status: AuthStatus.success, user: user)),
+    );
+  }
+
+  FutureOr<void> _logout(Logout event, Emitter<AuthState> emit) async {
+    emit(state.copyWith(status: AuthStatus.loading));
+    final response = await repository.logout();
+    response.fold(
+        (failure) => emit(state.copyWith(
+            status: AuthStatus.error, message: Message.fromFailure(failure))),
+        (_) => emit(state.copyWith(status: AuthStatus.success)));
   }
 }

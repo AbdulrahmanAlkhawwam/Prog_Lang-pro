@@ -6,8 +6,8 @@ class User {
   final String? imageUrl;
   final Location? location;
   final String firstName;
-  final String token;
   final String lastName;
+  final String? token;
 
   User({
     required this.id,
@@ -32,16 +32,16 @@ class UserModel extends User {
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        id: json["User"]["id"],
-        firstName: json["User"]["firstname"],
-        lastName: json["User"]["lastname"],
-        phone: json["User"]["phone"],
-        imageUrl: json["User"]["profileImage"],
-        location: json["User"]["latitude"] == null
+        id: json["User"]?["id"] ?? json["id"],
+        firstName: json["User"]?["firstname"] ?? json["firstname"],
+        lastName: json["User"]?["lastname"] ?? json["lastname"],
+        phone: json["User"]?["phone"] ?? json["phone"],
+        imageUrl: json["User"]?["profileImage"] ?? json["profileImage"],
+        location: json["User"]?["latitude"] == null
             ? null
             : Location(
-                latitudes: json["User"]["latitude"],
-                longitudes: json["User"]["longitude"],
+                latitudes: json["User"]?["latitude"],
+                longitudes: json["User"]?["longitude"],
               ),
         token: json["Token"],
       );

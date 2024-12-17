@@ -182,7 +182,7 @@ class HttpHelperImpl extends HttpHelper {
         // "Accept": "application/json",
         "Content-Type": "application/json",
         "Accept-Language": locale,
-        if (token.isNotEmpty) "Authorization": token,
+        if (token.isNotEmpty) "Authorization": "Bearer $token",
         ...?extraHeaders,
       };
 

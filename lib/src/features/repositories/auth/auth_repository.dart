@@ -7,6 +7,10 @@ import '../../models/user.dart';
 
 abstract class AuthRepository {
   Future<Either<Failure, User>> login(String phoneNumber, String password);
+
+  Future<Either<Failure, void>> logout();
+
+  Future<Either<Failure, User>> me();
 }
 
 class AuthRepositoryImpl extends AuthRepository {
@@ -18,10 +22,20 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<Either<Failure, User>> login(
       String phoneNumber, String password) async {
     return await AppUtils.safeCall(
-      () => datasource.login(
+      () async => await datasource.login(
         phoneNumber,
         password,
       ),
     );
+  }
+
+  @override
+  Future<Either<Failure, User>> me() async {
+    return await AppUtils.safeCall(() async => await datasource.me());
+  }
+
+  @override
+  Future<Either<Failure, void>> logout() async {
+    return await AppUtils.safeCall(() async => await datasource.logout());
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:program_language_project/src/features/models/Location.dart';
 import 'package:program_language_project/src/features/models/user.dart';
+import 'package:program_language_project/src/features/screens/auth/login_screen.dart';
+import 'package:program_language_project/src/features/screens/main/main_screen.dart';
 import 'package:program_language_project/src/features/screens/user/User_Profile_Screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,20 +28,7 @@ class App extends StatelessWidget {
             create: (context) => sl.get<AuthBloc>(),
           ),
         ],
-        child: UserProfileScreen(
-          user: User(
-            id: 123456,
-            phone: 0953550484,
-            firstName: "Abdulrahman",
-            lastName: "Alkhawwa",
-            token: ";ldkvj23467d242kd1nlj1emwcwej1l2ej",
-            location: null/*Location(
-              latitudes: 1234567.123456,
-              longitudes: 1234567.123456,
-            )*/,
-            imageUrl: null
-          ),
-        ),
+        child: MainScreen(),
       ),
     );
   }

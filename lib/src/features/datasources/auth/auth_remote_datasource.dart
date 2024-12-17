@@ -5,6 +5,10 @@ import '../../models/user.dart';
 
 abstract class AuthRemoteDatasource {
   Future<UserModel> login(String phoneNumber, String password);
+
+  Future<void> logout();
+
+  Future<UserModel> me();
 }
 
 class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
@@ -22,10 +26,23 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
             "phone": phoneNumber.substring(1),
             "password": password,
           },
-        ) ;
-        final data = json.decode(response);
-        return UserModel.fromJson(data);
+        ) as Map<String, dynamic>;
+        return UserModel.fromJson(response);
       },
     );
   }
+
+  @override
+  Future<UserModel> me() async {
+    return await http.handleApiCall(
+      () async {
+        final response = await http.get("/profile") as Map<String, dynamic>;
+        return UserModel.fromJson(response);
+      },
+    );
+  }
+
+  @override
+  Future<void> logout() async =>
+      await http.handleApiCall(() async => await http.post("/logout"));
 }
