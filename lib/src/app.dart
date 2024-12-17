@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:program_language_project/src/features/screens/auth/otp_screen.dart';
 
 import 'core/constants/theme.dart';
 import 'core/service_locator/service_locator.dart';
@@ -36,7 +37,7 @@ class App extends StatelessWidget {
             builder: (context, state) {
               return state.status == AuthStatus.authorized
                   ? MainScreen()
-                  : LoginScreen();
+                  : OtpScreen();
             },
           ),
         ),

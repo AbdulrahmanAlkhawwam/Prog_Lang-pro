@@ -14,6 +14,8 @@ abstract class AuthRemoteDatasource {
   Future<void> logout();
 
   Future<UserModel> me();
+
+  Future<bool> otp(String passkey);
 }
 
 class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
@@ -69,6 +71,17 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
         },
       ) as Map<String, dynamic>;
       return UserModel.fromJson(response);
+    });
+  }
+
+  @override
+  Future<bool> otp(String passkey) async {
+    return await http.handleApiCall(() async {
+      final response = await http.post(
+        "/register/otp",
+        body: {"otp": passkey},
+      ) as Map<String, dynamic>;
+      return response["message"] != "Unauthenticated.";
     });
   }
 }

@@ -9,6 +9,8 @@ import '../../models/user.dart';
 abstract class AuthRepository {
   Future<Either<Failure, User>> login(String phoneNumber, String password);
 
+  Future<Either<Failure, bool>> otp(String passkey);
+
   Future<Either<Failure, bool>> checkToken();
 
   Future<Either<Failure, void>> saveToken(String token);
@@ -33,6 +35,11 @@ class AuthRepositoryImpl extends AuthRepository {
         password,
       ),
     );
+  }
+
+  @override
+  Future<Either<Failure, bool>> otp(String passkey) async {
+    return await AppUtils.safeCall(() async => await datasource.otp(passkey));
   }
 
   @override
