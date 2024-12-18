@@ -1,7 +1,6 @@
 class Res {
   Res._();
 
-  /// SVGs
   static const String login = "assets/svgs/login.svg";
   static const String register = "assets/svgs/register.svg";
   static const String empty = "assets/svgs/empty.svg";

@@ -1,46 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:program_language_project/src/core/constants/strings.dart';
-import 'package:program_language_project/src/features/screens/auth/login_screen.dart';
 
 import '../../../core/components/app_button.dart';
 import '../../../core/components/bounded_list_view.dart';
 import '../../../core/constants/styles.dart';
-import '../../../core/service_locator/service_locator.dart';
 import '../../../core/utils/app_context.dart';
 import '../../../core/constants/res.dart';
 import '../../mangers/auth/bloc/auth_bloc.dart';
-import '../../models/user.dart';
+import '../auth/login_screen.dart';
 
-class UserProfileScreen extends StatelessWidget {
-  const UserProfileScreen({
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl.get<AuthBloc>()..add(Me()),
-      lazy: false,
-      child: BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) {
-          if (state.status == AuthStatus.unauthorized) {
-            context.pushReplacement(
-                MaterialPageRoute(builder: (context) => LoginScreen()));
-          }
-        },
-        child: Scaffold(
-          appBar: AppBar(
-            actions: [
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.mode_edit_outline_outlined),
-              ),
-            ],
-          ),
-          body: BlocBuilder<AuthBloc, AuthState>(
-            builder: (context, state) => switch (state.status) {
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state.status == AuthStatus.unauthorized) {
+          context.pushReplacement(
+              MaterialPageRoute(builder: (context) => LoginScreen()));
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.mode_edit_outline_outlined),
+            ),
+          ],
+        ),
+        body: BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) {
+            return switch (state.status) {
               AuthStatus.error => Center(child: Text(state.message.toString())),
               AuthStatus.loading => Center(child: CircularProgressIndicator()),
               _ => SafeArea(
@@ -130,7 +125,7 @@ class UserProfileScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 24),
                     AppButton(
-                      isLoading: false,
+                      isLoading: state.status == AuthStatus.loading,
                       text: 'Logout',
                       background: context.colors.errorContainer,
                       textColor: context.colors.onErrorContainer,
@@ -142,8 +137,8 @@ class UserProfileScreen extends StatelessWidget {
                     SizedBox(height: 20),
                   ],
                 )),
-            },
-          ),
+            };
+          },
         ),
       ),
     );

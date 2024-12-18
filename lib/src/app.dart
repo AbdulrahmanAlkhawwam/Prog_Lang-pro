@@ -27,17 +27,19 @@ class App extends StatelessWidget {
       child: MultiBlocListener(
         listeners: [
           BlocListener<AuthBloc, AuthState>(
-            listener: (context, state) {},
+            listener: (context, state) {
+              // todo : don't forget to get profile date and fix auth switcher
+            },
           ),
         ],
         child: MaterialApp(
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           home: BlocBuilder<AuthBloc, AuthState>(
-            builder: (context, state) {
-              return state.status == AuthStatus.authorized
-                  ? MainScreen()
-                  : LoginScreen();
+            builder: (context, state) => switch (state.status) {
+              AuthStatus.authorized => MainScreen(),
+              AuthStatus.success => MainScreen(),
+              _ => LoginScreen(),
             },
           ),
         ),

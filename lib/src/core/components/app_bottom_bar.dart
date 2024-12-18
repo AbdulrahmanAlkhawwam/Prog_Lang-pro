@@ -18,7 +18,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
   BottomNavigationBar build(BuildContext context) {
     return BottomNavigationBar(
       onTap: (value) {
-        setState(() => index = value);
+        setState(() => value != 4 ? index = value : null);
         widget.onTap(value);
       },
       currentIndex: index,
@@ -40,7 +40,9 @@ class _AppBottomBarState extends State<AppBottomBar> {
           label: cart,
         ),
         BottomNavigationBarItem(
-            icon: Icon(Icons.perm_identity_rounded), label: user),
+          icon: Icon(Icons.perm_identity_rounded),
+          label: user,
+        ),
       ],
     );
   }

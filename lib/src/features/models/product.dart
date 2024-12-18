@@ -15,7 +15,7 @@ class Product {
   final List<String> ingredients;
   final double price;
 
-  final Shop market;
+  final Shop? market;
 
   final int quantity;
 
@@ -52,7 +52,7 @@ class ProductModel extends Product {
         "String",
       ],
       price: json["price"],
-      market: Shop(
+      market: null /*Shop(
         id: json["market"]["id"],
         name: json["market"]["name"],
         place: json["market"]["place"],
@@ -62,6 +62,6 @@ class ProductModel extends Product {
           iconId: json["market"]["category"]["iconId"],
           categoryName: json["market"]["category"]["name"],
         ),
-      ),
+      ),*/,
       quantity: json["quantity"]);
 }

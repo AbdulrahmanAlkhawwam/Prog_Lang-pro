@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/components/search_input.dart';
 import '../../widgets/shop/shops_list.dart';
 
 class ShopsScreen extends StatelessWidget {
@@ -11,18 +10,9 @@ class ShopsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-      child: Column(
-        children: [
-          SearchInput(
-            onTap: () {},
-            hint: "Search",
-            onChanged: null,
-            controller: null,
-          ),
-          Expanded(child: ShopsList()),
-        ],
+      body: SafeArea(
+        child: ShopsList(),
       ),
-    ));
+    );
   }
 }

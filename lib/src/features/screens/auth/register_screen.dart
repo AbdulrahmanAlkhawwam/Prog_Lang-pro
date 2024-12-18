@@ -31,113 +31,110 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl.get<AuthBloc>(),
-      child: BlocConsumer<AuthBloc, AuthState>(
-        listener: (context, state) {
-          if (state.status == AuthStatus.authorized) {
-            context.push(MaterialPageRoute(builder: (context) => OtpScreen()));
-          }
-        },
-        builder: (context, state) {
-          return Scaffold(
-              body: Column(
-            children: [
-              Expanded(flex: 2, child: SvgPicture.asset(Res.register)),
-              Expanded(
-                flex: 3,
-                child: Form(
-                  key: globalKey,
-                  child: BoundedListView(
-                    padding: EdgeInsets.symmetric(horizontal: 36),
-                    children: [
-                      const Spacer(),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8),
-                        child: AppInput(
-                          controller: fNameController,
-                          isEnabled: true,
-                          hint: 'First Name',
-                          validator: (value) => context
-                              .read<AuthPresCubit>()
-                              .nameValidate(value, "first"),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      AppInput(
-                        controller: lNameController,
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state.status == AuthStatus.authorized || state.status == AuthStatus.error) {
+          context.push(MaterialPageRoute(builder: (context) => OtpScreen()));
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+            body: Column(
+          children: [
+            Expanded(flex: 2, child: SvgPicture.asset(Res.register)),
+            Expanded(
+              flex: 3,
+              child: Form(
+                key: globalKey,
+                child: BoundedListView(
+                  padding: EdgeInsets.symmetric(horizontal: 36),
+                  children: [
+                    const Spacer(),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: AppInput(
+                        controller: fNameController,
                         isEnabled: true,
-                        hint: 'Last Name',
+                        hint: 'First Name',
                         validator: (value) => context
                             .read<AuthPresCubit>()
-                            .nameValidate(value, "last"),
+                            .nameValidate(value, "first"),
                       ),
-                      const SizedBox(height: 16),
-                      AppInput(
-                        controller: phoneController,
-                        isEnabled: true,
-                        hint: 'phone number',
-                        validator: (value) =>
-                            context.read<AuthPresCubit>().phoneValidate(value),
-                      ),
-                      const SizedBox(height: 16),
-                      AppInput(
-                        controller: passwordController,
-                        onChanged: (value) =>
-                            value == confirmPasswordController.text
-                                ? setState(() => confirm = true)
-                                : setState(() => confirm = false),
-                        isEnabled: true,
-                        hint: 'password',
-                        validator: (value) => context
-                            .read<AuthPresCubit>()
-                            .passwordValidate(value),
-                      ),
-                      const SizedBox(height: 16),
-                      AppInput(
-                        controller: confirmPasswordController,
-                        isEnabled: passwordController.text != '',
-                        hint: 'confirm password',
-                        onChanged: (value) => value == passwordController.text
-                            ? setState(() => confirm = true)
-                            : setState(() => confirm = false),
-                      ),
-                      const SizedBox(height: 12),
-                      const Spacer(),
-                      AppButton(
-                        isLoading: state.status == AuthStatus.loading,
-                        text: 'register',
-                        onPressed: confirm
-                            ? () {
-                                if (globalKey.currentState!.validate()) {
-                                  context.read<AuthBloc>().add(
-                                        Register(
-                                          firstName: fNameController.text,
-                                          lastName: lNameController.text,
-                                          phoneNumber: phoneController.text,
-                                          password: passwordController.text,
-                                        ),
-                                      );
-                                }
+                    ),
+                    const SizedBox(height: 16),
+                    AppInput(
+                      controller: lNameController,
+                      isEnabled: true,
+                      hint: 'Last Name',
+                      validator: (value) => context
+                          .read<AuthPresCubit>()
+                          .nameValidate(value, "last"),
+                    ),
+                    const SizedBox(height: 16),
+                    AppInput(
+                      controller: phoneController,
+                      isEnabled: true,
+                      hint: 'phone number',
+                      validator: (value) =>
+                          context.read<AuthPresCubit>().phoneValidate(value),
+                    ),
+                    const SizedBox(height: 16),
+                    AppInput(
+                      controller: passwordController,
+                      onChanged: (value) =>
+                          value == confirmPasswordController.text
+                              ? setState(() => confirm = true)
+                              : setState(() => confirm = false),
+                      isEnabled: true,
+                      hint: 'password',
+                      validator: (value) => context
+                          .read<AuthPresCubit>()
+                          .passwordValidate(value),
+                    ),
+                    const SizedBox(height: 16),
+                    AppInput(
+                      controller: confirmPasswordController,
+                      isEnabled: passwordController.text != '',
+                      hint: 'confirm password',
+                      onChanged: (value) => value == passwordController.text
+                          ? setState(() => confirm = true)
+                          : setState(() => confirm = false),
+                    ),
+                    const SizedBox(height: 12),
+                    const Spacer(),
+                    AppButton(
+                      isLoading: state.status == AuthStatus.loading,
+                      text: 'register',
+                      onPressed: confirm
+                          ? () {
+                              if (globalKey.currentState!.validate()) {
+                                context.read<AuthBloc>().add(
+                                      Register(
+                                        firstName: fNameController.text,
+                                        lastName: lNameController.text,
+                                        phoneNumber: phoneController.text,
+                                        password: passwordController.text,
+                                      ),
+                                    );
                               }
-                            : null,
+                            }
+                          : null,
+                    ),
+                    TextButton(
+                      onPressed: () => context.pushReplacement(
+                        MaterialPageRoute(
+                            builder: (context) => LoginScreen()),
                       ),
-                      TextButton(
-                        onPressed: () => context.pushReplacement(
-                          MaterialPageRoute(
-                              builder: (context) => LoginScreen()),
-                        ),
-                        child: Text("I have already account"),
-                      ),
-                      const Spacer(),
-                    ],
-                  ),
+                      child: Text("I have already account"),
+                    ),
+                    const Spacer(),
+                  ],
                 ),
               ),
-            ],
-          ));
-        },
-      ),
+            ),
+          ],
+        ));
+      },
     );
   }
 }

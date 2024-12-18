@@ -165,8 +165,7 @@ class HttpHelperImpl extends HttpHelper {
       throw AuthorizationException("Expired access token", true);
     } else if (response.statusCode ~/ 100 != 2) {
       throw ServerException(
-        jsonDecode(response.body)["message"]?.toString() ??
-            response.statusCode.toString(),
+        response.statusCode.toString(),
         statusCode: response.statusCode,
         body: response.body,
       );

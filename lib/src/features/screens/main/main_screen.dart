@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../../../core/components/app_bottom_bar.dart';
 import '../../../core/utils/app_context.dart';
+import '../cart/cart_screen.dart';
+import '../purchase/purchase_screen.dart';
 import '../shop/shops_screen.dart';
-import '../user/User_Profile_Screen.dart';
+import '../user/profile_screen.dart';
+import 'home_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -13,26 +16,32 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int index = 0;
+  Widget screen = HomeScreen();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: switch (index) {
-        _ => ShopsScreen(),
-      },
+      body: screen,
       bottomNavigationBar: AppBottomBar(
-        onTap: (index) {
+        onTap: (index) => setState(() {
           if (index == 4) {
             context.push(MaterialPageRoute(
-              builder: (context) => UserProfileScreen(),
+              builder: (context) => ProfileScreen(),
             ));
-          } else {
-            setState(() {
-              this.index = index;
-            });
           }
-        },
+          switch (index) {
+            case 0:
+              screen = HomeScreen();
+            case 1:
+              screen = ShopsScreen();
+            case 2:
+              screen = PurchaseScreen();
+            case 3:
+              screen = CartScreen();
+            default:
+              screen = screen;
+          }
+        }),
       ),
     );
   }
