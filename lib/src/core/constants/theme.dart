@@ -15,6 +15,7 @@ class AppTheme {
         colorScheme: colors,
         primaryColor: colors.primary,
         useMaterial3: true,
+        tabBarTheme: _tabBarTheme(colors),
         textTheme: _textTheme(colors),
         textButtonTheme: _textButtonTheme(colors),
         inputDecorationTheme: _inputDecorationTheme(colors),
@@ -162,6 +163,22 @@ class AppTheme {
         height: 20 / 12,
         color: colors.onSurface,
       ),
+    );
+  }
+
+  static _tabBarTheme(ColorScheme colors) {
+    return TabBarTheme(
+      dividerColor: colors.surfaceContainer,
+      labelStyle: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+      ),
+      labelColor: colors.primary,
+      unselectedLabelStyle: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+      ),
+      unselectedLabelColor: colors.outline,
     );
   }
 }
