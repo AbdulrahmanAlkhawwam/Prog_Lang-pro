@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:program_language_project/src/features/screens/auth/otp_screen.dart';
+import 'package:program_language_project/src/features/screens/shop/shop_details_screen.dart';
+import 'package:program_language_project/src/features/screens/shop/shops_screen.dart';
 
 import 'core/constants/theme.dart';
 import 'core/service_locator/service_locator.dart';
@@ -35,13 +37,18 @@ class App extends StatelessWidget {
         child: MaterialApp(
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
-          home: BlocBuilder<AuthBloc, AuthState>(
+          home:
+
+
+          BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) => switch (state.status) {
               AuthStatus.authorized => MainScreen(),
               AuthStatus.success => MainScreen(),
-              _ => LoginScreen(),
+              _ => ShopDetailsScreen(),
             },
           ),
+
+
         ),
       ),
     );
