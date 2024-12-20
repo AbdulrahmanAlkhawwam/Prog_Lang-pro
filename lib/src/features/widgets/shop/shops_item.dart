@@ -28,8 +28,8 @@ class ShopsItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(appBor),
                 color: context.colors.outline,
               ),
-              // TODO : Add app_image file
-              // child: Image.network(shop.imageId),
+              // Todo : fix this code
+              child: Image.network("http://10.0.2.2:8000/${shop.imageUrl}"),
             ),
           ),
           Padding(
