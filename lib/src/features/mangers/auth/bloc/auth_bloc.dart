@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
@@ -21,6 +22,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<Register>(_register);
     on<Logout>(_logout);
     on<Login>(_login);
+    on<UpdateUserImage>(_updateUserImage); 
   }
 
   FutureOr<void> _login(Login event, Emitter<AuthState> emit) async {
@@ -104,8 +106,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         (result) => emit(state.copyWith(
             status: result ? AuthStatus.authorized : AuthStatus.unauthorized)));
   }
+  FutureOr<void> _updateUserImage(UpdateUserImage event, Emitter<AuthState> emit) async {
+
+    final updatedUser = state.user?.copyWith(imageUrl: event.image); 
+    emit(state.copyWith(user: updatedUser)); 
+  }
+
 
   void _deleteToken() => repository.deleteToken();
 
   void _saveToken(String token) => repository.saveToken(token);
 }
+

@@ -1,7 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:program_language_project/src/features/screens/auth/otp_screen.dart';
-
 import 'core/constants/theme.dart';
 import 'core/service_locator/service_locator.dart';
 import 'features/mangers/auth/bloc/auth_bloc.dart';
@@ -33,7 +31,8 @@ class App extends StatelessWidget {
         child: MaterialApp(
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
-          home: BlocBuilder<AuthBloc, AuthState>(
+          home: 
+           BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
               return state.status == AuthStatus.authorized
                   ? MainScreen()

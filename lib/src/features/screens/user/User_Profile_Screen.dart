@@ -1,9 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:program_language_project/src/core/constants/strings.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:program_language_project/src/features/screens/auth/login_screen.dart';
-
 import '../../../core/components/app_button.dart';
 import '../../../core/components/bounded_list_view.dart';
 import '../../../core/constants/styles.dart';
@@ -11,12 +12,31 @@ import '../../../core/service_locator/service_locator.dart';
 import '../../../core/utils/app_context.dart';
 import '../../../core/constants/res.dart';
 import '../../mangers/auth/bloc/auth_bloc.dart';
-import '../../models/user.dart';
 
-class UserProfileScreen extends StatelessWidget {
-  const UserProfileScreen({
-    super.key,
-  });
+
+class UserProfileScreen extends StatefulWidget {
+  const UserProfileScreen({super.key});
+
+  @override
+  State<UserProfileScreen> createState() => _UserProfileScreenState();
+}
+
+class _UserProfileScreenState extends State<UserProfileScreen> {
+  File? _image;
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path); 
+      });
+
+       context.read<AuthBloc>().add(UpdateUserImage(_image!)); 
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +54,7 @@ class UserProfileScreen extends StatelessWidget {
           appBar: AppBar(
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed:_pickImage ,
                 icon: Icon(Icons.mode_edit_outline_outlined),
               ),
             ],
@@ -53,7 +73,7 @@ class UserProfileScreen extends StatelessWidget {
                                 ? Res.unknownUserLight
                                 : Res.unknownUserDark,
                           )
-                        : Image.network(state.user!.imageUrl!),
+                        : Image.file(_image!),
                     SizedBox(height: 42),
                     Container(
                       height: 56,
