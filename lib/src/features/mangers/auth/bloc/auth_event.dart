@@ -40,3 +40,10 @@ class OTP extends AuthEvent {
 
   OTP({required this.passkey});
 }
+
+
+class UpdateUserImage extends AuthEvent {
+  final File image;
+
+  UpdateUserImage(this.image);
+}

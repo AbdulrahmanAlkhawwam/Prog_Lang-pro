@@ -1,9 +1,9 @@
-import 'package:program_language_project/src/features/models/Location.dart';
+import 'dart:io';import "package:program_language_project/src/features/models/Location.dart";
 
 class User {
   final int id;
   final int phone;
-  final String? imageUrl;
+  late File? imageUrl;
   final Location? location;
   final String firstName;
   final String lastName;
@@ -18,7 +18,20 @@ class User {
     this.location,
     this.imageUrl,
   });
+  User copyWith({File? imageUrl}) {
+    return User(
+      id: this.id,
+      phone: this.phone,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      token: this.token,
+      location: this.location,
+      imageUrl: imageUrl ?? this.imageUrl
+    );
+  }
 }
+
+
 
 class UserModel extends User {
   UserModel({
