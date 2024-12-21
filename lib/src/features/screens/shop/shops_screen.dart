@@ -76,7 +76,3 @@ class ShopsScreen extends StatelessWidget {
     );
   }
 }
-
-
-
-*/

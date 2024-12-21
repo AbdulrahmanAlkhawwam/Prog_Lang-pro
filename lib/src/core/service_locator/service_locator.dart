@@ -4,6 +4,7 @@ import './core_services.dart';
 import './auth_services.dart';
 import './shop_services.dart';
 import './product_services.dart';
+import './shops_services.dart';
 import './main_services.dart';
 
 final sl = GetIt.instance;
