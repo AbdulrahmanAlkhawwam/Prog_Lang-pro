@@ -46,12 +46,14 @@ class App extends StatelessWidget {
               },
             ),
           ],
+          // TODO : DON'T FORGET THEME NOTIFIER
+          // TODO : DON'T FORGET TO ADD language_sheet.dart
           child: MaterialApp(
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
+            // localizationsDelegates: context.localizationDelegates,
+            // supportedLocales: context.supportedLocales,
+            // locale: context.locale,
             home: BlocBuilder<AuthBloc, AuthState>(
               builder: (context, state) => switch (state.status) {
                 AuthStatus.unauthorized || AuthStatus.error => LoginScreen(),

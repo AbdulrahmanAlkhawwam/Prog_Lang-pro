@@ -77,7 +77,7 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
         "/register/otp",
         body: {"otp": passkey},
       ) as Map<String, dynamic>;
-      return response["message"] != "Unauthenticated.";
+      return response["status"];
     });
   }
 
