@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:program_language_project/src/core/localization/keys.g.dart';
 
 import '../../../core/components/search_input.dart';
 import '../../../core/service_locator/service_locator.dart';
@@ -23,7 +25,7 @@ class SearchScreen extends StatelessWidget {
                 children: [
                   SearchInput(
                     controller: controller,
-                    hint: "Search",
+                    hint: LocaleKeys.home_search.tr(),
                     onChanged: (value) =>
                         context.read<MainCubit>().search(value),
                   ),

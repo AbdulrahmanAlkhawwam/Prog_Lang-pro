@@ -1,4 +1,5 @@
 import '../../../core/helpers/http_helper.dart';
+import '../../models/Location.dart';
 import '../../models/user.dart';
 
 abstract class AuthRemoteDatasource {
@@ -10,6 +11,15 @@ abstract class AuthRemoteDatasource {
     String password,
     String phoneNumber,
   );
+
+  Future<UserModel> updateUser(
+    String firstName,
+    String lastName,
+    int phoneNumber,
+    Location? location,
+  );
+
+  Future<void> deleteAccount();
 
   Future<void> logout();
 
@@ -40,20 +50,6 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
   }
 
   @override
-  Future<UserModel> me() async {
-    return await http.handleApiCall(
-      () async {
-        final response = await http.get("/profile") as Map<String, dynamic>;
-        return UserModel.fromJson(response);
-      },
-    );
-  }
-
-  @override
-  Future<void> logout() async =>
-      await http.handleApiCall(() async => await http.post("/logout"));
-
-  @override
   Future<UserModel> register(
     String firstName,
     String lastName,
@@ -64,8 +60,8 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
       final response = await http.post(
         "/register",
         body: {
-          "firstname": firstName,
-          "lastname": lastName,
+          "first_name": firstName,
+          "last_name": lastName,
           "phone": phoneNumber.substring(1),
           "password": password,
         },
@@ -83,5 +79,41 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
       ) as Map<String, dynamic>;
       return response["message"] != "Unauthenticated.";
     });
+  }
+
+  @override
+  Future<void> logout() async =>
+      await http.handleApiCall(() async => await http.post("/logout"));
+
+  @override
+  Future<void> deleteAccount() async =>
+      // TODO : fix this end point
+      await http.handleApiCall(() async => await http.delete("/delete"));
+
+  @override
+  Future<UserModel> me() async {
+    return await http.handleApiCall(
+      () async {
+        final response = await http.get("/profile") as Map<String, dynamic>;
+        return UserModel.fromJson(response);
+      },
+    );
+  }
+
+  @override
+  Future<UserModel> updateUser(String firstName, String lastName,
+      int phoneNumber, Location? location) async {
+    final response = await http.handleApiCall(() async => await http.put(
+          "/profile",
+          body: {
+            // TODO : fix this
+            "firstName": firstName,
+            "lastName": lastName,
+            "phone": phoneNumber,
+            "location_lat": location?.latitudes,
+            "location_lon": location?.longitudes
+          },
+        )) as Map<String, dynamic>;
+    return UserModel.fromJson(response);
   }
 }

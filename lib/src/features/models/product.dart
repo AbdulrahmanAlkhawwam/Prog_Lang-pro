@@ -1,5 +1,3 @@
-import 'package:program_language_project/src/features/models/category.dart';
-
 import './shop.dart';
 
 class Product {
@@ -52,7 +50,8 @@ class ProductModel extends Product {
         "String",
       ],
       price: json["price"],
-      market: null /*Shop(
+      market:
+          null /*Shop(
         id: json["market"]["id"],
         name: json["market"]["name"],
         place: json["market"]["place"],
@@ -62,6 +61,7 @@ class ProductModel extends Product {
           iconId: json["market"]["category"]["iconId"],
           categoryName: json["market"]["category"]["name"],
         ),
-      ),*/,
+      ),*/
+      ,
       quantity: json["quantity"]);
 }

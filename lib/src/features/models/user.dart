@@ -32,17 +32,19 @@ class UserModel extends User {
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        id: json["User"]?["id"] ?? json["id"],
-        firstName: json["User"]?["firstname"] ?? json["firstname"],
-        lastName: json["User"]?["lastname"] ?? json["lastname"],
-        phone: json["User"]?["phone"] ?? json["phone"],
-        imageUrl: json["User"]?["profileImage"] ?? json["profileImage"],
-        location: json["User"]?["latitude"] == null
+        id: json["user"]?["id"] ,
+        firstName: json["user"]?["first_name"],
+        lastName: json["user"]?["last_name"] ,
+        phone: json["user"]?["phone"] ,
+        imageUrl: json["user"]?["profile_image"],
+        location: json["user"]?["latitude"] == null
             ? null
             : Location(
-                latitudes: json["User"]?["latitude"],
-                longitudes: json["User"]?["longitude"],
+                latitudes: json["user"]?["latitude"],
+                longitudes: json["user"]?["longitude"],
               ),
-        token: json["Token"],
+        token: json["token"],
       );
+
+
 }

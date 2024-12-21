@@ -31,6 +31,8 @@ class CheckAuth extends AuthEvent {}
 
 class Logout extends AuthEvent {}
 
+class Delete extends AuthEvent {}
+
 class Me extends AuthEvent {}
 
 class OTP extends AuthEvent {

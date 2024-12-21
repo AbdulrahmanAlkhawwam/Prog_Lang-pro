@@ -40,9 +40,9 @@ class ShopModel extends Shop {
 
   factory ShopModel.fromJson(Map<String, dynamic> json) => ShopModel(
       id: json["User"]?["id"] ?? json["id"],
-      name: json["storename"],
+      name: json["store_name"],
       description: json["descriptions"],
-      imageUrl: json["imageURL"],
+      imageUrl: json["image"],
       place: json["User"]?["latitude"] == null
           ? null
           : Location(
@@ -50,12 +50,11 @@ class ShopModel extends Shop {
               longitudes: json["User"]?["longitude"],
             ),
       address: json["address"],
-      status:"OPENED",
-          // _getStatus(_getTime(json["timeopen"]), _getTime(json["timeClose"])),
+      status: "OPENED",
+      // _getStatus(_getTime(json["timeopen"]), _getTime(json["timeClose"])),
       category: Category(
-        id: "123",
-        iconId: 123,
-        categoryName: "categoryName",
+        id: 123,
+        name: "categoryName",
       ));
 }
 

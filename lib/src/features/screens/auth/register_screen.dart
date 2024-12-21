@@ -7,7 +7,6 @@ import '../../../core/components/app_button.dart';
 import '../../../core/components/app_input.dart';
 import '../../../core/components/bounded_list_view.dart';
 import '../../../core/constants/res.dart';
-import '../../../core/service_locator/service_locator.dart';
 import '../../../core/utils/app_context.dart';
 import '../../mangers/auth/bloc/auth_bloc.dart';
 import '../../mangers/auth/cubit/auth_pres_cubit.dart';
@@ -33,7 +32,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state.status == AuthStatus.authorized || state.status == AuthStatus.error) {
+        if (state.status == AuthStatus.authorized ||
+            state.status == AuthStatus.error) {
           context.push(MaterialPageRoute(builder: (context) => OtpScreen()));
         }
       },
@@ -87,9 +87,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               : setState(() => confirm = false),
                       isEnabled: true,
                       hint: 'password',
-                      validator: (value) => context
-                          .read<AuthPresCubit>()
-                          .passwordValidate(value),
+                      validator: (value) =>
+                          context.read<AuthPresCubit>().passwordValidate(value),
                     ),
                     const SizedBox(height: 16),
                     AppInput(
@@ -122,8 +121,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     TextButton(
                       onPressed: () => context.pushReplacement(
-                        MaterialPageRoute(
-                            builder: (context) => LoginScreen()),
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
                       ),
                       child: Text("I have already account"),
                     ),

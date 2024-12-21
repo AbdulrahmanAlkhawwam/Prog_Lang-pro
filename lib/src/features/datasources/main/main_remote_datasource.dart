@@ -3,6 +3,8 @@ import '../../models/shop.dart';
 
 abstract class MainRemoteDatasource {
   Future<List<Shop>> search(String searchText);
+
+  String image(String path);
 }
 
 class MainRemoteDatasourceImpl extends MainRemoteDatasource {
@@ -16,5 +18,10 @@ class MainRemoteDatasourceImpl extends MainRemoteDatasource {
             await http.post("/search", body: {"storename": searchText}))
         as List<dynamic>;
     return response.map((e) => ShopModel.fromJson(e)).toList();
+  }
+
+  @override
+  String image(String path) {
+    return http.makeUri("/$path").toString();
   }
 }

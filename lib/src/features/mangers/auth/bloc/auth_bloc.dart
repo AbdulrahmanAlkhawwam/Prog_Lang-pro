@@ -21,6 +21,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<Register>(_register);
     on<Logout>(_logout);
     on<Login>(_login);
+    on<Delete>(_delete);
   }
 
   FutureOr<void> _login(Login event, Emitter<AuthState> emit) async {
@@ -44,7 +45,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     response.fold(
       (failure) => emit(state.copyWith(
           status: AuthStatus.error, message: Message.fromFailure(failure))),
-      (user) => emit(state.copyWith(status: AuthStatus.success, user: user)),
+      (user) => emit(state.copyWith(status: AuthStatus.authorized, user: user)),
     );
   }
 
@@ -55,13 +56,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         (failure) => emit(state.copyWith(
               status: AuthStatus.error,
               message: Message.fromFailure(failure),
-            )),
-        (haveToken) => emit(
-              state.copyWith(
-                  status: haveToken
-                      ? AuthStatus.authorized
-                      : AuthStatus.unauthorized),
-            ));
+            )), (haveToken) {
+      emit(
+        state.copyWith(
+          status: haveToken ? AuthStatus.authorized : AuthStatus.unauthorized,
+        ),
+      );
+      if (haveToken) add(Me());
+    });
   }
 
   FutureOr<void> _logout(Logout event, Emitter<AuthState> emit) async {
@@ -108,4 +110,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   void _deleteToken() => repository.deleteToken();
 
   void _saveToken(String token) => repository.saveToken(token);
+
+  FutureOr<void> _delete(Delete event, Emitter<AuthState> emit) async {
+    emit(state.copyWith(status: AuthStatus.loading));
+    final response = await repository.delete();
+
+    response.fold(
+      (failure) => emit(state.copyWith(
+          status: AuthStatus.error, message: Message.fromFailure(failure))),
+      (_) => emit(state.copyWith(status: AuthStatus.unauthorized)),
+    );
+  }
 }

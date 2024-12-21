@@ -5,18 +5,18 @@ import 'package:meta/meta.dart';
 
 import '../../../core/utils/message.dart';
 import '../../models/shop.dart';
-import '../../repositories/shops/Shops_repository.dart';
+import '../../repositories/shops/Shop_repository.dart';
 
-part 'shops_event.dart';
-part 'shops_state.dart';
+part 'shop_event.dart';
+part 'shop_state.dart';
 
-class ShopsBloc extends Bloc<ShopsEvent, ShopsState> {
-  final ShopsRepository repository;
+class ShopBloc extends Bloc<ShopEvent, ShopState> {
+  final ShopRepository repository;
 
-  ShopsBloc({required this.repository}) : super(ShopsState()) {
+  ShopBloc({required this.repository}) : super(ShopState()) {
     on<GetShops>(_getShops);
   }
-  FutureOr<void> _getShops(ShopsEvent event, Emitter<ShopsState> emit) async {
+  FutureOr<void> _getShops(ShopEvent event, Emitter<ShopState> emit) async {
      emit(state.copyWith(status: ShopsStatus.loading));
     final response = await repository.call();
     response.fold(

@@ -29,6 +29,8 @@ abstract class AuthRepository {
 
   Future<Either<Failure, void>> logout();
 
+  Future<Either<Failure, void>> delete();
+
   Future<Either<Failure, User>> me();
 }
 
@@ -71,8 +73,9 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> checkToken() async =>
-      await AppUtils.safeCall(() => storage.checkToken());
+  Future<Either<Failure, bool>> checkToken() async {
+    return await AppUtils.safeCall(() => storage.checkToken());
+  }
 
   @override
   Future<Either<Failure, User>> me() async {
@@ -85,11 +88,18 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Either<Failure, void>> saveToken(String token) async =>
-      await AppUtils.safeCall(() => storage.saveToken(token));
+  Future<Either<Failure, void>> saveToken(String token) async {
+    return await AppUtils.safeCall(() => storage.saveToken(token));
+  }
 
   @override
   Future<Either<Failure, void>> deleteToken() async {
     return await AppUtils.safeCall(() async => await storage.deleteToken());
+  }
+
+  @override
+  Future<Either<Failure, void>> delete() async {
+    return await AppUtils.safeCall(
+        () async => await datasource.deleteAccount());
   }
 }

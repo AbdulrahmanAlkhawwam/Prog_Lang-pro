@@ -19,14 +19,15 @@ class MainCubit extends Cubit<MainState> {
     final response = await repository.search(searchText);
     response.fold(
       (failure) => emit(state.copyWith(
-        status: SearchStatus.error,
-        message: Message.fromFailure(failure),
-        searchResult: []
-      )),
+          status: SearchStatus.error,
+          message: Message.fromFailure(failure),
+          searchResult: [])),
       (result) => emit(state.copyWith(
         status: SearchStatus.founded,
         searchResult: result,
       )),
     );
   }
+
+  String image(String path) => repository.image(path);
 }

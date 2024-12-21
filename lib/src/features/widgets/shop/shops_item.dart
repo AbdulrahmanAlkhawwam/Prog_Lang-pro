@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:program_language_project/src/features/mangers/main/cubit/main_cubit.dart';
 
 import '../../../core/constants/styles.dart';
 import '../../../core/utils/app_context.dart';
@@ -29,7 +31,8 @@ class ShopsItem extends StatelessWidget {
                 color: context.colors.outline,
               ),
               // Todo : fix this code
-              child: Image.network("http://10.0.2.2:8000/${shop.imageUrl}"),
+              child: Image.network(context.read<MainCubit>().image(shop.imageUrl)),
+              // child: Image.network("http://10.0.2.2:8000/${shop.imageUrl}"),
             ),
           ),
           Padding(

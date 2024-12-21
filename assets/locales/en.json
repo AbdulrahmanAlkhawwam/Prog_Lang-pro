@@ -1,7 +1,8 @@
 {
-  "app_name": "سليم",
-  "app_description": "تطبيق تطوير العادات",
+  "app_name": "طلباتك",
+  "app_description": "تطبيق توصيل طلبات",
   "home": {
+    "search": "بحث",
     "today": "اليوم",
     "yesterday": "البارحة",
     "filter": "التصفية",

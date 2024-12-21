@@ -27,6 +27,9 @@ class LoginScreen extends StatelessWidget {
         if (state.status == AuthStatus.authorized) {
           context.push(MaterialPageRoute(builder: (context) => MainScreen()));
         }
+        if (state.status == AuthStatus.error) {
+          context.showErrorSnackBar(massage: state.message);
+        }
       },
       builder: (context, state) {
         return Scaffold(

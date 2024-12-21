@@ -1,14 +1,10 @@
 class Category {
-  /// unique id (not repeat)
-  final String id ;
+  final int id;
 
-  final int iconId;
-  /// name for category 8 - 12 character not more
-  final String categoryName;
+  final String name;
 
   Category({
     required this.id,
-    required this.iconId,
-    required this.categoryName,
+    required this.name,
   });
 }

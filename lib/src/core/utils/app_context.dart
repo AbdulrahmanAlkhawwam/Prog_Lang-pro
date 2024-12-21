@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../utils/message.dart';
 import '../constants/styles.dart';
 
 extension AppNavigation on BuildContext {
@@ -71,7 +72,7 @@ extension AppSnackbar on BuildContext {
     );
   }
 
-  void showErrorSnackBar({String? massage}) {
+  void showErrorSnackBar({Message? massage}) {
     ScaffoldMessenger.of(this).clearSnackBars();
     ScaffoldMessenger.of(this).showSnackBar(
       SnackBar(
@@ -94,7 +95,7 @@ extension AppSnackbar on BuildContext {
             Expanded(
               child: Text(
                 textAlign: TextAlign.start,
-                massage ?? "Error",
+                massage?.value.toString() ?? "Error",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: textTheme.bodyMedium?.copyWith(
