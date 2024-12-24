@@ -34,17 +34,17 @@ class Message extends Equatable {
       case 0:
         return LocaleKeys.error_messages_operation_cancelled.tr();
       case >= 200 && < 300:
-        return LocaleKeys.error_messages_operation_successful.tr();
+        return LocaleKeys.error_messages_200s.tr();
       case 400:
         return LocaleKeys.error_messages_check_input_info.tr();
       case 401:
-        return LocaleKeys.error_messages_wrong_password_retry.tr();
+        return LocaleKeys.error_messages_401.tr();
       case 403:
-        return LocaleKeys.error_messages_no_access_permission.tr();
+        return LocaleKeys.error_messages_403.tr();
       case 404:
-        return LocaleKeys.error_messages_resource_not_found.tr();
-      case 429:
-        return LocaleKeys.error_messages_exceeded_limit_retry_later.tr();
+        return LocaleKeys.error_messages_404.tr();
+      case 422:
+        return LocaleKeys.error_messages_422.tr();
       case > 404 && < 500:
         return LocaleKeys.error_messages_check_input_retry.tr();
       case 500:
@@ -62,15 +62,15 @@ class Message extends Equatable {
         return LocaleKeys.error_messages_operation_cancelled.tr();
       case "3":
         return LocaleKeys.error_messages_purchase_failed_error_3.tr();
-      case "6":
-        return LocaleKeys.error_messages_already_subscribed_restore.tr();
+      // case "6":
+      //   return LocaleKeys.error_messages_already_subscribed_restore.tr();
       case "7":
         return LocaleKeys.error_messages_cannot_restore_subscription_error_7
             .tr();
       case "10":
         return LocaleKeys.error_messages_network_error_retry.tr();
-      case "15":
-        return LocaleKeys.error_messages_subscription_pending_wait.tr();
+      // case "15":
+      //   return LocaleKeys.error_messages_subscription_pending_wait.tr();
       default:
         return LocaleKeys.error_messages_operation_failed_with_code_args
             .tr(args: [platformCode!]);

@@ -76,6 +76,22 @@ class AppTheme {
     );
   }
 
+  static _tabBarTheme(ColorScheme colors) {
+    return TabBarTheme(
+      dividerColor: colors.surfaceContainer,
+      labelStyle: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+      ),
+      labelColor: colors.primary,
+      unselectedLabelStyle: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+      ),
+      unselectedLabelColor: colors.outline,
+    );
+  }
+
   static TextTheme _textTheme(ColorScheme colors) {
     return TextTheme(
       displayLarge: GoogleFonts.poppins(
@@ -163,22 +179,6 @@ class AppTheme {
         height: 20 / 12,
         color: colors.onSurface,
       ),
-    );
-  }
-
-  static _tabBarTheme(ColorScheme colors) {
-    return TabBarTheme(
-      dividerColor: colors.surfaceContainer,
-      labelStyle: TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.w500,
-      ),
-      labelColor: colors.primary,
-      unselectedLabelStyle: TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.w500,
-      ),
-      unselectedLabelColor: colors.outline,
     );
   }
 }

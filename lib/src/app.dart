@@ -5,62 +5,52 @@ import 'package:flutter/material.dart';
 import 'core/components/loading_screen.dart';
 import 'core/constants/theme.dart';
 import 'core/service_locator/service_locator.dart';
-import 'features/mangers/auth/bloc/auth_bloc.dart';
-import 'features/mangers/auth/cubit/auth_pres_cubit.dart';
-import 'features/mangers/shops/shop_bloc.dart';
-import 'features/screens/auth/login_screen.dart';
-import 'features/screens/main/main_screen.dart';
+import 'features/auth/presentation/manger/bloc/auth_bloc.dart';
+import 'features/auth/presentation/manger/cubit/auth_pres_cubit.dart';
+import 'features/shop/presentation/manger/shop_bloc.dart';
+import 'features/auth/presentation/pages/login_screen.dart';
+import 'features/home/presentation/pages/main_screen.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return EasyLocalization(
-      supportedLocales: [
-        Locale('ar'),
-        Locale('en'),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => sl.get<AuthBloc>()..add(CheckAuth()),
+          lazy: false,
+        ),
+        BlocProvider(
+          create: (_) => sl.get<ShopBloc>(),
+          lazy: false,
+        ),
+        BlocProvider(create: (_) => sl.get<AuthPresCubit>()),
       ],
-      useOnlyLangCode: true,
-      fallbackLocale: Locale('ar'),
-      path: 'assets/locales',
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (_) => sl.get<AuthBloc>()..add(CheckAuth()),
-            lazy: false,
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<AuthBloc, AuthState>(
+            listener: (context, state) {
+              if (state.status == AuthStatus.authorized) {
+                context.read<ShopBloc>().add(GetShops());
+              }
+            },
           ),
-          BlocProvider(
-            create: (_) => sl.get<ShopBloc>(),
-            lazy: false,
-          ),
-          BlocProvider(create: (_) => sl.get<AuthPresCubit>()),
         ],
-        child: MultiBlocListener(
-          listeners: [
-            BlocListener<AuthBloc, AuthState>(
-              listener: (context, state) {
-                if (state.status == AuthStatus.authorized) {
-                  context.read<ShopBloc>().add(GetShops());
-                }
-              },
-            ),
-          ],
-          // TODO : DON'T FORGET THEME NOTIFIER
-          // TODO : DON'T FORGET TO ADD language_sheet.dart
-          child: MaterialApp(
-            theme: AppTheme.lightTheme,
-            darkTheme: AppTheme.darkTheme,
-            // localizationsDelegates: context.localizationDelegates,
-            // supportedLocales: context.supportedLocales,
-            // locale: context.locale,
-            home: BlocBuilder<AuthBloc, AuthState>(
-              builder: (context, state) => switch (state.status) {
-                AuthStatus.unauthorized || AuthStatus.error => LoginScreen(),
-                AuthStatus.loading || AuthStatus.init => LoadingScreen(),
-                AuthStatus.authorized => MainScreen(),
-              },
-            ),
+        child: MaterialApp(
+          theme: AppTheme.lightTheme,
+          themeMode: ThemeMode.system,
+          darkTheme: AppTheme.darkTheme,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+          home: BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) => switch (state.status) {
+              AuthStatus.unauthorized || AuthStatus.error => LoginScreen(),
+              AuthStatus.loading || AuthStatus.init => LoadingScreen(),
+              AuthStatus.authorized => MainScreen(),
+            },
           ),
         ),
       ),

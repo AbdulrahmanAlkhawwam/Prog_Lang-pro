@@ -7,7 +7,6 @@ abstract class AppException implements Exception {
   String toString() => "$runtimeType($message)";
 }
 
-/// local exception
 class DeleteException extends AppException {
   DeleteException(super.message);
 
@@ -26,7 +25,6 @@ class CacheException implements Exception {
   }
 }
 
-/// remote exception
 class ServerException extends AppException {
   final int? statusCode;
   final body;
@@ -43,7 +41,6 @@ class AuthorizationException extends AppException {
   AuthorizationException(super.message, this.retry);
 }
 
-/// exceptions
 class ParsingException extends AppException {
   ParsingException(super.message);
 }
