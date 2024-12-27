@@ -7,6 +7,7 @@ import '../../../../core/components/bounded_list_view.dart';
 import '../../../../core/constants/styles.dart';
 import '../../../../core/utils/app_context.dart';
 import '../../../../core/constants/res.dart';
+import '../../../home/presentation/manger/cubit/main_cubit.dart';
 import '../manger/bloc/auth_bloc.dart';
 import 'edit_profile_screen.dart';
 import 'login_screen.dart';
@@ -21,8 +22,7 @@ class ProfileScreen extends StatelessWidget {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state.status == AuthStatus.unauthorized) {
-          context.pushReplacement(
-              MaterialPageRoute(builder: (context) => LoginScreen()));
+          context.pushReplacement(LoginScreen());
         }
       },
       child: BlocBuilder<AuthBloc, AuthState>(
@@ -63,7 +63,11 @@ class ProfileScreen extends StatelessWidget {
                                   ? Res.unknownUserLight
                                   : Res.unknownUserDark,
                             )
-                          : Image.network("http:10.0.2.2:800/api/${state.user!.imagePath!}"),
+                          : Image.network(
+                              context
+                                  .read<MainCubit>()
+                                  .image(state.user!.imagePath!),
+                            ),
                       SizedBox(height: 42),
                       Container(
                         height: 56,

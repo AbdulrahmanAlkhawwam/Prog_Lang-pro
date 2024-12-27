@@ -15,8 +15,7 @@ class HomeScreen extends StatelessWidget {
         children: [
           SearchInput(
             onTap: () {
-              context.push(
-                  MaterialPageRoute(builder: (context) => SearchScreen()));
+              context.push(SearchScreen());
             },
             hint: "Search",
             onChanged: null,

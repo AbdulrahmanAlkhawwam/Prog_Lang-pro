@@ -25,7 +25,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final CheckTokenUC checkTokenUC;
   final DeleteAccountUC deleteAccountUC;
   final DeleteTokenUC deleteTokenUC;
-  final EditAccount editAccountUc;
+  final EditAccountUC editAccountUc;
   final GetAccountUC getAccountUc;
   final LoginUC loginUC;
   final LogoutUC logoutUC;

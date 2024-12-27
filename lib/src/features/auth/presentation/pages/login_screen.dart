@@ -28,7 +28,7 @@ class LoginScreen extends StatelessWidget {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state.status == AuthStatus.authorized) {
-          context.push(MaterialPageRoute(builder: (context) => MainScreen()));
+          context.push(MainScreen());
         }
         if (state.status == AuthStatus.error) {
           context.showErrorSnackBar(massage: state.message);
@@ -81,12 +81,11 @@ class LoginScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 16),
                     TextButton(
-                        child: Text(
-                            LocaleKeys.auth_login_not_have_an_account.tr()),
-                        onPressed: () {
-                          context.pushReplacement(MaterialPageRoute(
-                              builder: (context) => RegisterScreen()));
-                        }),
+                      child:
+                          Text(LocaleKeys.auth_login_not_have_an_account.tr()),
+                      onPressed: () =>
+                          context.pushReplacement(RegisterScreen()),
+                    ),
                     const Spacer()
                   ],
                 ),

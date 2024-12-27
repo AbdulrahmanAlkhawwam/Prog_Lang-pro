@@ -25,9 +25,7 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: AppBottomBar(
         onTap: (index) => setState(() {
           if (index == 4) {
-            context.push(MaterialPageRoute(
-              builder: (context) => ProfileScreen(),
-            ));
+            context.push(ProfileScreen());
           }
           switch (index) {
             case 0:

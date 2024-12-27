@@ -18,9 +18,7 @@ class ShopsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => context.push(MaterialPageRoute(
-        builder: (context) => ShopDetailsScreen(id: shop.id),
-      )),
+      onTap: () => context.push(ShopDetailsScreen(id: shop.id)),
       child: Container(
         margin: const EdgeInsets.all(8),
         decoration: BoxDecoration(

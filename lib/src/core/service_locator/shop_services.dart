@@ -18,4 +18,3 @@ Future<void> initializeShopServices(GetIt sl) async {
     () => ShopBloc(repository: sl()),
   );
 }
-//

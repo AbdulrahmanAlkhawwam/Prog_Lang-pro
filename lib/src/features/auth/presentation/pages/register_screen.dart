@@ -35,7 +35,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       listener: (context, state) {
         if (state.status == AuthStatus.authorized ||
             state.status == AuthStatus.error) {
-          context.push(MaterialPageRoute(builder: (context) => OtpScreen()));
+          context.push(OtpScreen());
         }
       },
       builder: (context, state) {
@@ -123,9 +123,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           : null,
                     ),
                     TextButton(
-                      onPressed: () => context.pushReplacement(
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
-                      ),
+                      onPressed: () => context.pushReplacement(LoginScreen()),
                       child: Text("I have already account"),
                     ),
                     const Spacer(),

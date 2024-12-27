@@ -56,8 +56,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       child: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state.status == AuthStatus.unauthorized) {
-            context.pushReplacement(
-                MaterialPageRoute(builder: (context) => LoginScreen()));
+            context.pushReplacement(LoginScreen());
           }
         },
         child: Scaffold(

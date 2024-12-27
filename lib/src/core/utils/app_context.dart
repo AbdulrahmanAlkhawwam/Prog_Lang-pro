@@ -4,10 +4,11 @@ import '../utils/message.dart';
 import '../constants/styles.dart';
 
 extension AppNavigation on BuildContext {
-  Future push(Route route) => Navigator.push(this, route);
+  Future push(route) =>
+      Navigator.push(this, MaterialPageRoute(builder: (context) => route));
 
-  Future pushReplacement(Route route) =>
-      Navigator.pushAndRemoveUntil(this, route, (route) => false);
+  Future pushReplacement(route) => Navigator.pushAndRemoveUntil(
+      this, MaterialPageRoute(builder: (context) => route), (route) => false);
 
   void pop([value]) => Navigator.pop(this, value);
 }

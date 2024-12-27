@@ -13,8 +13,15 @@ class ShopDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl.get<ShopBloc>()..add(GetShopsDetails(id: id)),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => sl.get<ShopBloc>()..add(GetShopsDetails(id: id)),
+        ),
+        BlocProvider(
+          create: (context) => sl.get<MainCubit>(),
+        ),
+      ],
       child: BlocBuilder<ShopBloc, ShopState>(
         builder: (context, state) {
           switch (state.status) {
@@ -30,83 +37,65 @@ class ShopDetailsScreen extends StatelessWidget {
               );
             case ShopStatus.success:
               return Scaffold(
-                body: Column(
-                  children: [
-                    // Container for image
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(context
-                                .read<MainCubit>()
-                                .image(state.shop!.imagePath)),
-                            fit: BoxFit
-                                .cover, // Added fit property for better display
-                          ),
+                body: SafeArea(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 200,
+                        width: double.infinity,
+                        child: Image.network(
+                          context
+                              .read<MainCubit>()
+                              .image(state.shop!.imagePath),
                         ),
                       ),
-                    ),
-                    // Container with shadow separator
-                    Container(
-                      height: 1.0,
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: context.colors.outline,
-                            blurRadius: 4,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                    ),
-                    // Main content container
-                    Expanded(
-                      child: Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 40, vertical: 24),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              state.shop?.name ?? "marketname",
-                              style: TextStyle(
-                                color: context.colors.onSurface,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 22,
-                              ),
+                      Container(
+                        height: 1.0,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: context.colors.outline,
+                              blurRadius: 4,
+                              offset: Offset(0, 3),
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 4, bottom: 16),
-                              child: Text(
-                                state.shop?.description ?? "Market description",
+                          ],
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 40, vertical: 24),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                state.shop?.name ?? "market name",
                                 style: TextStyle(
                                   color: context.colors.onSurface,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 12,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 22,
                                 ),
                               ),
-                            ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.map,
-                                  color: context.colors.primaryContainer,
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 4, bottom: 16),
+                                child: Text(
+                                  state.shop?.description ??
+                                      "Market description",
+                                  style: TextStyle(
+                                    color: context.colors.onSurface,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12,
+                                  ),
                                 ),
-                                SizedBox(width: 14),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 4),
-                              child: Row(
+                              ),
+                              Row(
                                 children: [
                                   Icon(
-                                    Icons.door_front_door_outlined,
+                                    Icons.map,
                                     color: context.colors.primaryContainer,
                                   ),
                                   SizedBox(width: 14),
                                   Text(
-                                    state.shop?.status ?? "Market state",
+                                    state.shop?.address ?? "Market place",
                                     style: TextStyle(
                                       color: context.colors.primaryContainer,
                                       fontSize: 14,
@@ -114,45 +103,53 @@ class ShopDetailsScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                            ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.lens_blur,
-                                  color: context.colors.primaryContainer,
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.door_front_door_outlined,
+                                      color: context.colors.primaryContainer,
+                                    ),
+                                    SizedBox(width: 14),
+                                    Text(
+                                      state.shop?.status ?? "Market state",
+                                      style: TextStyle(
+                                        color: context.colors.primaryContainer,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(width: 14),
-                                Text(
-                                  "Market category",
-                                  style: TextStyle(
+                              ),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.lens_blur,
                                     color: context.colors.primaryContainer,
-                                    fontSize: 14,
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                  SizedBox(width: 14),
+                                  Text(
+                                    "Market category",
+                                    style: TextStyle(
+                                      color: context.colors.primaryContainer,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    // Final container for separation
-                    Container(
-                      height: 1.0,
-                      decoration: BoxDecoration(
-                        color: context.colors.surface,
-                        boxShadow: [
-                          BoxShadow(
-                            color: context.colors.outline,
-                            blurRadius: 4,
-                            offset: Offset(0, -3),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                      Expanded(
+                        child: Container(),
+                      )
+                    ],
+                  ),
                 ),
               );
-
             case ShopStatus.init:
               return Scaffold(
                 body: Center(child: CircularProgressIndicator()),
