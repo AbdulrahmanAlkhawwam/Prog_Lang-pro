@@ -32,17 +32,15 @@ class ProfileScreen extends StatelessWidget {
               actions: [
                 IconButton(
                   onPressed: () => context.push(
-                    MaterialPageRoute(
-                      builder: (context) => EditProfileScreen(
-                        fNameController: TextEditingController(
-                          text: state.user?.firstName,
-                        ),
-                        lNameController: TextEditingController(
-                          text: state.user?.lastName,
-                        ),
-                        phoneController: TextEditingController(
-                          text: state.user?.phone.toString(),
-                        ),
+                    EditProfileScreen(
+                      fNameController: TextEditingController(
+                        text: state.user?.firstName,
+                      ),
+                      lNameController: TextEditingController(
+                        text: state.user?.lastName,
+                      ),
+                      phoneController: TextEditingController(
+                        text: state.user?.phone.toString(),
                       ),
                     ),
                   ),

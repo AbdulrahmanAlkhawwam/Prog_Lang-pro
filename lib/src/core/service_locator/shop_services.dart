@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:program_language_project/src/features/shop/domain/use_cases/get_shop_details_uc.dart';
+import 'package:program_language_project/src/features/shop/domain/use_cases/get_shops_uc.dart';
 
 import '../../features/shop/data/data_source/shop_remote_datasource.dart';
 import '../../features/shop/data/repositories/Shop_repository_impl.dart';
@@ -14,7 +16,15 @@ Future<void> initializeShopServices(GetIt sl) async {
     () => ShopRepositoryImpl(datasource: sl()),
   );
 
+  sl.registerLazySingleton<GetShopDetailsUC>(
+      () => GetShopDetailsUC(repository: sl()));
+  sl.registerLazySingleton<GetShopsUC>(() => GetShopsUC(repository: sl()));
+
   sl.registerFactory<ShopBloc>(
-    () => ShopBloc(repository: sl()),
+    () => ShopBloc(
+      getShopDetailsUC: sl(),
+      getShopsUC: sl(),
+      repository: sl(),
+    ),
   );
 }

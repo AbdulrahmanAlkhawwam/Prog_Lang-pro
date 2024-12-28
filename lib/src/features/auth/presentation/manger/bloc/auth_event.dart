@@ -7,8 +7,12 @@ class DeleteAccount extends AuthEvent {}
 
 class EditAccount extends AuthEvent {
   final EditAccountParam data;
+  final File? image;
 
-  EditAccount({required this.data});
+  EditAccount({
+    required this.data,
+    required this.image,
+  });
 }
 
 class GetAccount extends AuthEvent {}
@@ -33,10 +37,4 @@ class OTP extends AuthEvent {
   final String passkey;
 
   OTP({required this.passkey});
-}
-
-class UpdateUserImage extends AuthEvent {
-  final File image;
-
-  UpdateUserImage(this.image);
 }

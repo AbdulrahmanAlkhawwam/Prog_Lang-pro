@@ -21,7 +21,7 @@ class EditAccountUC extends UseCase<User, EditAccountParam> {
 class EditAccountParam {
   final String firstName;
   final String lastName;
-  final Location location;
+  final Location? location;
 
   EditAccountParam({
     required this.firstName,

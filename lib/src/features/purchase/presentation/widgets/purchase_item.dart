@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:program_language_project/src/core/utils/app_context.dart';
 
-import '../../domain/entities/purchase.dart';
+import '../../domain/entities/order.dart';
 
 class PurchaseItem extends StatelessWidget {
-  final Purchase purchase;
+  final Order purchase;
 
   const PurchaseItem({
     super.key,

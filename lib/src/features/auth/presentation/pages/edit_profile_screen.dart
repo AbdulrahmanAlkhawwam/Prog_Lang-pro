@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:program_language_project/src/features/auth/domain/use_cases/edit_account_uc.dart';
 
 import '../../../../core/components/app_button.dart';
 import '../../../../core/components/app_input.dart';
@@ -36,7 +37,12 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
+  late TextEditingController fNameController;
+
+  late TextEditingController lNameController;
+
   File? _image;
+  final key = GlobalKey<FormState>();
 
   Future<void> _pickImage() async {
     final picker = ImagePicker();
@@ -45,8 +51,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     if (pickedFile != null) {
       setState(() => _image = File(pickedFile.path));
-      context.read<AuthBloc>().add(UpdateUserImage(_image!));
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fNameController = widget.fNameController;
+    lNameController = widget.lNameController;
   }
 
   @override
@@ -63,7 +75,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           appBar: AppBar(
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (key.currentState!.validate()) {
+                    context.read<AuthBloc>().add(EditAccount(
+                          data: EditAccountParam(
+                            firstName: fNameController.text,
+                            lastName: lNameController.text,
+                            location: null,
+                          ),
+                          image: _image,
+                        ));
+                  }
+                },
                 icon: Icon(Icons.done),
               ),
             ],
@@ -77,85 +100,88 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 AuthStatus.loading =>
                   Center(child: CircularProgressIndicator()),
                 _ => SafeArea(
-                      child: BoundedListView(
-                    padding: EdgeInsets.all(36),
-                    children: [
-                      InkWell(
-                          onTap: () => _pickImage(),
-                          onLongPress: () => print("deleteImage"),
-                          child: CircleAvatar(
-                            radius: 120,
-                            backgroundImage: Image.network(
-                                    cubit.image(state.user?.imagePath ?? ''))
-                                .image,
-                            foregroundImage: _image == null
-                                ? null
-                                : Image.file(_image!).image,
-                            child: SvgPicture.asset(
-                              Theme.of(context).brightness == Brightness.light
-                                  ? Res.unknownUserLight
-                                  : Res.unknownUserDark,
-                            ),
-                          )),
-                      SizedBox(height: 42),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 12),
-                        child: AppInput(
-                          isEnabled: true,
-                          controller: widget.fNameController,
-                          validator: (value) => context
-                              .read<AuthPresCubit>()
-                              .nameValidate(value, "first name"),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 12),
-                        child: AppInput(
-                          isEnabled: true,
-                          controller: widget.lNameController,
-                          validator: (value) => context
-                              .read<AuthPresCubit>()
-                              .nameValidate(value, "last name"),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 12),
-                        child: AppInput(
-                          isEnabled: false,
-                          controller: widget.phoneController,
-                          validator: (value) => context
-                              .read<AuthPresCubit>()
-                              .phoneValidate(value),
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: context.colors.surfaceContainer,
-                          borderRadius: BorderRadius.circular(appBor),
-                        ),
-                        padding: EdgeInsets.all(8),
-                        margin: EdgeInsets.symmetric(vertical: 12),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          // TODO : change this container to static map with latitude and longitude
-                          child: Container(
-                            height: context.height / 5,
-                            color: Colors.blue,
+                      child: Form(
+                    key: key,
+                    child: BoundedListView(
+                      padding: EdgeInsets.all(36),
+                      children: [
+                        InkWell(
+                            onTap: () => _pickImage(),
+                            onLongPress: () => print("deleteImage"),
+                            child: CircleAvatar(
+                              radius: 60,
+                              backgroundImage: Image.network(
+                                      cubit.image(state.user?.imagePath ?? ''))
+                                  .image,
+                              foregroundImage: _image == null
+                                  ? null
+                                  : Image.file(_image!).image,
+                              child: SvgPicture.asset(
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Res.unknownUserLight
+                                    : Res.unknownUserDark,
+                              ),
+                            )),
+                        SizedBox(height: 42),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 12),
+                          child: AppInput(
+                            isEnabled: true,
+                            controller: widget.fNameController,
+                            validator: (value) => context
+                                .read<AuthPresCubit>()
+                                .nameValidate(value, "first name"),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 24),
-                      AppButton(
-                        isLoading: state.status == AuthStatus.loading,
-                        text: 'Delete Account',
-                        background: context.colors.errorContainer,
-                        textColor: context.colors.onErrorContainer,
-                        splash: context.colors.error,
-                        onPressed: () =>
-                            context.read<AuthBloc>().add(DeleteAccount()),
-                      ),
-                      SizedBox(height: 20),
-                    ],
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 12),
+                          child: AppInput(
+                            isEnabled: true,
+                            controller: widget.lNameController,
+                            validator: (value) => context
+                                .read<AuthPresCubit>()
+                                .nameValidate(value, "last name"),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 12),
+                          child: AppInput(
+                            isEnabled: false,
+                            controller: widget.phoneController,
+                            validator: (value) => context
+                                .read<AuthPresCubit>()
+                                .phoneValidate(value),
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: context.colors.surfaceContainer,
+                            borderRadius: BorderRadius.circular(appBor),
+                          ),
+                          padding: EdgeInsets.all(8),
+                          margin: EdgeInsets.symmetric(vertical: 12),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(4),
+                            // TODO : change this container to static map with latitude and longitude
+                            child: Container(
+                              height: context.height / 5,
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 24),
+                        AppButton(
+                          isLoading: state.status == AuthStatus.loading,
+                          text: 'Delete Account',
+                          background: context.colors.errorContainer,
+                          textColor: context.colors.onErrorContainer,
+                          splash: context.colors.error,
+                          onPressed: () =>
+                              context.read<AuthBloc>().add(DeleteAccount()),
+                        ),
+                        SizedBox(height: 20),
+                      ],
+                    ),
                   )),
               };
             },

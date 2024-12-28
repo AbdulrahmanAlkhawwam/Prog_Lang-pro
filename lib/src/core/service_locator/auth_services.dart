@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:program_language_project/src/features/auth/domain/use_cases/delete_image_uc.dart';
+import 'package:program_language_project/src/features/auth/domain/use_cases/upload_image_uc.dart';
 
 import '../../features/auth/data/data_source/auth_local_data_source.dart';
 import '../../features/auth/data/data_source/auth_remote_data_source.dart';
@@ -30,6 +32,8 @@ Future<void> initializeAuthServices(GetIt sl) async {
   sl.registerLazySingleton<CheckTokenUC>(() => CheckTokenUC(repository: sl()));
   sl.registerLazySingleton<DeleteAccountUC>(
       () => DeleteAccountUC(repository: sl()));
+  sl.registerLazySingleton<DeleteImageUC>(
+      () => DeleteImageUC(repository: sl()));
   sl.registerLazySingleton<DeleteTokenUC>(
       () => DeleteTokenUC(repository: sl()));
   sl.registerLazySingleton<EditAccountUC>(
@@ -40,19 +44,24 @@ Future<void> initializeAuthServices(GetIt sl) async {
   sl.registerLazySingleton<OtpUC>(() => OtpUC(repository: sl()));
   sl.registerLazySingleton<RegisterUC>(() => RegisterUC(repository: sl()));
   sl.registerLazySingleton<SaveTokenUC>(() => SaveTokenUC(repository: sl()));
+  sl.registerLazySingleton<UploadImageUC>(
+      () => UploadImageUC(repository: sl()));
 
   sl.registerFactory<AuthBloc>(
     () => AuthBloc(
-        checkTokenUC: sl(),
-        deleteAccountUC: sl(),
-        deleteTokenUC: sl(),
-        editAccountUc: sl(),
-        getAccountUc: sl(),
-        loginUC: sl(),
-        logoutUC: sl(),
-        otpUC: sl(),
-        registerUC: sl(),
-        saveTokenUC: sl()),
+      checkTokenUC: sl(),
+      deleteAccountUC: sl(),
+      deleteImageUC: sl(),
+      deleteTokenUC: sl(),
+      editAccountUc: sl(),
+      getAccountUc: sl(),
+      loginUC: sl(),
+      logoutUC: sl(),
+      otpUC: sl(),
+      registerUC: sl(),
+      saveTokenUC: sl(),
+      uploadImageUC: sl(),
+    ),
   );
   sl.registerFactory<AuthPresCubit>(
     () => AuthPresCubit(),

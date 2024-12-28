@@ -3,10 +3,20 @@ part of 'shop_bloc.dart';
 @immutable
 abstract class ShopEvent {}
 
-final class GetShops extends ShopEvent {}
+final class GetShops extends ShopEvent {
+  final int? typeId;
 
-final class GetShopsDetails extends ShopEvent {
+  GetShops({this.typeId});
+}
+
+final class GetShopDetails extends ShopEvent {
   final int id;
 
-  GetShopsDetails({required this.id});
+  GetShopDetails({required this.id});
+}
+
+final class GetShopCategory extends ShopEvent {
+  final int shopId;
+
+  GetShopCategory({required this.shopId});
 }

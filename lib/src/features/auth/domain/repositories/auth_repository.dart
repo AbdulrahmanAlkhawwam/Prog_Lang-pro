@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import '../../../../core/errors/failures.dart';
 import '../entities/user.dart';
@@ -7,6 +9,10 @@ import '../use_cases/register_uc.dart';
 
 abstract class AuthRepository {
   Future<Either<Failure, void>> deleteAccount();
+
+  Future<Either<Failure, void>> deleteImage();
+
+  Future<Either<Failure, void>> deleteToken();
 
   Future<Either<Failure, User>> editAccount(EditAccountParam param);
 
@@ -24,5 +30,5 @@ abstract class AuthRepository {
 
   Future<Either<Failure, void>> saveToken(String token);
 
-  Future<Either<Failure, void>> deleteToken();
-}
+  Future<Either<Failure,void>> uploadImage(File? image);
+ }

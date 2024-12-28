@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:program_language_project/src/features/auth/domain/use_cases/delete_image_uc.dart';
+import 'package:program_language_project/src/features/auth/domain/use_cases/upload_image_uc.dart';
 
 import '../../../../../core/utils/message.dart';
 import '../../../domain/entities/user.dart';
@@ -24,6 +26,8 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final CheckTokenUC checkTokenUC;
   final DeleteAccountUC deleteAccountUC;
+  final DeleteImageUC deleteImageUC;
+
   final DeleteTokenUC deleteTokenUC;
   final EditAccountUC editAccountUc;
   final GetAccountUC getAccountUc;
@@ -32,10 +36,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final OtpUC otpUC;
   final RegisterUC registerUC;
   final SaveTokenUC saveTokenUC;
+  final UploadImageUC uploadImageUC;
 
   AuthBloc({
     required this.checkTokenUC,
     required this.deleteAccountUC,
+    required this.deleteImageUC,
     required this.deleteTokenUC,
     required this.editAccountUc,
     required this.getAccountUc,
@@ -44,6 +50,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required this.otpUC,
     required this.registerUC,
     required this.saveTokenUC,
+    required this.uploadImageUC,
   }) : super(AuthState()) {
     on<DeleteAccount>(_deleteAccount);
     on<CheckAuth>(_checkAuth);
@@ -52,7 +59,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<Logout>(_logout);
     on<OTP>(_checkOtp);
     on<Register>(_register);
-    // on<UpdateUserImage>(_updateUserImage);
+    on<EditAccount>(_editAccount);
   }
 
   FutureOr<void> _getAccount(GetAccount event, Emitter<AuthState> emit) async {
@@ -172,6 +179,47 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       (failure) => emit(state.copyWith(
           status: AuthStatus.error, message: Message.fromFailure(failure))),
       (_) => emit(state.copyWith(status: AuthStatus.unauthorized)),
+    );
+  }
+
+  FutureOr<void> _editAccount(
+      EditAccount event, Emitter<AuthState> emit) async {
+    emit(state.copyWith(status: AuthStatus.loading));
+    final response = await editAccountUc(param: event.data);
+    response.fold(
+      (failure) => emit(state.copyWith(
+        status: AuthStatus.error,
+        message: Message.fromFailure(failure),
+      )),
+      (_) async {
+        if (event.image != null) {
+          _uploadImage(event, emit);
+        } else {
+          _deleteImage(event, emit);
+        }
+      },
+    );
+  }
+
+  _uploadImage(EditAccount event, Emitter<AuthState> emit) async {
+    final response = await uploadImageUC(param: event.image);
+    response.fold(
+      (failure) => emit(state.copyWith(
+        status: AuthStatus.error,
+        message: Message.fromFailure(failure),
+      )),
+      (_) => emit(state.copyWith(status: AuthStatus.authorized)),
+    );
+  }
+
+  _deleteImage(EditAccount event, Emitter<AuthState> emit) async {
+    final response = await deleteImageUC(param: event.image);
+    response.fold(
+      (failure) => emit(state.copyWith(
+        status: AuthStatus.error,
+        message: Message.fromFailure(failure),
+      )),
+      (_) => emit(state.copyWith(status: AuthStatus.authorized)),
     );
   }
 }

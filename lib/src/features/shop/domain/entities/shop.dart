@@ -1,5 +1,5 @@
 
-import '../../../home/domain/entities/category.dart';
+import 'category.dart';
 
 class Shop {
   final int id;

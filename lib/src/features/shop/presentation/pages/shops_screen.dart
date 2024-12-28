@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/service_locator/service_locator.dart';
-import '../../../home/domain/entities/category.dart';
+import '../../domain/entities/category.dart';
 import '../../../home/presentation/manger/cubit/main_cubit.dart';
 import '../../../home/presentation/widgets/categories_list.dart';
 import '../manger/shop_bloc.dart';

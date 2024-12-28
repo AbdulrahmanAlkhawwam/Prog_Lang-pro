@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/category.dart';
+import '../../../shop/domain/entities/category.dart';
 import 'category_item.dart';
 
 class CategoriesList extends StatelessWidget {

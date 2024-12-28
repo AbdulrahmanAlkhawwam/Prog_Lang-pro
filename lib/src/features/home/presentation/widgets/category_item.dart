@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/constants/styles.dart';
 import '../../../../core/utils/app_context.dart';
-import '../../domain/entities/category.dart';
+import '../../../shop/domain/entities/category.dart';
 
 class CategoryItem extends StatelessWidget {
   final Category category;

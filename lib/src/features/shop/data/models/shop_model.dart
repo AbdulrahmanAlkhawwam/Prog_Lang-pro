@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../home/domain/entities/category.dart';
+import '../../domain/entities/category.dart';
 import '../../domain/entities/shop.dart';
 
 class ShopModel extends Shop {
@@ -15,17 +15,18 @@ class ShopModel extends Shop {
   });
 
   factory ShopModel.fromJson(Map<String, dynamic> json) => ShopModel(
-      id: json["User"]?["id"] ?? json["id"],
-      name: json["store_name"],
-      description: json["descriptions"],
-      imagePath: json["image"],
-      address: json["address"],
-      status: "OPENED",
-      // _getStatus(_getTime(json["timeopen"]), _getTime(json["timeClose"])),
-      category: Category(
-        id: 123,
-        name: "categoryName",
-      ));
+        id: json["User"]?["id"] ?? json["id"],
+        name: json["store_name"],
+        description: json["descriptions"],
+        imagePath: json["image"],
+        address: json["address"],
+        status: "OPENED",
+        // _getStatus(_getTime(json["timeopen"]), _getTime(json["timeClose"])),
+        category: Category(
+          id: 123,
+          name: "categoryName",
+        ),
+      );
 }
 
 TimeOfDay _getTime(String time) {

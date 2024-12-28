@@ -3,7 +3,7 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/components/skeleton.dart';
 import '../../../../core/utils/app_context.dart';
-import '../../domain/entities/purchase.dart';
+import '../../domain/entities/order.dart';
 import '../widgets/purchase_item.dart';
 
 class PurchaseScreen extends StatelessWidget {
@@ -36,7 +36,7 @@ class PurchaseScreen extends StatelessWidget {
                             itemCount: 10,
                             itemBuilder: (context, index) {
                               return PurchaseItem(
-                                purchase: Purchase(
+                                purchase: Order(
                                   id: 123,
                                   name: "name",
                                   storeId: 123,
