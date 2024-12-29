@@ -38,8 +38,9 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen>
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-              sl.get<ShopBloc>()..add(GetShopDetails(id: widget.id)),
+          create: (context) => sl.get<ShopBloc>()
+            ..add(GetShopDetails(id: widget.id))
+            ..add(GetShopCategory(shopId: widget.id)),
         ),
         BlocProvider(
           create: (context) => sl.get<MainCubit>(),

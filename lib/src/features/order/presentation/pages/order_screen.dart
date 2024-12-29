@@ -4,10 +4,10 @@ import 'package:shimmer/shimmer.dart';
 import '../../../../core/components/skeleton.dart';
 import '../../../../core/utils/app_context.dart';
 import '../../domain/entities/order.dart';
-import '../widgets/purchase_item.dart';
+import '../widgets/order_item.dart';
 
-class PurchaseScreen extends StatelessWidget {
-  const PurchaseScreen({super.key});
+class OrderScreen extends StatelessWidget {
+  const OrderScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

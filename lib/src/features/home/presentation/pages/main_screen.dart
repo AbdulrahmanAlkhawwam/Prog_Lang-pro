@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../../core/components/app_bottom_bar.dart';
 import '../../../../core/utils/app_context.dart';
 import '../../../auth/presentation/pages/profile_screen.dart';
+import '../../../order/presentation/pages/order_screen.dart';
 import '../../../shop/presentation/pages/shops_screen.dart';
-import '../../../purchase/presentation/pages/purchase_screen.dart';
 import 'cart_screen.dart';
 import 'home_screen.dart';
 
@@ -33,7 +33,7 @@ class _MainScreenState extends State<MainScreen> {
             case 1:
               screen = ShopsScreen();
             case 2:
-              screen = PurchaseScreen();
+              screen = OrderScreen();
             case 3:
               screen = CartScreen();
             default:

@@ -36,9 +36,8 @@ class ShopRemoteDatasourceImpl extends ShopRemoteDatasource {
   @override
   Future<List<CategoryModel>> getShopCategories(int shopId) async {
     final response = await http.handleApiCall(
-      () async => await http.get("/store/$shopId/type"),
+      () async => await http.get("/type/$shopId/store"),
     ) as List<dynamic>;
-    // TODO : don't forget to fix this api output
     return response.map((e) => CategoryModel.fromMap(e)).toList();
   }
 

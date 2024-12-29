@@ -11,6 +11,6 @@ const localeKey = "locale";
 /// ROUTES
 const home = "home";
 const shops = "shops";
-const purchase = "purchase";
+const purchase = "order";
 const cart = "cart";
 const user = "userProfile";
