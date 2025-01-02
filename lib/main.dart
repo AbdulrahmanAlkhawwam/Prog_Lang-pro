@@ -6,7 +6,10 @@ import 'src/core/service_locator/service_locator.dart';
 
 void main() async => await initializeApp().then((_) => runApp(
       EasyLocalization(
-        supportedLocales: [Locale('ar'), Locale('en')],
+        supportedLocales: [
+          Locale('ar'),
+          Locale('en'),
+        ],
         fallbackLocale: Locale('ar'),
         useOnlyLangCode: true,
         path: 'assets/locales',

@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-
-import '../../domain/entities/category.dart';
 import '../../domain/entities/shop.dart';
 
 class ShopModel extends Shop {
@@ -8,7 +5,6 @@ class ShopModel extends Shop {
     required super.id,
     required super.name,
     required super.status,
-    required super.category,
     required super.description,
     required super.imagePath,
     required super.address,
@@ -20,22 +16,7 @@ class ShopModel extends Shop {
         description: json["descriptions"],
         imagePath: json["image"],
         address: json["address"],
-        status: "OPENED",
-        // _getStatus(_getTime(json["timeopen"]), _getTime(json["timeClose"])),
-        category: Category(
-          id: 123,
-          name: "categoryName",
-        ),
+        // TODO : don't forget to fix this
+        status: json["status"] ?? "OPEN",
       );
-}
-
-TimeOfDay _getTime(String time) {
-  return TimeOfDay(
-    hour: int.parse(time.substring(0, time.indexOf(':') - 1)),
-    minute: int.parse(time.substring(time.indexOf(':') + 1)),
-  );
-}
-
-String _getStatus(TimeOfDay openTime, TimeOfDay closeTime) {
-  return "OPENED";
 }

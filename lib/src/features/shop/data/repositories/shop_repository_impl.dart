@@ -14,7 +14,8 @@ class ShopRepositoryImpl extends ShopRepository {
 
   @override
   Future<Either<Failure, List<Shop>>> getShops(int? typeId) async {
-    return await AppUtils.safeCall(() async => await datasource.getShops(typeId));
+    return await AppUtils.safeCall(
+        () async => await datasource.getShops(typeId));
   }
 
   @override
@@ -26,5 +27,11 @@ class ShopRepositoryImpl extends ShopRepository {
   Future<Either<Failure, List<Category>>> getShopCategories(int shopId) async {
     return await AppUtils.safeCall(
         () async => await datasource.getShopCategories(shopId));
+  }
+
+  @override
+  Future<Either<Failure, List<Category>>> getCategories() async {
+    return await AppUtils.safeCall(
+        () async => await datasource.getCategories());
   }
 }

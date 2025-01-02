@@ -1,9 +1,9 @@
 class Location {
-  final double longitudes;
-  final double latitudes;
+  final double longitude;
+  final double latitude;
 
   Location({
-    required this.latitudes,
-    required this.longitudes,
+    required this.latitude,
+    required this.longitude,
   });
 }

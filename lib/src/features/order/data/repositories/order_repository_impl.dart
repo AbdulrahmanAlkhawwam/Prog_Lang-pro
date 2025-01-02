@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart' hide Order;
 
-import 'package:program_language_project/src/core/errors/failures.dart';
-import 'package:program_language_project/src/core/utils/app_util.dart';
+import '../../../../core/errors/failures.dart';
+import '../../../../core/utils/app_util.dart';
 import '../../domain/entities/order.dart';
 import '../../domain/repositories/order_repository.dart';
 import '../data_source/order_remote_data_source.dart';

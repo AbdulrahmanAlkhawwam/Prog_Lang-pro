@@ -4,11 +4,11 @@ enum AuthStatus {
   init,
   loading,
   error,
+  notVerified,
   authorized,
   unauthorized,
 }
 
-@immutable
 class AuthState {
   final AuthStatus status;
   final User? user;

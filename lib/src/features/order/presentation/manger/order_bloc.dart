@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:program_language_project/src/core/utils/message.dart';
-import 'package:program_language_project/src/features/order/domain/entities/order.dart';
-import 'package:program_language_project/src/features/order/domain/repositories/order_repository.dart';
+
+import '../../../../core/utils/message.dart';
+import '../../domain/entities/order.dart';
+import '../../domain/repositories/order_repository.dart';
 
 part 'order_event.dart';
 
@@ -17,7 +18,21 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     on<GetOrders>(_getOrders);
   }
 
-  FutureOr<void> _getOrders(GetOrders event, Emitter<OrderState> emit) async{
-    emit(state);
+  FutureOr<void> _getOrders(GetOrders event, Emitter<OrderState> emit) async {
+    emit(state.copyWith(status: OrderStatus.loading));
+    final response = await repository.getOrders();
+
+    response.fold(
+      (failure) => emit(state.copyWith(
+        status: OrderStatus.error,
+        message: Message.fromFailure(failure),
+      )),
+      (orders) => emit(state.copyWith(
+        status: OrderStatus.success,
+        completedOrders: orders.where((e) => e.status == "COMPLETED").toList(),
+        inCompletedOrders: orders.where((e) => e.status == "PENDING").toList(),
+        canceledOrders: orders.where((e) => e.status == "CANCELED").toList(),
+      )),
+    );
   }
 }

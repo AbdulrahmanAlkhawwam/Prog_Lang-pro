@@ -1,24 +1,21 @@
-import '../../../shop/domain/entities/shop.dart';
-
 class Product {
-  final String id;
+  final int id;
+  final int storeId;
+  final int categoryId;
   final String name;
   final String description;
-
-  final List<String> ingredients;
+  final String image;
   final double price;
-
-  final Shop? market;
-
   final int quantity;
 
   Product({
     required this.id,
+    required this.storeId,
+    required this.categoryId,
     required this.name,
     required this.description,
-    required this.ingredients,
+    required this.image,
     required this.price,
-    required this.market,
     required this.quantity,
   });
 }

@@ -1,18 +1,23 @@
+import '../../../product/data/models/product_model.dart';
 import '../../domain/entities/order.dart';
 
 class OrderModel extends Order {
   OrderModel({
     required super.id,
-    required super.name,
-    required super.storeId,
+    required super.status,
     required super.price,
-    super.products = const [],
+    required super.createdAt,
+    required super.updatedAt,
+    required super.products,
   });
 
   factory OrderModel.fromJson(Map<String, dynamic> json) => OrderModel(
-        id: json["id"],
-        name: json["name"],
-        storeId: json["store_id"],
-        price: json["price"],
-      );
+      id: json["id"],
+      price: double.parse(json["total_price"]),
+      status: json["status"],
+      createdAt: DateTime.parse(json["created_at"]),
+      updatedAt: DateTime.parse(json["updated_at"]),
+      products: (json["products"] as List)
+          .map((e) => ProductModel.fromMap(e))
+          .toList());
 }

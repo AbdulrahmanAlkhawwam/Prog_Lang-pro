@@ -3,6 +3,17 @@
 abstract class  LocaleKeys {
   static const app_name = 'app_name';
   static const app_description = 'app_description';
+  static const dialog_delete_title = 'dialog.delete.title';
+  static const dialog_delete_content_user = 'dialog.delete.content_user';
+  static const dialog_delete_back_button = 'dialog.delete.back_button';
+  static const dialog_delete_accept_button = 'dialog.delete.accept_button';
+  static const dialog_lang_title = 'dialog.lang.title';
+  static const dialog_lang_ar = 'dialog.lang.ar';
+  static const dialog_lang_en = 'dialog.lang.en';
+  static const dialog_theme_title = 'dialog.theme.title';
+  static const dialog_theme_light = 'dialog.theme.light';
+  static const dialog_theme_dark = 'dialog.theme.dark';
+  static const dialog_theme_system = 'dialog.theme.system';
   static const home_search = 'home.search';
   static const home_today = 'home.today';
   static const home_yesterday = 'home.yesterday';

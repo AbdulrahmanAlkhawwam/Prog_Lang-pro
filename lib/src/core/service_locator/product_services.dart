@@ -6,13 +6,16 @@ import '../../features/product/domain/repositories/product_repository.dart';
 import '../../features/product/presentation/manger/product_bloc.dart';
 
 Future<void> initializeProductServices(GetIt sl) async {
+  /// Data Source
   sl.registerLazySingleton<ProductRemoteDatasource>(
     () => ProductRemoteDatasourceImpl(http: sl()),
   );
 
+  /// Repository
   sl.registerLazySingleton<ProductRepository>(
       () => ProductRepositoryImpl(datasource: sl()));
 
+  /// State Management
   sl.registerFactory<ProductBloc>(
     () => ProductBloc(repository: sl()),
   );

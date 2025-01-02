@@ -4,9 +4,8 @@ enum ShopStatus { init, error, success, loading }
 
 class ShopState {
   ShopStatus status;
-  List<Shop>? shops;
-  List<Category>? categories;
-
+  List<Shop> shops;
+  List<Category> categories;
   Shop? shop;
 
   Message? message;
@@ -14,8 +13,8 @@ class ShopState {
   ShopState({
     this.status = ShopStatus.init,
     this.message,
-    this.shops,
-    this.categories,
+    this.shops = const [],
+    this.categories = const [],
     this.shop,
   });
 

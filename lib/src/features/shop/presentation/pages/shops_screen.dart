@@ -1,18 +1,25 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/components/screens/empty_shops_screen.dart';
+import '../../../../core/components/screens/error_screen.dart';
 import '../../../../core/service_locator/service_locator.dart';
-import '../../domain/entities/category.dart';
 import '../../../home/presentation/manger/cubit/main_cubit.dart';
-import '../../../home/presentation/widgets/categories_list.dart';
+import '../widgets/categories_list.dart';
 import '../manger/shop_bloc.dart';
 import '../widgets/shops_list.dart';
 
-class ShopsScreen extends StatelessWidget {
-  ShopsScreen({super.key});
+class ShopsScreen extends StatefulWidget {
+  const ShopsScreen({super.key});
 
+  @override
+  State<ShopsScreen> createState() => _ShopsScreenState();
+}
+
+class _ShopsScreenState extends State<ShopsScreen> {
   final controller = TextEditingController();
-  final int? index = 2;
+
+  int? index;
 
   @override
   Widget build(BuildContext context) {
@@ -20,37 +27,40 @@ class ShopsScreen extends StatelessWidget {
       create: (context) => sl.get<MainCubit>(),
       child: BlocBuilder<ShopBloc, ShopState>(
         builder: (context, state) {
-          return Scaffold(
-            body: SafeArea(
-              child: switch (state.status) {
-                ShopStatus.loading =>
-                  Center(child: CircularProgressIndicator()),
-                ShopStatus.error => Center(
-                    child: Text(
-                        'Error loading stores #${state.message.toString()}')),
-                _ => Padding(
+          return switch (state.status) {
+            ShopStatus.error => ErrorScreen(errorMessage: state.message!),
+            _ => Scaffold(
+                body: SafeArea(
+                  child: Padding(
                     padding: const EdgeInsets.all(24),
                     child: Column(
                       children: [
                         CategoriesList(
-                          select: 1,
-                          categories: [
-                            Category(id: 123, name: "food"),
-                            Category(id: 234, name: "clothes"),
-                            Category(id: 345, name: "cars"),
-                          ],
+                          onTap: (select) => setState(() {
+                            index == select ? index = null : index = select;
+                            context
+                                .read<ShopBloc>()
+                                .add(GetShops(typeId: index));
+                          }),
+                          select: index,
+                          categories: state.categories,
                         ),
                         const SizedBox(height: 16),
                         Expanded(
-                            child: ShopsList(
-                          shops: state.shops ?? [],
-                        )),
+                          child: state.shops.isEmpty &&
+                                  state.status == ShopStatus.success
+                              ? EmptyShopsScreen()
+                              : ShopsList(
+                                  shops: state.shops,
+                                  isHorizontal: true,
+                                ),
+                        ),
                       ],
                     ),
                   ),
-              },
-            ),
-          );
+                ),
+              ),
+          };
         },
       ),
     );

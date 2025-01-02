@@ -1,18 +1,13 @@
 part of 'auth_bloc.dart';
 
-@immutable
 sealed class AuthEvent {}
 
 class DeleteAccount extends AuthEvent {}
 
 class EditAccount extends AuthEvent {
   final EditAccountParam data;
-  final File? image;
 
-  EditAccount({
-    required this.data,
-    required this.image,
-  });
+  EditAccount({required this.data});
 }
 
 class GetAccount extends AuthEvent {}

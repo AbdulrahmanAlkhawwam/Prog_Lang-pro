@@ -1,6 +1,25 @@
 {
-  "app_name": "طلباتك",
+  "app_name": "Talabatak",
   "app_description": "تطبيق توصيل طلبات",
+  "dialog": {
+    "delete": {
+      "title": "Do you want to delete ? ",
+      "content_user": "The user will be deleted and cannot be returned to later.",
+      "back_button": "Cancel",
+      "accept_button": "Delete"
+    },
+    "lang": {
+      "title": "Choose the language that suits you :",
+      "ar": "Arabic language",
+      "en": "English language"
+    },
+    "theme": {
+      "title": "Choose the theme that suits you :",
+      "light": "Light mode",
+      "dark": "Dark mode",
+      "system": "system mode"
+    }
+  },
   "home": {
     "search": "بحث",
     "today": "اليوم",

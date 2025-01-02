@@ -5,6 +5,7 @@ import '../../../home/domain/entities/Location.dart';
 class User {
   final int id;
   final int phone;
+  final bool isVerified;
   final String firstName;
   final String lastName;
   final Location? location;
@@ -15,6 +16,7 @@ class User {
   User({
     required this.id,
     required this.phone,
+    required this.isVerified,
     required this.firstName,
     required this.lastName,
     required this.token,
@@ -23,14 +25,16 @@ class User {
     this.location,
   });
 
-  User copyWith(
-      {int? id,
-      int? phone,
-      String? firstName,
-      String? lastName,
-      Location? location,
-      String? imagePath,
-      File? imageFile}) {
+  User copyWith({
+    int? id,
+    int? phone,
+    String? firstName,
+    String? lastName,
+    Location? location,
+    String? imagePath,
+    bool? isVerified,
+    File? imageFile,
+  }) {
     return User(
       id: id ?? this.id,
       phone: phone ?? this.phone,
@@ -39,6 +43,7 @@ class User {
       location: location ?? this.location,
       imagePath: imagePath ?? this.imagePath,
       imageFile: imageFile ?? this.imageFile,
+      isVerified: isVerified ?? this.isVerified,
       token: token,
     );
   }

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import '../../../../core/helpers/http_helper.dart';
 import '../../domain/use_cases/edit_account_uc.dart';
 import '../../domain/use_cases/login_uc.dart';
@@ -8,8 +6,6 @@ import '../models/user_model.dart';
 
 abstract class AuthRemoteDataSource {
   Future<void> deleteAccount();
-
-  Future<void> deleteImage();
 
   Future<UserModel> editAccount(EditAccountParam param);
 
@@ -22,8 +18,6 @@ abstract class AuthRemoteDataSource {
   Future<bool> otp(String passkey);
 
   Future<UserModel> register(RegisterParam param);
-
-  Future<void> uploadImage(File? image);
 }
 
 class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
@@ -34,10 +28,6 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   @override
   Future<void> deleteAccount() async =>
       await http.handleApiCall(() async => await http.delete("/profile"));
-
-  @override
-  Future<void> deleteImage() async =>
-      await http.handleApiCall(() async => await http.delete("/profile/image"));
 
   @override
   Future<UserModel> getAccount() async => await http.handleApiCall(
@@ -105,16 +95,6 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
         },
       ) as Map<String, dynamic>;
       return UserModel.fromJson(response);
-    });
-  }
-
-  @override
-  Future<void> uploadImage(File? image) async {
-    return await http.handleApiCall(() async {
-      return await http.post(
-        "/profile/uploadImage",
-        body: {"image": image},
-      );
     });
   }
 }

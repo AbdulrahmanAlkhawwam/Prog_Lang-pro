@@ -6,6 +6,7 @@ class UserModel extends User {
     required super.id,
     required super.firstName,
     required super.lastName,
+    required super.isVerified,
     required super.phone,
     required super.token,
     super.location,
@@ -18,12 +19,12 @@ class UserModel extends User {
         lastName: json["user"]?["last_name"],
         phone: json["user"]?["phone"],
         imagePath: json["user"]?["image"],
-
+        isVerified: json["user"]["is_verified"] == 1 ? true : false,
         location: json["user"]?["latitude"] == null
             ? null
             : Location(
-                latitudes: json["user"]?["latitude"],
-                longitudes: json["user"]?["longitude"],
+                latitude: json["user"]?["latitude"],
+                longitude: json["user"]?["longitude"],
               ),
         token: json["token"],
       );

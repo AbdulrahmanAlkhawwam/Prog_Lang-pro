@@ -20,3 +20,5 @@ final class GetShopCategory extends ShopEvent {
 
   GetShopCategory({required this.shopId});
 }
+
+final class GetShopsCategories extends ShopEvent {}

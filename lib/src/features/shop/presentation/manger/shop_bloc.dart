@@ -27,6 +27,7 @@ class ShopBloc extends Bloc<ShopEvent, ShopState> {
     on<GetShops>(_getShops);
     on<GetShopDetails>(_getShopsDetails);
     on<GetShopCategory>(_getShopCategory);
+    on<GetShopsCategories>(_getCategories);
   }
 
   FutureOr<void> _getShopsDetails(
@@ -73,5 +74,21 @@ class ShopBloc extends Bloc<ShopEvent, ShopState> {
       (categories) => emit(
           state.copyWith(status: ShopStatus.success, categories: categories)),
     );
+  }
+
+  FutureOr<void> _getCategories(
+      GetShopsCategories event, Emitter<ShopState> emit) async {
+    emit(state.copyWith(status: ShopStatus.loading));
+    final response = await repository.getCategories();
+
+    response.fold(
+        (failure) => emit(state.copyWith(
+              status: ShopStatus.error,
+              message: Message.fromFailure(failure),
+            )),
+        (categories) => emit(state.copyWith(
+              status: ShopStatus.success,
+              categories: categories,
+            )));
   }
 }

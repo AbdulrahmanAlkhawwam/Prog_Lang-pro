@@ -62,15 +62,11 @@ class Message extends Equatable {
         return LocaleKeys.error_messages_operation_cancelled.tr();
       case "3":
         return LocaleKeys.error_messages_purchase_failed_error_3.tr();
-      // case "6":
-      //   return LocaleKeys.error_messages_already_subscribed_restore.tr();
       case "7":
         return LocaleKeys.error_messages_cannot_restore_subscription_error_7
             .tr();
       case "10":
         return LocaleKeys.error_messages_network_error_retry.tr();
-      // case "15":
-      //   return LocaleKeys.error_messages_subscription_pending_wait.tr();
       default:
         return LocaleKeys.error_messages_operation_failed_with_code_args
             .tr(args: [platformCode!]);

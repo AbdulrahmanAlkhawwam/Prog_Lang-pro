@@ -120,7 +120,11 @@ class _OtpScreenState extends State<OtpScreen> {
             ),
             TextButton(
               onPressed: () => context.pop(),
-              child: Text("Change phone number"),
+              child: Text(
+                "Change phone number",
+                style: context.textTheme.labelMedium
+                    ?.copyWith(color: context.colors.surface),
+              ),
             ),
           ],
         ),

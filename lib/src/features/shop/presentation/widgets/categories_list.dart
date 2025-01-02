@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
-import '../../../shop/domain/entities/category.dart';
+import '../../domain/entities/category.dart';
 import 'category_item.dart';
 
 class CategoriesList extends StatelessWidget {
   final List<Category> categories;
   final int? select;
+  final Function(dynamic) onTap;
 
   const CategoriesList({
     super.key,
     required this.categories,
     required this.select,
+    required this.onTap,
   });
 
   @override
@@ -20,8 +22,8 @@ class CategoriesList extends StatelessWidget {
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) => CategoryItem(
-          isSelect: index == select,
-          onTap: () {},
+          isSelect: categories[index].id == select,
+          onTap: () => onTap(categories[index].id),
           category: categories[index],
         ),
         separatorBuilder: (context, index) => const SizedBox(width: 8),

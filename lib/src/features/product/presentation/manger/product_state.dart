@@ -4,24 +4,28 @@ enum ProductStatus { init, error, success, loading }
 
 class ProductState {
   ProductStatus status;
-  List<Product>? products;
-  String? message;
+  List<Product> products;
+  List<Category> categories;
+  Message? message;
 
   ProductState({
     this.status = ProductStatus.init,
     this.message,
-    this.products,
+    this.products = const [],
+    this.categories = const [],
   });
 
   ProductState copyWith({
     ProductStatus? status,
-    String? message,
+    Message? message,
     List<Product>? products,
+    List<Category>? categories,
   }) {
     return ProductState(
       message: message ?? this.message,
       status: status ?? this.status,
       products: products ?? this.products,
+      categories: categories ?? this.categories,
     );
   }
 }

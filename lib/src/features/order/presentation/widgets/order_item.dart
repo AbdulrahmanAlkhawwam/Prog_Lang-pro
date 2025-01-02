@@ -1,23 +1,32 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:program_language_project/src/core/utils/app_context.dart';
+import 'package:shimmer/shimmer.dart';
 
+import '../../../../core/components/skeleton.dart';
+import '../../../../core/utils/app_context.dart';
 import '../../domain/entities/order.dart';
+import '../pages/order_details_screen.dart';
 
 class PurchaseItem extends StatelessWidget {
-  final Order purchase;
+  final Order order;
+  final bool isLoading;
 
   const PurchaseItem({
     super.key,
-    required this.purchase,
+    required this.order,
+    required this.isLoading,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: isLoading
+          ? null
+          : () => context.push(OrderDetailsScreen(order: order)),
       child: Container(
-        padding: EdgeInsets.all(17),
-        height: 119,
+        margin: EdgeInsets.symmetric(horizontal: 24),
+        padding: EdgeInsets.all(16),
+        height: 120,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: context.colors.surfaceContainer,
@@ -31,13 +40,21 @@ class PurchaseItem extends StatelessWidget {
                   color: context.colors.onPrimaryContainer,
                 ),
                 SizedBox(width: 12),
-                Text(
-                  "purchases date",
-                  style: context.textTheme.bodySmall,
-                ),
+                isLoading
+                    ? Expanded(
+                        child: Shimmer.fromColors(
+                          baseColor: context.colors.outline.withOpacity(0.3),
+                          highlightColor: context.colors.surface,
+                          child: Skeleton(height: 10),
+                        ),
+                      )
+                    : Text(
+                        DateFormat("MM/dd - HH:mm").format(order.updatedAt),
+                        style: context.textTheme.bodySmall,
+                      ),
               ],
             ),
-            SizedBox(height: 6),
+            SizedBox(height: 4),
             Row(
               children: [
                 Icon(
@@ -45,13 +62,21 @@ class PurchaseItem extends StatelessWidget {
                   color: context.colors.onPrimaryContainer,
                 ),
                 SizedBox(width: 12),
-                Text(
-                  "market name",
-                  style: context.textTheme.bodySmall,
-                ),
+                isLoading
+                    ? Expanded(
+                        child: Shimmer.fromColors(
+                          baseColor: context.colors.outline.withOpacity(0.3),
+                          highlightColor: context.colors.surface,
+                          child: Skeleton(height: 10),
+                        ),
+                      )
+                    : Text(
+                        "${order.products.length} products",
+                        style: context.textTheme.bodySmall,
+                      ),
               ],
             ),
-            SizedBox(height: 6),
+            SizedBox(height: 4),
             Row(
               children: [
                 Icon(
@@ -59,10 +84,18 @@ class PurchaseItem extends StatelessWidget {
                   color: context.colors.onPrimaryContainer,
                 ),
                 SizedBox(width: 12),
-                Text(
-                  "purchases price",
-                  style: context.textTheme.bodySmall,
-                ),
+                isLoading
+                    ? Expanded(
+                        child: Shimmer.fromColors(
+                          baseColor: context.colors.outline.withOpacity(0.3),
+                          highlightColor: context.colors.surface,
+                          child: Skeleton(height: 10),
+                        ),
+                      )
+                    : Text(
+                        order.price.toString(),
+                        style: context.textTheme.bodySmall,
+                      ),
               ],
             ),
           ],

@@ -10,5 +10,7 @@ abstract class ShopRepository {
   Future<Either<Failure, Shop>> getShop(int id);
 
   Future<Either<Failure, List<Category>>> getShopCategories(int shopId);
+
+  Future<Either<Failure, List<Category>>> getCategories ();
 }
 

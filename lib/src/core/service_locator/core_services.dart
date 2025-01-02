@@ -1,3 +1,4 @@
+import 'package:program_language_project/src/core/helpers/multipart_http_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:http/http.dart' as http;
@@ -46,5 +47,13 @@ Future<void> initializeCoreServices(GetIt sl) async {
       storage: sl(),
     ),
     dispose: (httpHelper) => httpHelper.close(),
+  );
+
+  sl.registerLazySingleton<MultipartHttpHelper>(
+    () => MultipartHttpHelperImpl(
+      host: Env.host,
+      basePath: "/api",
+      storage: sl(),
+    ),
   );
 }

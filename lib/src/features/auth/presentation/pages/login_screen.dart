@@ -7,14 +7,16 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../core/components/app_button.dart';
 import '../../../../core/components/app_input.dart';
 import '../../../../core/components/bounded_list_view.dart';
+import '../../../../core/components/dialogs/lang_dialog.dart';
 import '../../../../core/constants/res.dart';
 import '../../../../core/localization/keys.g.dart';
 import '../../../../core/utils/app_context.dart';
 import '../../../home/presentation/pages/main_screen.dart';
 import '../../domain/use_cases/login_uc.dart';
-import 'register_screen.dart';
 import '../manger/bloc/auth_bloc.dart';
 import '../manger/cubit/auth_pres_cubit.dart';
+import './otp_screen.dart';
+import './register_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -27,6 +29,9 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
+        if (state.status == AuthStatus.notVerified) {
+          context.push(OtpScreen());
+        }
         if (state.status == AuthStatus.authorized) {
           context.push(MainScreen());
         }
@@ -36,6 +41,20 @@ class LoginScreen extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
+          appBar: AppBar(
+            actions: [
+              IconButton(
+                onPressed: () async {
+                  final lang = await showDialog(
+                      context: context, builder: (context) => LangDialog());
+                },
+                icon: Icon(
+                  Icons.g_translate,
+                  color: context.colors.primaryContainer,
+                ),
+              )
+            ],
+          ),
           body: Column(
             children: [
               Expanded(child: SvgPicture.asset(Res.login)),

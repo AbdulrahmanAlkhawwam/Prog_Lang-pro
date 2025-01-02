@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/errors/failures.dart';
@@ -25,10 +23,6 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<Either<Failure, void>> deleteAccount() async =>
       await AppUtils.safeCall(() async => await datasource.deleteAccount());
-
-  @override
-  Future<Either<Failure, void>> deleteImage() async =>
-      await AppUtils.safeCall(() async => await datasource.deleteImage());
 
   @override
   Future<Either<Failure, void>> deleteToken() async =>
@@ -63,8 +57,4 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<Either<Failure, void>> saveToken(String token) async =>
       await AppUtils.safeCall(() => storage.saveToken(token));
-
-  @override
-  Future<Either<Failure, void>> uploadImage(File? image) async =>
-      await AppUtils.safeCall(() async => await datasource.uploadImage(image));
 }
