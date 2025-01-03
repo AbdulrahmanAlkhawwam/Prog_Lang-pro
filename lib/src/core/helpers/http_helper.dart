@@ -179,17 +179,12 @@ class HttpHelperImpl extends HttpHelper {
 
   Map<String, String> _makeHeaders({Map? extraHeaders}) => {
         "Content-Type": "application/json",
-        "Accept-Language": locale,
         if (token.isNotEmpty) "Authorization": "Bearer $token",
         ...?extraHeaders,
       };
 
   String get token {
     return storage.getString(accessTokenKey) ?? "";
-  }
-
-  String get locale {
-    return storage.getString(localeKey) ?? "";
   }
 
   @override

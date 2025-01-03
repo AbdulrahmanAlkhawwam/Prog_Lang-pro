@@ -44,10 +44,10 @@ class LoginScreen extends StatelessWidget {
           appBar: AppBar(
             actions: [
               IconButton(
-                onPressed: () async {
-                  final lang = await showDialog(
-                      context: context, builder: (context) => LangDialog());
-                },
+                onPressed: () async => await showDialog(
+                  context: context,
+                  builder: (context) => LangDialog(),
+                ),
                 icon: Icon(
                   Icons.g_translate,
                   color: context.colors.primaryContainer,

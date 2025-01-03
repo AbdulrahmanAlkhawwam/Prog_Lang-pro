@@ -6,6 +6,7 @@ import './file_services.dart';
 import './shop_services.dart';
 import './product_services.dart';
 import './main_services.dart';
+import './settings_services.dart';
 import './order_services.dart';
 
 final sl = GetIt.instance;
@@ -17,5 +18,6 @@ Future<void> initializeApp() async {
   await initializeMainServices(sl);
   await initializeOrderServices(sl);
   await initializeProductServices(sl);
+  await initializeSettingsServices(sl);
   await initializeShopServices(sl);
 }

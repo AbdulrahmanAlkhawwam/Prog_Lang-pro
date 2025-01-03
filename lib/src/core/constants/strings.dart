@@ -6,7 +6,6 @@ const cartTable = "cart";
 const firstTimeOpenKey = "opened";
 const themeModeKey = "theme_mode";
 const accessTokenKey = "token";
-const localeKey = "locale";
 
 /// ROUTES
 const home = "home";

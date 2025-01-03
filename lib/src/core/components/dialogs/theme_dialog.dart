@@ -1,12 +1,19 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../features/home/presentation/manger/theme_notifier.dart';
 import '../../constants/styles.dart';
 import '../../utils/app_context.dart';
 import '../../localization/keys.g.dart';
 
 class ThemeDialog extends StatelessWidget {
   const ThemeDialog({super.key});
+
+  void _optionSelected(BuildContext context, ThemeMode theme) {
+    context.read<ThemeNotifier>().setThemeMode(theme);
+    context.pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +39,8 @@ class ThemeDialog extends StatelessWidget {
               child: Column(
                 children: [
                   ListTile(
-                    onTap: () => context.pop("en"),
+                    onTap: () => _optionSelected(context, ThemeMode.dark),
+                    //context.pop("en"),
                     leading: Icon(
                       Icons.dark_mode_outlined,
                       color: context.colors.primaryContainer,
@@ -47,7 +55,8 @@ class ThemeDialog extends StatelessWidget {
                     child: Divider(color: context.colors.outline),
                   ),
                   ListTile(
-                    onTap: () => context.pop("ar"),
+                    onTap: () => _optionSelected(context, ThemeMode.light),
+                    //context.pop("ar"),
                     leading: Icon(
                       Icons.light_mode_outlined,
                       color: context.colors.primaryContainer,
@@ -62,7 +71,8 @@ class ThemeDialog extends StatelessWidget {
                     child: Divider(color: context.colors.outline),
                   ),
                   ListTile(
-                    onTap: () => context.pop("ar"),
+                    onTap: () => _optionSelected(context, ThemeMode.system),
+                    //context.pop("ar"),
                     leading: Icon(
                       Icons.devices,
                       color: context.colors.primaryContainer,

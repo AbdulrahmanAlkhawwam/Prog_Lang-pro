@@ -38,6 +38,10 @@ extension AppResponsive on BuildContext {
 
 extension AppDirectionality on BuildContext {
   TextDirection get textDirection => Directionality.of(this);
+
+  bool get isRTL => textDirection == TextDirection.rtl;
+
+  bool get isLTR => textDirection == TextDirection.ltr;
 }
 
 extension AppSnackbar on BuildContext {

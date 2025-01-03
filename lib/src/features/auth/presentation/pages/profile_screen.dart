@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:program_language_project/main.dart';
 
 import '../../../../core/components/app_button.dart';
 import '../../../../core/components/bounded_list_view.dart';
@@ -38,26 +39,30 @@ class ProfileScreen extends StatelessWidget {
                   IconButton(
                     onPressed: () => showMenu(
                       context: context,
-                      position: RelativeRect.fromLTRB(200, 0, 0, 0),
+                      position: RelativeRect.fromLTRB(context.isLTR ? 200 : 0,
+                          0, context.isRTL ? 200 : 0, 0),
                       color: context.colors.surfaceContainer,
                       elevation: appBor,
                       items: [
                         PopupMenuItem(
                           child: TextButton(
-                            onPressed: () => context.push(
-                              EditProfileScreen(
-                                fNameController: TextEditingController(
-                                  text: state.user?.firstName,
+                            onPressed: () {
+                              context.pop();
+                              context.push(
+                                EditProfileScreen(
+                                  fNameController: TextEditingController(
+                                    text: state.user?.firstName,
+                                  ),
+                                  lNameController: TextEditingController(
+                                    text: state.user?.lastName,
+                                  ),
+                                  phoneController: TextEditingController(
+                                    text: state.user?.phone.toString(),
+                                  ),
+                                  location: state.user?.location,
                                 ),
-                                lNameController: TextEditingController(
-                                  text: state.user?.lastName,
-                                ),
-                                phoneController: TextEditingController(
-                                  text: state.user?.phone.toString(),
-                                ),
-                                location: state.user?.location,
-                              ),
-                            ),
+                              );
+                            },
                             child: Row(
                               children: [
                                 Icon(
@@ -76,12 +81,11 @@ class ProfileScreen extends StatelessWidget {
                         PopupMenuItem(
                           child: TextButton(
                             onPressed: () async {
-                              final lang = await showDialog(
+                              context.pop();
+                              await showDialog(
                                 context: context,
                                 builder: (context) => LangDialog(),
                               );
-                              // TODO : don't forget to change lang
-                              //context.setLocale(lang);
                             },
                             child: Row(
                               children: [
@@ -101,11 +105,10 @@ class ProfileScreen extends StatelessWidget {
                         PopupMenuItem(
                           child: TextButton(
                             onPressed: () async {
-                              final theme = await showDialog(
+                              context.pop();
+                              await showDialog(
                                   context: context,
                                   builder: (context) => ThemeDialog());
-                              Navigator.pop(context);
-                              // todo : don't forget to change this
                             },
                             child: Row(
                               children: [

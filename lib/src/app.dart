@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'core/components/screens/loading_screen.dart';
 import 'core/constants/theme.dart';
@@ -8,6 +9,7 @@ import 'core/service_locator/service_locator.dart';
 import 'features/auth/presentation/manger/bloc/auth_bloc.dart';
 import 'features/auth/presentation/manger/cubit/auth_pres_cubit.dart';
 import 'features/files/presentation/bloc/file_bloc.dart';
+import 'features/home/presentation/manger/theme_notifier.dart';
 import 'features/order/presentation/manger/order_bloc.dart';
 import 'features/product/presentation/manger/product_bloc.dart';
 import 'features/shop/presentation/manger/shop_bloc.dart';
@@ -23,25 +25,11 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => sl.get<AuthBloc>()..add(CheckAuth()),
-          lazy: false,
-        ),
-        BlocProvider(
-          create: (_) => sl.get<OrderBloc>(),
-          lazy: false,
-        ),
-        BlocProvider(
-          create: (_) => sl.get<ProductBloc>(),
-          lazy: false,
-        ),
-        BlocProvider(
-          create: (_) => sl.get<ShopBloc>(),
-          lazy: false,
-        ),
-        BlocProvider(
-          create: (_) => sl.get<FileBloc>(),
-          lazy: false,
-        ),
+            create: (_) => sl.get<AuthBloc>()..add(CheckAuth()), lazy: false),
+        BlocProvider(create: (_) => sl.get<OrderBloc>(), lazy: false),
+        BlocProvider(create: (_) => sl.get<ProductBloc>(), lazy: false),
+        BlocProvider(create: (_) => sl.get<ShopBloc>(), lazy: false),
+        BlocProvider(create: (_) => sl.get<FileBloc>(), lazy: false),
         BlocProvider(create: (_) => sl.get<AuthPresCubit>()),
       ],
       child: MultiBlocListener(
@@ -57,22 +45,27 @@ class App extends StatelessWidget {
             },
           ),
         ],
-        child: MaterialApp(
-          theme: AppTheme.lightTheme,
-          themeMode: ThemeMode.system,
-          darkTheme: AppTheme.darkTheme,
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
-          home: BlocBuilder<AuthBloc, AuthState>(
-            builder: (context, state) {
-              return switch (state.status) {
-                AuthStatus.unauthorized || AuthStatus.error => LoginScreen(),
-                AuthStatus.loading || AuthStatus.init => LoadingScreen(),
-                AuthStatus.notVerified => OtpScreen(),
-                AuthStatus.authorized => MainScreen(),
-              };
-            },
+        child: MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => sl<ThemeNotifier>()),
+          ],
+          builder: (context, child) => MaterialApp(
+            theme: AppTheme.lightTheme,
+            themeMode: context.watch<ThemeNotifier>().themeMode,
+            darkTheme: AppTheme.darkTheme,
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+            home: BlocBuilder<AuthBloc, AuthState>(
+              builder: (context, state) {
+                return switch (state.status) {
+                  AuthStatus.unauthorized || AuthStatus.error => LoginScreen(),
+                  AuthStatus.loading || AuthStatus.init => LoadingScreen(),
+                  AuthStatus.notVerified => OtpScreen(),
+                  AuthStatus.authorized => MainScreen(),
+                };
+              },
+            ),
           ),
         ),
       ),

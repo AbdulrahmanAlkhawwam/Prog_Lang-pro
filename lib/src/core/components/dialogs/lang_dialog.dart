@@ -8,6 +8,11 @@ import '../../localization/keys.g.dart';
 class LangDialog extends StatelessWidget {
   const LangDialog({super.key});
 
+  void _optionSelected(BuildContext context, int option) async =>
+      await context.setLocale(context.supportedLocales[option]).then(
+            (value) => context.pop(),
+          );
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -32,7 +37,7 @@ class LangDialog extends StatelessWidget {
               child: Column(
                 children: [
                   ListTile(
-                    onTap: () => context.pop("en"),
+                    onTap: () => _optionSelected(context,1), //context.pop("en"),
                     titleAlignment: ListTileTitleAlignment.center,
                     title: Text(
                       LocaleKeys.dialog_lang_en.tr(),
@@ -44,7 +49,7 @@ class LangDialog extends StatelessWidget {
                     child: Divider(color: context.colors.outline),
                   ),
                   ListTile(
-                    onTap: () => context.pop("ar"),
+                    onTap: () => _optionSelected(context,0), //context.pop("ar"),
                     titleAlignment: ListTileTitleAlignment.center,
                     title: Text(
                       LocaleKeys.dialog_lang_ar.tr(),
