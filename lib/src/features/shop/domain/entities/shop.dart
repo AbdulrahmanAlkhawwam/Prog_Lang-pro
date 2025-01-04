@@ -14,4 +14,16 @@ class Shop {
     required this.status,
     required this.address,
   });
+
+  @override
+  String toString() {
+    return "shop {"
+        " id : $id ,"
+        " name : $name ,"
+        " description : $description ,"
+        " image path : $imagePath ,"
+        " status : $status ,"
+        " address : $address ,"
+        "}";
+  }
 }

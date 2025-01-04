@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 
 import '../../../../core/errors/failures.dart';
 import '../../../../core/use_case/use_case.dart';
-import '../entities/user.dart';
+import '../../../home/domain/entities/user.dart';
 import '../repositories/auth_repository.dart';
 
 class RegisterUC extends UseCase<User, RegisterParam> {

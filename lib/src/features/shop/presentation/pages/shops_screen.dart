@@ -49,7 +49,7 @@ class _ShopsScreenState extends State<ShopsScreen> {
                         Expanded(
                           child: state.shops.isEmpty &&
                                   state.status == ShopStatus.success
-                              ? EmptyShopsScreen()
+                              ? EmptyScreen(isShopScreen: true)
                               : ShopsList(
                                   shops: state.shops,
                                   isHorizontal: true,

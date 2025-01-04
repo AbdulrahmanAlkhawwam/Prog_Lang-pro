@@ -1,4 +1,4 @@
-import '../../../home/domain/entities/Location.dart';
+import '../../domain/entities/Location.dart';
 import '../../domain/entities/user.dart';
 
 class UserModel extends User {
@@ -22,7 +22,7 @@ class UserModel extends User {
         isVerified: json["user"]["is_verified"] == 1 ? true : false,
         location: json["user"]?["latitude"] == null
             ? null
-            : Location(
+            : LocalLocation(
                 latitude: json["user"]?["latitude"],
                 longitude: json["user"]?["longitude"],
               ),

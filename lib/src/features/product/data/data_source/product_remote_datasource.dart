@@ -26,9 +26,8 @@ class ProductRemoteDatasourceImpl extends ProductRemoteDatasource {
 
   @override
   Future<List<ProductModel>> getShopProducts(int shopId) async {
-    final response =
-        http.handleApiCall(() async => await http.get("/product/$shopId/store"))
-            as List<dynamic>;
+    final response = await http.handleApiCall(
+        () async => await http.get("/product/$shopId/store")) as List<dynamic>;
     return response.map((e) => ProductModel.fromMap(e)).toList();
   }
 

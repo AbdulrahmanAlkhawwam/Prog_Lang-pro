@@ -1,16 +1,21 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:program_language_project/main.dart';
+import 'package:program_language_project/src/core/components/screens/error_screen.dart';
+import 'package:program_language_project/src/core/localization/keys.g.dart';
+import 'package:program_language_project/src/features/favorite/presentation/pages/favorites_screen.dart';
+import 'package:program_language_project/src/features/home/presentation/manger/bloc/user_bloc.dart';
 
 import '../../../../core/components/app_button.dart';
 import '../../../../core/components/bounded_list_view.dart';
 import '../../../../core/components/dialogs/lang_dialog.dart';
 import '../../../../core/components/dialogs/theme_dialog.dart';
+import '../../../../core/constants/env.dart';
+import '../../../../core/constants/res.dart';
 import '../../../../core/constants/styles.dart';
 import '../../../../core/service_locator/service_locator.dart';
 import '../../../../core/utils/app_context.dart';
-import '../../../../core/constants/res.dart';
 import '../../../home/presentation/manger/cubit/main_cubit.dart';
 import '../manger/bloc/auth_bloc.dart';
 import 'edit_profile_screen.dart';
@@ -31,7 +36,7 @@ class ProfileScreen extends StatelessWidget {
             context.pushReplacement(LoginScreen());
           }
         },
-        child: BlocBuilder<AuthBloc, AuthState>(
+        child: BlocBuilder<UserBloc, UserState>(
           builder: (context, state) {
             return Scaffold(
               appBar: AppBar(
@@ -71,7 +76,7 @@ class ProfileScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 8),
                                 Text(
-                                  "Edit account",
+                                  LocaleKeys.profile_more_edit.tr(),
                                   style: context.textTheme.labelMedium,
                                 ),
                               ],
@@ -95,7 +100,7 @@ class ProfileScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 8),
                                 Text(
-                                  "Languages",
+                                  LocaleKeys.profile_more_lang.tr(),
                                   style: context.textTheme.labelMedium,
                                 ),
                               ],
@@ -120,7 +125,28 @@ class ProfileScreen extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 8),
                                 Text(
-                                  "Themes",
+                                  LocaleKeys.profile_more_theme.tr(),
+                                  style: context.textTheme.labelMedium,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        PopupMenuItem(
+                          child: TextButton(
+                            onPressed: () {
+                              context.pop();
+                              context.push(FavoritesScreen());
+                            },
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.favorite_border_rounded,
+                                  color: context.colors.primary,
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  LocaleKeys.profile_more_favorite.tr(),
                                   style: context.textTheme.labelMedium,
                                 ),
                               ],
@@ -134,10 +160,7 @@ class ProfileScreen extends StatelessWidget {
                 ],
               ),
               body: switch (state.status) {
-                AuthStatus.error =>
-                  Center(child: Text(state.message.toString())),
-                AuthStatus.loading =>
-                  Center(child: CircularProgressIndicator()),
+                UserStatus.error => ErrorScreen(errorMessage: state.message!),
                 _ => SafeArea(
                     child: BoundedListView(
                       padding: EdgeInsets.all(36),
@@ -221,24 +244,34 @@ class ProfileScreen extends StatelessWidget {
                           padding: EdgeInsets.all(8),
                           margin: EdgeInsets.symmetric(vertical: 12),
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(4),
-                            // TODO : change this container to static map with latitude and longitude
-                            child: Container(
-                              height: context.height / 5,
-                              color: Colors.blue,
-                            ),
-                          ),
+                              borderRadius: BorderRadius.circular(4),
+                              child: state.user?.location == null
+                                  ? Container(
+                                      height: context.height / 6,
+                                      color: context.colors.secondaryContainer
+                                          .withOpacity(0.3),
+                                      child: Center(
+                                        child: Text(
+                                          "There are no Location",
+                                          style: context.textTheme.labelLarge
+                                              ?.copyWith(
+                                            color: context.colors.secondary,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : Image.network(
+                                      'https://api.tomtom.com/map/1/staticimage?layer=basic&style=main&format=png&zoom=6&center=${state.user?.location?.longitude}%2C%20${state.user?.location?.latitude}&width=1024&height=512&view=Unified&key=${Env.map}')),
                         ),
                         SizedBox(height: 24),
                         AppButton(
                           isLoading: state.status == AuthStatus.loading,
-                          text: 'Logout',
+                          text: LocaleKeys.profile_logout.tr(),
                           background: context.colors.errorContainer,
                           textColor: context.colors.onErrorContainer,
                           splash: context.colors.error,
-                          onPressed: () {
-                            context.read<AuthBloc>().add(Logout());
-                          },
+                          onPressed: () =>
+                              context.read<AuthBloc>().add(Logout()),
                         ),
                         SizedBox(height: 20),
                       ],

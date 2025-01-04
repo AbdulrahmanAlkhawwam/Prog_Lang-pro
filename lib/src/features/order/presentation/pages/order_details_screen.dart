@@ -87,6 +87,7 @@ class OrderDetailsScreen extends StatelessWidget {
                 child: ListView.separated(
               padding: EdgeInsets.all(16),
               itemBuilder: (context, index) => ProductItem(
+                inShop: false,
                 product: order.products[index],
               ),
               separatorBuilder: (context, index) => const SizedBox(height: 8),

@@ -7,8 +7,8 @@ import '../../domain/entities/order.dart';
 import '../manger/order_bloc.dart';
 import '../widgets/order_item.dart';
 
-class OrderScreen extends StatelessWidget {
-  const OrderScreen({super.key});
+class OrdersScreen extends StatelessWidget {
+  const OrdersScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

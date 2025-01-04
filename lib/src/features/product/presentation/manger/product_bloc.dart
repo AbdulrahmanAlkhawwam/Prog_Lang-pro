@@ -17,7 +17,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
   ProductBloc({required this.repository}) : super(ProductState()) {
     // on<ProductEvent>(_getProducts);
-    on<GetShopProduct>(_getShopProducts);
+    on<GetShopProducts>(_getShopProducts);
     on<GetProductsCategories>(_getCategories);
   }
 
@@ -37,7 +37,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   // }
 
   FutureOr<void> _getShopProducts(
-      GetShopProduct event, Emitter<ProductState> emit) async {
+      GetShopProducts event, Emitter<ProductState> emit) async {
     emit(state.copyWith(status: ProductStatus.loading));
     final response = await repository.getShopProducts(event.shopId);
     response.fold(

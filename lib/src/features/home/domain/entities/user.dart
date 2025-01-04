@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import '../../../home/domain/entities/Location.dart';
+import 'Location.dart';
 
 class User {
   final int id;
@@ -8,7 +8,7 @@ class User {
   final bool isVerified;
   final String firstName;
   final String lastName;
-  final Location? location;
+  final LocalLocation? location;
   final String? imagePath;
   final File? imageFile;
   final String? token;
@@ -30,7 +30,7 @@ class User {
     int? phone,
     String? firstName,
     String? lastName,
-    Location? location,
+    LocalLocation? location,
     String? imagePath,
     bool? isVerified,
     File? imageFile,

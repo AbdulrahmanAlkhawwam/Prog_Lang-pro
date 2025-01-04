@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'package:program_language_project/src/core/localization/keys.g.dart';
 
 import '../../../../core/constants/styles.dart';
 import '../../../../core/utils/app_context.dart';
@@ -25,17 +27,10 @@ class _OtpScreenState extends State<OtpScreen> {
     _startTimer();
   }
 
-  void _startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        if (_seconds > 0) {
-          _seconds--;
-        } else {
-          _timer?.cancel();
-        }
-      });
-    });
-  }
+  void _startTimer() => _timer = Timer.periodic(
+        Duration(seconds: 1),
+        (timer) => setState(() => _seconds > 0 ? _seconds-- : _timer?.cancel()),
+      );
 
   String _formatTime(int seconds) {
     int minutes = seconds ~/ 60;
@@ -61,14 +56,14 @@ class _OtpScreenState extends State<OtpScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Verification code",
+                  LocaleKeys.auth_otp_title.tr(),
                   style: context.textTheme.titleMedium,
                 ),
               ],
             ),
             const SizedBox(height: 4),
             Text(
-              "we send code for this number ... if you don’t have any account , please resend again to get the code ",
+              LocaleKeys.auth_otp_description.tr(),
               style: TextStyle(fontSize: 12),
             ),
             const SizedBox(height: 28),

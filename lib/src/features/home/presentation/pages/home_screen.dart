@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:program_language_project/src/features/product/presentation/manger/product_bloc.dart';
 
 import '../../../../core/components/search_input.dart';
 import '../../../../core/utils/app_context.dart';
@@ -30,7 +31,7 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Categories"),
+                    Text("Shop Categories"),
                     const SizedBox(height: 16),
                     CategoriesList(
                       onTap: (select) {
@@ -38,6 +39,14 @@ class HomeScreen extends StatelessWidget {
                         context.push(ShopsScreen());
                       },
                       categories: state.categories,
+                      select: null,
+                    ),
+                    const SizedBox(height: 32),
+                    Text("Product Categories"),
+                    const SizedBox(height: 16),
+                    CategoriesList(
+                      onTap: (select) {},
+                      categories: context.read<ProductBloc>().state.categories,
                       select: null,
                     ),
                   ],

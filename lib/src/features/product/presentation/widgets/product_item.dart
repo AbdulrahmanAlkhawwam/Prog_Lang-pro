@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:program_language_project/src/features/product/presentation/pages/product_details_screen.dart';
 
 import '../../../../core/constants/styles.dart';
 import '../../../../core/utils/app_context.dart';
@@ -10,10 +11,12 @@ import '../manger/product_bloc.dart';
 
 class ProductItem extends StatelessWidget {
   final Product product;
+  final bool inShop;
 
   const ProductItem({
     super.key,
     required this.product,
+    required this.inShop,
   });
 
   @override
@@ -23,58 +26,68 @@ class ProductItem extends StatelessWidget {
         .state
         .shops
         .where((element) => element.id == product.storeId)
-        .first
-        .name;
+        .firstOrNull
+        ?.name;
     final category = context
         .read<ProductBloc>()
         .state
         .categories
         .where((element) => element.id == product.categoryId)
-        .first
-        .name;
-    return Container(
-      padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: context.colors.surfaceContainer,
-        borderRadius: BorderRadius.circular(appBor),
-      ),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(4),
-            child: Image.network(
-              context.read<MainCubit>().image(product.image),
-              height: 140,
-              width: 140,
-              fit: BoxFit.cover,
+        .firstOrNull
+        ?.name;
+    return InkWell(
+      onTap: () => context.push(ProductDetailsScreen(
+        product: product,
+      )),
+      child: Container(
+        padding: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: context.colors.surfaceContainer,
+          borderRadius: BorderRadius.circular(appBor),
+        ),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(4),
+              child: Image.network(
+                context.read<MainCubit>().image(product.image),
+                height: 140,
+                width: 140,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          Expanded(
-            child: Column(
-              children: [
-                Text(
-                  product.name,
-                  style: context.textTheme.titleMedium,
-                ),
-                const SizedBox(height: 8),
-                Column(
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: appBor),
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(
+                      product.name,
+                      style: context.textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: 8),
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(Icons.category_outlined),
                         const SizedBox(width: 8),
-                        Text(category)
+                        Text(category ?? "category name")
                       ],
                     ),
                     const SizedBox(height: 8),
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.door_back_door_outlined),
+                        Icon(
+                          inShop
+                              ? Icons.shopping_cart_outlined
+                              : Icons.door_back_door_outlined,
+                        ),
                         const SizedBox(width: 8),
-                        Text(store)
+                        Text(inShop
+                            ? product.quantity.toString()
+                            : store ?? "store name")
                       ],
                     ),
                     const SizedBox(height: 8),
@@ -88,10 +101,10 @@ class ProductItem extends StatelessWidget {
                     ),
                   ],
                 ),
-              ],
-            ),
-          )
-        ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -59,56 +59,58 @@ class LoginScreen extends StatelessWidget {
             children: [
               Expanded(child: SvgPicture.asset(Res.login)),
               Expanded(
-                  child: Form(
-                key: globalKey,
-                child: BoundedListView(
-                  padding: const EdgeInsets.symmetric(horizontal: 36),
-                  children: [
-                    const Spacer(),
-                    AppInput(
-                      isEnabled: true,
-                      hint: LocaleKeys.auth_login_phone_field.tr(),
-                      keyboardType: TextInputType.phone,
-                      controller: phoneController,
-                      validator: (value) =>
-                          context.read<AuthPresCubit>().phoneValidate(value),
-                    ),
-                    const SizedBox(height: 16),
-                    AppInput(
-                      isEnabled: true,
-                      hint: LocaleKeys.auth_login_password_field.tr(),
-                      controller: passwordController,
-                      validator: (value) =>
-                          context.read<AuthPresCubit>().passwordValidate(value),
-                    ),
-                    const Spacer(),
-                    AppButton(
-                      isLoading: state.status == AuthStatus.loading,
-                      text: LocaleKeys.auth_login_login_button.tr(),
-                      onPressed: () {
-                        if (globalKey.currentState!.validate()) {
-                          context.read<AuthBloc>().add(
-                                Login(
-                                  data: LoginParam(
-                                    phone: phoneController.text,
-                                    password: passwordController.text,
+                child: Form(
+                  key: globalKey,
+                  child: BoundedListView(
+                    padding: const EdgeInsets.symmetric(horizontal: 36),
+                    children: [
+                      const Spacer(),
+                      AppInput(
+                        isEnabled: true,
+                        hint: LocaleKeys.auth_login_phone_field.tr(),
+                        keyboardType: TextInputType.phone,
+                        controller: phoneController,
+                        validator: (value) =>
+                            context.read<AuthPresCubit>().phoneValidate(value),
+                      ),
+                      const SizedBox(height: 16),
+                      AppInput(
+                        isEnabled: true,
+                        hint: LocaleKeys.auth_login_password_field.tr(),
+                        controller: passwordController,
+                        validator: (value) => context
+                            .read<AuthPresCubit>()
+                            .passwordValidate(value),
+                      ),
+                      const Spacer(),
+                      AppButton(
+                        isLoading: state.status == AuthStatus.loading,
+                        text: LocaleKeys.auth_login_login_button.tr(),
+                        onPressed: () {
+                          if (globalKey.currentState!.validate()) {
+                            context.read<AuthBloc>().add(
+                                  Login(
+                                    data: LoginParam(
+                                      phone: phoneController.text,
+                                      password: passwordController.text,
+                                    ),
                                   ),
-                                ),
-                              );
-                        }
-                      },
-                    ),
-                    SizedBox(height: 16),
-                    TextButton(
-                      child:
-                          Text(LocaleKeys.auth_login_not_have_an_account.tr()),
-                      onPressed: () =>
-                          context.pushReplacement(RegisterScreen()),
-                    ),
-                    const Spacer()
-                  ],
+                                );
+                          }
+                        },
+                      ),
+                      SizedBox(height: 16),
+                      TextButton(
+                        child: Text(
+                            LocaleKeys.auth_login_not_have_an_account.tr()),
+                        onPressed: () =>
+                            context.pushReplacement(RegisterScreen()),
+                      ),
+                      const Spacer()
+                    ],
+                  ),
                 ),
-              ))
+              ),
             ],
           ),
         );
