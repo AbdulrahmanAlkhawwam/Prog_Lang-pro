@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 
 import './auth_services.dart';
+import './cart_services.dart';
 import './core_services.dart';
 import './favorite_services.dart';
 import './file_services.dart';
@@ -15,6 +16,7 @@ final sl = GetIt.instance;
 
 Future<void> initializeApp() async {
   await initializeAuthServices(sl);
+  await initializeCartServices(sl);
   await initializeCoreServices(sl);
   await initializeFavoriteServices(sl);
   await initializeFileServices(sl);

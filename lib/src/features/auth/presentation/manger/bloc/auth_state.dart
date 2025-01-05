@@ -3,6 +3,7 @@ part of 'auth_bloc.dart';
 enum AuthStatus {
   init,
   loading,
+  checking,
   error,
   notVerified,
   authorized,
@@ -24,11 +25,10 @@ class AuthState {
     AuthStatus? status,
     User? user,
     Message? message,
-  }) {
-    return AuthState(
-      message: message ?? this.message,
-      status: status ?? this.status,
-      user: user ?? this.user,
-    );
-  }
+  }) =>
+      AuthState(
+        message: message ?? this.message,
+        status: status ?? this.status,
+        user: user ?? this.user,
+      );
 }

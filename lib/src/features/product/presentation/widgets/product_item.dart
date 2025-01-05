@@ -4,7 +4,7 @@ import 'package:program_language_project/src/features/product/presentation/pages
 
 import '../../../../core/constants/styles.dart';
 import '../../../../core/utils/app_context.dart';
-import '../../../home/presentation/manger/cubit/main_cubit.dart';
+import '../../../home/presentation/manger/cubit/main/main_cubit.dart';
 import '../../../shop/presentation/manger/shop_bloc.dart';
 import '../../domain/entities/product.dart';
 import '../manger/product_bloc.dart';

@@ -2,23 +2,26 @@ import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-
-// import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:flutter_svg/svg.dart';
+
+// import 'package:location/location.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:program_language_project/src/features/home/presentation/manger/bloc/user_bloc.dart';
+import 'package:program_language_project/src/features/home/presentation/pages/map_screen.dart';
 
 import '../../../../core/components/app_button.dart';
 import '../../../../core/components/app_input.dart';
 import '../../../../core/components/bounded_list_view.dart';
 import '../../../../core/components/dialogs/delete_dialog.dart';
+import '../../../../core/constants/env.dart';
 import '../../../../core/constants/res.dart';
 import '../../../../core/constants/styles.dart';
 import '../../../../core/service_locator/service_locator.dart';
 import '../../../../core/utils/app_context.dart';
 import '../../../files/presentation/bloc/file_bloc.dart';
 import '../../../home/domain/entities/Location.dart';
-import '../../../home/presentation/manger/cubit/main_cubit.dart';
-import '../../domain/use_cases/edit_account_uc.dart';
+import '../../../home/domain/use_cases/edit_account_uc.dart';
+import '../../../home/presentation/manger/cubit/main/main_cubit.dart';
 import '../manger/bloc/auth_bloc.dart';
 import '../manger/cubit/auth_pres_cubit.dart';
 import './login_screen.dart';
@@ -27,7 +30,7 @@ class EditProfileScreen extends StatefulWidget {
   final TextEditingController fNameController;
   final TextEditingController lNameController;
   final TextEditingController phoneController;
-  final Location? location;
+  final LocalLocation? location;
 
   const EditProfileScreen({
     super.key,
@@ -44,7 +47,7 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController fNameController;
   late TextEditingController lNameController;
-  late Location? location;
+  late LocalLocation? location;
 
   File? _image;
   final key = GlobalKey<FormState>();
@@ -59,6 +62,35 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
   }
 
+  // Future<void> _getCurrentLocation() async {
+  //   Location? location = Location();
+  //   bool serviceEnabled;
+  //   PermissionStatus permissionGranted;
+  //   LocationData locationData;
+  //
+  //   serviceEnabled = await location.serviceEnabled();
+  //   if (!serviceEnabled) {
+  //     serviceEnabled = await location.requestService();
+  //     if (!serviceEnabled) return;
+  //   }
+  //
+  //   permissionGranted = await location.hasPermission();
+  //   if (permissionGranted == PermissionStatus.denied) {
+  //     permissionGranted = await location.requestPermission();
+  //     if (permissionGranted != PermissionStatus.granted) {
+  //       return;
+  //     }
+  //   }
+  //
+  //   locationData = await location.getLocation();
+  //   setState(() {
+  //     this.location = LocalLocation(
+  //       latitude: locationData.latitude,
+  //       longitude: locationData.longitude,
+  //     );
+  //   });
+  // }
+
   @override
   void initState() {
     super.initState();
@@ -66,10 +98,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     lNameController = widget.lNameController;
     location = widget.location;
   }
-
-  // String get locationImage {
-  //   return 'https://api.tomtom.com/map/1/staticimage?layer=basic&style=main&format=png&zoom=6&center=${location?.longitude}%2C%20${location?.latitude}&width=1024&height=512&view=Unified&key=${Env.map}';
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +133,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               IconButton(
                 onPressed: () {
                   if (key.currentState?.validate() ?? false) {
-                    context.read<AuthBloc>().add(
+                    context.read<UserBloc>().add(
                           EditAccount(
                             data: EditAccountParam(
                               firstName: fNameController.text,
@@ -135,149 +163,123 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 AuthStatus.loading =>
                   Center(child: CircularProgressIndicator()),
                 _ => SafeArea(
-                      child: Form(
-                    key: key,
-                    child: BoundedListView(
-                      padding: EdgeInsets.all(36),
-                      children: [
-                        InkWell(
-                            hoverColor: Colors.white,
-                            borderRadius: BorderRadius.circular(100),
-                            onTap: () => _pickImage(),
-                            onLongPress: () => setState(() => _image = null),
-                            // todo : don't forget to fix this
-                            child: CircleAvatar(
-                              radius: 60,
-                              backgroundImage: state.user?.imagePath == null
-                                  ? null
-                                  : Image.network(
-                                          cubit.image(state.user!.imagePath!))
-                                      .image,
-                              foregroundImage: _image == null
-                                  ? null
-                                  : Image.file(_image!).image,
-                              child: SvgPicture.asset(
-                                Theme.of(context).brightness == Brightness.light
-                                    ? Res.unknownUserLight
-                                    : Res.unknownUserDark,
-                              ),
-                            )),
-                        SizedBox(height: 42),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 12),
-                          child: AppInput(
-                            isEnabled: true,
-                            controller: widget.fNameController,
-                            validator: (value) => context
-                                .read<AuthPresCubit>()
-                                .nameValidate(value, "first name"),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 12),
-                          child: AppInput(
-                            isEnabled: true,
-                            controller: widget.lNameController,
-                            validator: (value) => context
-                                .read<AuthPresCubit>()
-                                .nameValidate(value, "last name"),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 12),
-                          child: AppInput(
-                            isEnabled: false,
-                            controller: widget.phoneController,
-                            validator: (value) => context
-                                .read<AuthPresCubit>()
-                                .phoneValidate(value),
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: context.colors.surfaceContainer,
-                            borderRadius: BorderRadius.circular(appBor),
-                          ),
-                          padding: EdgeInsets.all(8),
-                          margin: EdgeInsets.symmetric(vertical: 12),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(4),
-                            child: InkWell(
-                              onTap: () async {
-                                // location = await context.push(MapScreen());
-                              },
-                              onLongPress: () =>
-                                  setState(() => location = null),
-                              child: Container(
-                                height: context.height / 5,
-                                color: Colors.blue,
-                                child: state.user!.location == null ||
-                                        state.user!.location?.latitude == null
+                    child: Form(
+                      key: key,
+                      child: BoundedListView(
+                        padding: EdgeInsets.all(36),
+                        children: [
+                          InkWell(
+                              hoverColor: Colors.white,
+                              borderRadius: BorderRadius.circular(100),
+                              onTap: () => _pickImage(),
+                              onLongPress: () => setState(() => _image = null),
+                              // todo : don't forget to fix this
+                              child: CircleAvatar(
+                                radius: 60,
+                                backgroundImage: state.user?.imagePath == null
                                     ? null
-                                    : GestureDetector(
-                                        // onTap: () async {
-                                        //   if (location?.longitude == null ||
-                                        //       location?.latitude == null) {
-                                        //     ScaffoldMessenger.of(context)
-                                        //         .showSnackBar(SnackBar(
-                                        //       duration: const Duration(
-                                        //           milliseconds: 1500),
-                                        //       backgroundColor: Theme.of(context)
-                                        //           .colorScheme
-                                        //           .primary,
-                                        //       content: const Text(
-                                        //           "we can't display this location , check if the location is really "),
-                                        //     ));
-                                        //   } else {
-                                        //     await showSimplePickerLocation(
-                                        //       initPosition: GeoPoint(
-                                        //         latitude: location!.latitude,
-                                        //         longitude: location!.longitude,
-                                        //       ),
-                                        //       context: context,
-                                        //       isDismissible: false,
-                                        //       radius: 15,
-                                        //       zoomOption:
-                                        //           const ZoomOption(initZoom: 8),
-                                        //       contentPadding:
-                                        //           const EdgeInsets.all(10),
-                                        //       textCancelPicker: "back",
-                                        //       textConfirmPicker: "Ok",
-                                        //     );
-                                        //   }
-                                        // },
-
-                                        // child: CircleAvatar(
-                                        //   radius: 70,
-                                        //   backgroundImage:
-                                        //       NetworkImage(locationImage),
-                                        // ),
-                                        ),
-                              ),
+                                    : Image.network(
+                                            cubit.image(state.user!.imagePath!))
+                                        .image,
+                                foregroundImage: _image == null
+                                    ? null
+                                    : Image.file(_image!).image,
+                                child: SvgPicture.asset(
+                                  Theme.of(context).brightness ==
+                                          Brightness.light
+                                      ? Res.unknownUserLight
+                                      : Res.unknownUserDark,
+                                ),
+                              )),
+                          SizedBox(height: 42),
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 12),
+                            child: AppInput(
+                              isEnabled: true,
+                              controller: widget.fNameController,
+                              validator: (value) => context
+                                  .read<AuthPresCubit>()
+                                  .nameValidate(value, 0),
                             ),
                           ),
-                        ),
-                        SizedBox(height: 24),
-                        AppButton(
-                          isLoading: state.status == AuthStatus.loading,
-                          text: 'Delete Account',
-                          background: context.colors.errorContainer,
-                          textColor: context.colors.onErrorContainer,
-                          splash: context.colors.error,
-                          onPressed: () async {
-                            final result = await showDialog(
-                              context: context,
-                              builder: (context) => DeleteDialog(),
-                            );
-                            if (result ?? false) {
-                              context.read<AuthBloc>().add(DeleteAccount());
-                            }
-                          },
-                        ),
-                        SizedBox(height: 20),
-                      ],
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 12),
+                            child: AppInput(
+                              isEnabled: true,
+                              controller: widget.lNameController,
+                              validator: (value) => context
+                                  .read<AuthPresCubit>()
+                                  .nameValidate(value, 1),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 12),
+                            child: AppInput(
+                              isEnabled: false,
+                              controller: widget.phoneController,
+                              validator: (value) => context
+                                  .read<AuthPresCubit>()
+                                  .phoneValidate(value),
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: context.colors.surfaceContainer,
+                              borderRadius: BorderRadius.circular(appBor),
+                            ),
+                            padding: EdgeInsets.all(8),
+                            margin: EdgeInsets.symmetric(vertical: 12),
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(4),
+                                child: state.user?.location == null
+                                    ? InkWell(
+                                        onLongPress: () => location = null,
+                                        // onTap: () async => location =
+                                        // await context.push(MapScreen()),
+                                        child: Container(
+                                          padding: EdgeInsets.all(24),
+                                          height: context.height / 5,
+                                          color: context
+                                              .colors.secondaryContainer
+                                              .withOpacity(0.3),
+                                          child: Center(
+                                            child: Text(
+                                              textAlign: TextAlign.center,
+                                              "When click on it will get yor current location ",
+                                              style: context
+                                                  .textTheme.labelLarge
+                                                  ?.copyWith(
+                                                color: context.colors.secondary,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    : Image.network(
+                                        'https://api.tomtom.com/map/1/staticimage?layer=basic&style=main&format=png&zoom=6&center=${state.user?.location?.longitude}%2C%20${state.user?.location?.latitude}&width=1024&height=512&view=Unified&key=${Env.map}')),
+                          ),
+                          SizedBox(height: 24),
+                          AppButton(
+                            isLoading: state.status == AuthStatus.loading,
+                            text: 'Delete Account',
+                            background: context.colors.errorContainer,
+                            textColor: context.colors.onErrorContainer,
+                            splash: context.colors.error,
+                            onPressed: () async {
+                              final result = await showDialog(
+                                context: context,
+                                builder: (context) => DeleteDialog(),
+                              );
+                              if (result ?? false) {
+                                context.read<UserBloc>().add(DeleteAccount());
+                              }
+                            },
+                          ),
+                          SizedBox(height: 20),
+                        ],
+                      ),
                     ),
-                  )),
+                  ),
               };
             },
           ),

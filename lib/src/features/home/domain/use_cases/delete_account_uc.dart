@@ -1,11 +1,12 @@
 import 'package:dartz/dartz.dart';
+import 'package:program_language_project/src/features/home/domain/repositories/user_repository.dart';
 
 import '../../../../core/errors/failures.dart';
 import '../../../../core/use_case/use_case.dart';
-import '../repositories/auth_repository.dart';
+import '../../../auth/domain/repositories/auth_repository.dart';
 
 class DeleteAccountUC extends UseCaseNoParam {
-  final AuthRepository repository ;
+  final UserRepository repository ;
 
   DeleteAccountUC({required this.repository});
 

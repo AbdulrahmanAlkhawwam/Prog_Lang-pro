@@ -2,16 +2,6 @@ part of 'auth_bloc.dart';
 
 sealed class AuthEvent {}
 
-class DeleteAccount extends AuthEvent {}
-
-class EditAccount extends AuthEvent {
-  final EditAccountParam data;
-
-  EditAccount({required this.data});
-}
-
-class GetAccount extends AuthEvent {}
-
 class Login extends AuthEvent {
   final LoginParam data;
 

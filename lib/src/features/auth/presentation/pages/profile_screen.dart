@@ -16,7 +16,7 @@ import '../../../../core/constants/res.dart';
 import '../../../../core/constants/styles.dart';
 import '../../../../core/service_locator/service_locator.dart';
 import '../../../../core/utils/app_context.dart';
-import '../../../home/presentation/manger/cubit/main_cubit.dart';
+import '../../../home/presentation/manger/cubit/main/main_cubit.dart';
 import '../manger/bloc/auth_bloc.dart';
 import 'edit_profile_screen.dart';
 import 'login_screen.dart';
@@ -247,7 +247,7 @@ class ProfileScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(4),
                               child: state.user?.location == null
                                   ? Container(
-                                      height: context.height / 6,
+                                      height: context.height / 5,
                                       color: context.colors.secondaryContainer
                                           .withOpacity(0.3),
                                       child: Center(

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/styles.dart';
 import '../../../../core/utils/app_context.dart';
-import '../../../home/presentation/manger/cubit/main_cubit.dart';
+import '../../../home/presentation/manger/cubit/main/main_cubit.dart';
 import '../../domain/entities/shop.dart';
 import '../pages/shop_details_screen.dart';
 

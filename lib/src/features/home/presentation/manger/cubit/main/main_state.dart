@@ -11,23 +11,27 @@ enum SearchStatus {
 class MainState {
   final SearchStatus status;
   final Message? message;
-  final List<Shop> searchResult;
+  final List<Shop> searchStoreResult;
+  final List<Product> searchProductResult;
 
   const MainState({
     this.status = SearchStatus.init,
     this.message,
-    this.searchResult = const [],
+    this.searchStoreResult = const [],
+    this.searchProductResult = const [],
   });
 
   MainState copyWith({
     SearchStatus? status,
     Message? message,
-    List<Shop>? searchResult,
+    List<Shop>? searchStoreResult,
+    List<Product>? searchProductResult,
   }) {
     return MainState(
       message: message ?? this.message,
       status: status ?? this.status,
-      searchResult: searchResult ?? this.searchResult,
+      searchStoreResult: searchStoreResult ?? this.searchStoreResult,
+      searchProductResult: searchProductResult ?? this.searchProductResult,
     );
   }
 }

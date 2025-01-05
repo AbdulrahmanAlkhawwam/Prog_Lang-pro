@@ -67,8 +67,10 @@ class AppButton extends StatelessWidget {
         ),
         if (isLoading && onPressed != null)
           Shimmer.fromColors(
-            baseColor: context.colors.primaryContainer.withOpacity(0.75),
-            highlightColor: context.colors.surface.withOpacity(0.25),
+            baseColor: background?.withOpacity(0.75) ??
+                context.colors.primaryContainer.withOpacity(0.75),
+            highlightColor: splash?.withOpacity(0.25) ??
+                context.colors.surface.withOpacity(0.25),
             enabled: true,
             child: const Skeleton(
               borderRadius: curvedBor,

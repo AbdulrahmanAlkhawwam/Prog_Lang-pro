@@ -7,7 +7,7 @@ import '../../../../core/components/screens/error_screen.dart';
 import '../../../../core/components/screens/loading_screen.dart';
 import '../../../../core/service_locator/service_locator.dart';
 import '../../../../core/utils/app_context.dart';
-import '../../../home/presentation/manger/cubit/main_cubit.dart';
+import '../../../home/presentation/manger/cubit/main/main_cubit.dart';
 import '../../../product/presentation/manger/product_bloc.dart';
 import '../../../product/presentation/widgets/product_item.dart';
 import '../../domain/entities/category.dart';
@@ -63,20 +63,17 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen>
                         children: [
                           Stack(children: [
                             if (state.shop?.imagePath != null)
-                              SizedBox(
-                                height: 200,
-                                width: double.infinity,
-                                child: Image.network(
-                                  context
-                                      .read<MainCubit>()
-                                      .image(state.shop!.imagePath),
+                              Opacity(
+                                opacity: state.shop?.status == "OPEN" ? 1 : 0.5,
+                                child: SizedBox(
+                                  height: 200,
+                                  width: double.infinity,
+                                  child: Image.network(
+                                    context
+                                        .read<MainCubit>()
+                                        .image(state.shop!.imagePath),
+                                  ),
                                 ),
-                              ),
-                            if (state.shop?.status != "OPEN")
-                              Container(
-                                height: 200,
-                                width: double.infinity,
-                                color: context.colors.outline,
                               ),
                             AppBar(
                               backgroundColor: Colors.transparent,

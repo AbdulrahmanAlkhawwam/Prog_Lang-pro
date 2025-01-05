@@ -18,4 +18,17 @@ class Product {
     required this.price,
     required this.quantity,
   });
+
+  @override
+  String toString() {
+    return "product{"
+        " id : $id ,"
+        " storeId : $storeId ,"
+        " categoryId : $categoryId ,"
+        " name : $name ,"
+        " description : $description ,"
+        " image : $image ,"
+        " price : $price ,"
+        " quantity : $quantity }";
+  }
 }

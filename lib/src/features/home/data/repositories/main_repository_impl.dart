@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:program_language_project/src/features/product/domain/entities/product.dart';
 
 import '../../../../core/errors/failures.dart';
 import '../../../../core/utils/app_util.dart';
@@ -12,11 +13,16 @@ class MainRepositoryImpl extends MainRepository {
   MainRepositoryImpl({required this.datasource});
 
   @override
-  Future<Either<Failure, List<Shop>>> search(String searchText) async {
-    return await AppUtils.safeCall(
-        () async => await datasource.search(searchText));
-  }
+  Future<Either<Failure, List<Shop>>> searchStore(String searchText) async =>
+      await AppUtils.safeCall(
+          () async => await datasource.searchStore(searchText));
 
   @override
   String image(String path) => datasource.image(path);
+
+  @override
+  Future<Either<Failure, List<Product>>> searchProduct(
+          String searchText) async =>
+      await AppUtils.safeCall(
+          () async => await datasource.searchProduct(searchText));
 }

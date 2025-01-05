@@ -5,7 +5,8 @@ import '../../../../core/components/app_button.dart';
 import '../../../../core/constants/styles.dart';
 import '../../../../core/service_locator/service_locator.dart';
 import '../../../../core/utils/app_context.dart';
-import '../../../home/presentation/manger/cubit/main_cubit.dart';
+import '../../../home/presentation/manger/cubit/cart/cart_cubit.dart';
+import '../../../home/presentation/manger/cubit/main/main_cubit.dart';
 import '../../domain/entities/product.dart';
 import '../manger/product_bloc.dart';
 
@@ -16,9 +17,17 @@ class ProductDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl.get<MainCubit>(),
-      child: BlocBuilder<MainCubit, MainState>(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => sl.get<MainCubit>()),
+        BlocProvider(create: (context) => sl.get<CartCubit>()),
+      ],
+      child: BlocConsumer<MainCubit, MainState>(
+        listener: (context, state) {
+          if (state.status == SearchStatus.error) {
+            context.showErrorSnackBar(massage: state.message);
+          }
+        },
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
@@ -94,29 +103,40 @@ class ProductDetailsScreen extends StatelessWidget {
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: AppButton(
-              background: context.colors.secondaryContainer,
-              splash: context.colors.secondary,
-              isLoading: false,
-              onPressed: () {},
-              text: '',
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: Text(
-                      "Add to Cart",
-                      style: context.textTheme.titleSmall?.copyWith(
-                          color: context.colors.onSecondaryContainer),
-                    )),
-                    Icon(
-                      Icons.shopping_cart_outlined,
-                      color: context.colors.onSecondaryContainer,
-                    )
-                  ],
-                ),
-              ),
+            floatingActionButton: BlocConsumer<CartCubit, CartState>(
+              listener: (context, state) {
+                if (state.status == CartStatus.error) {
+                  context.showErrorSnackBar(massage: state.message);
+                }
+              },
+              builder: (context, state) {
+                return AppButton(
+                  background: context.colors.secondaryContainer,
+                  splash: context.colors.secondary,
+                  isLoading: state.status == CartStatus.loading,
+                  onPressed: product.quantity == 0
+                      ? null
+                      : () => context.read<CartCubit>().addToCart(product),
+                  text: '',
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: Text(
+                          "Add to Cart",
+                          style: context.textTheme.titleSmall?.copyWith(
+                              color: context.colors.onSecondaryContainer),
+                        )),
+                        Icon(
+                          Icons.shopping_cart_outlined,
+                          color: context.colors.onSecondaryContainer,
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
           );
         },

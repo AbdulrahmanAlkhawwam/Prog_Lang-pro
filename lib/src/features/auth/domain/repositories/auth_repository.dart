@@ -1,20 +1,12 @@
 
 import 'package:dartz/dartz.dart';
 import '../../../../core/errors/failures.dart';
-import '../entities/user.dart';
-import '../use_cases/edit_account_uc.dart';
+import '../../../home/domain/entities/user.dart';
 import '../use_cases/login_uc.dart';
 import '../use_cases/register_uc.dart';
 
 abstract class AuthRepository {
-  Future<Either<Failure, void>> deleteAccount();
-
-
   Future<Either<Failure, void>> deleteToken();
-
-  Future<Either<Failure, User>> editAccount(EditAccountParam param);
-
-  Future<Either<Failure, User>> getAccount();
 
   Future<Either<Failure, User>> login(LoginParam param);
 

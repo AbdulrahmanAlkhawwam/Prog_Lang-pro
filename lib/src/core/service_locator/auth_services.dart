@@ -4,10 +4,7 @@ import '../../features/auth/data/data_source/auth_local_data_source.dart';
 import '../../features/auth/data/data_source/auth_remote_data_source.dart';
 import '../../features/auth/domain/repositories/auth_repository.dart';
 import '../../features/auth/domain/use_cases/check_token_uc.dart';
-import '../../features/auth/domain/use_cases/delete_account_uc.dart';
 import '../../features/auth/domain/use_cases/delete_token_uc.dart';
-import '../../features/auth/domain/use_cases/edit_account_uc.dart';
-import '../../features/auth/domain/use_cases/get_account_uc.dart';
 import '../../features/auth/domain/use_cases/login_uc.dart';
 import '../../features/auth/domain/use_cases/logout_uc.dart';
 import '../../features/auth/domain/use_cases/otp_uc.dart';
@@ -27,17 +24,12 @@ Future<void> initializeAuthServices(GetIt sl) async {
 
   /// Repository
   sl.registerLazySingleton<AuthRepository>(
-      () => AuthRepositoryImpl(datasource: sl(), storage: sl()));
+      () => AuthRepositoryImpl(dataSource: sl(), storage: sl()));
 
   /// Use Cases
   sl.registerLazySingleton<CheckTokenUC>(() => CheckTokenUC(repository: sl()));
-  sl.registerLazySingleton<DeleteAccountUC>(
-      () => DeleteAccountUC(repository: sl()));
   sl.registerLazySingleton<DeleteTokenUC>(
       () => DeleteTokenUC(repository: sl()));
-  sl.registerLazySingleton<EditAccountUC>(
-      () => EditAccountUC(repository: sl()));
-  sl.registerLazySingleton<GetAccountUC>(() => GetAccountUC(repository: sl()));
   sl.registerLazySingleton<LoginUC>(() => LoginUC(repository: sl()));
   sl.registerLazySingleton<LogoutUC>(() => LogoutUC(repository: sl()));
   sl.registerLazySingleton<OtpUC>(() => OtpUC(repository: sl()));
@@ -48,10 +40,7 @@ Future<void> initializeAuthServices(GetIt sl) async {
   sl.registerFactory<AuthBloc>(
     () => AuthBloc(
       checkTokenUC: sl(),
-      deleteAccountUC: sl(),
       deleteTokenUC: sl(),
-      editAccountUc: sl(),
-      getAccountUc: sl(),
       loginUC: sl(),
       logoutUC: sl(),
       otpUC: sl(),

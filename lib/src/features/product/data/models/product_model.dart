@@ -22,4 +22,24 @@ class ProductModel extends Product {
         quantity: json["quantity"],
         image: json["image"],
       );
+
+  factory ProductModel.fromEntity(Product product) => ProductModel(
+        id: product.id,
+        storeId: product.storeId,
+        categoryId: product.categoryId,
+        name: product.name,
+        description: product.description,
+        image: product.image,
+        price: product.price,
+        quantity: product.quantity,
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "storeId": storeId,
+        "categoryId": categoryId,
+        "quantity": 1,
+        "price": price,
+        "name": name,
+      };
 }

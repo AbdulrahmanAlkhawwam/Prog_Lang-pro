@@ -5,10 +5,8 @@ import '../../constants/res.dart';
 import '../../constants/styles.dart';
 import '../../utils/app_context.dart';
 
-class EmptyScreen extends StatelessWidget {
-  final bool isShopScreen;
-
-  const EmptyScreen({super.key, required this.isShopScreen});
+class EmptyFavoritesScreen extends StatelessWidget {
+  const EmptyFavoritesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +15,11 @@ class EmptyScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SvgPicture.asset(Res.emptyShops),
+            SvgPicture.asset(Res.emptyFavourite),
             Padding(
               padding: const EdgeInsets.all(appBor),
               child: Text(
-                isShopScreen ? "There are no Shops" : "There are no Product",
+                "There are no Favorites",
                 style: context.textTheme.labelMedium,
               ),
             ),

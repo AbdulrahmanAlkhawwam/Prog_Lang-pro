@@ -1,6 +1,5 @@
 {
   "app_name": "Talabatak",
-  "app_description": "تطبيق توصيل طلبات",
   "dialog": {
     "delete": {
       "title": "Do you want to delete ? ",
@@ -19,6 +18,57 @@
       "dark": "Dark mode",
       "system": "system mode"
     }
+  },
+  "auth": {
+    "login": {
+      "phone_field": "Phone Number",
+      "password_field": "Password",
+      "login_button": "Login",
+      "not_have_an_account": "You don't have an account ?"
+    },
+    "register": {
+      "first_name_field": "First Name",
+      "last_name_field": "Last Name",
+      "phone_field": "Phone Number",
+      "password_field": "Password",
+      "confirm_password_field": "Confirm password",
+      "register_button": "Create Account",
+      "have_an_account": "I have already account"
+    },
+    "otp": {
+      "title": "Verification Code",
+      "description": "we send code for this number ... if you don’t have any account , please check your sms "
+    },
+    "validate": {
+      "number": {
+        "empty": "phone number must be not empty",
+        "format": "phone number format is not correct"
+      },
+      "password": {
+        "empty": "password must be not empty",
+        "length": "password must be between 8 and 20"
+      },
+      "name": {
+        "first_name_empty": "you must enter the first name",
+        "last_name_empty": "you must enter the last name",
+        "first_name_length": "first name must be between 2 and 20 letters",
+        "last_name_length": "last name must be between 2 and 20 letters"
+      }
+    }
+  },
+  "profile": {
+    "more": {
+      "edit": "Edit Account",
+      "lang": "Languages",
+      "theme": "Themes",
+      "favorite": "Favorites"
+    },
+    "logout": "Logout",
+    "delete_account": "حذف الحساب"
+  },
+  "setting": {
+    "logout": "Logout",
+    "delete_account": "Delete Account"
   },
   "home": {
     "search": "بحث",
@@ -60,54 +110,6 @@
     "total_count": "عدد المرات المنتهية",
     "goal": "الهدف",
     "new_message": "رسالة جديدة"
-  },
-  "habit": {
-    "title": "العادات",
-    "week": "أسبوع",
-    "two_weeks": "أسبوعين",
-    "month": "شهر",
-    "year": "سنة",
-    "any_time": "أي فترة",
-    "every_day": "كل يوم",
-    "specific_days": "أيام محددة",
-    "every_week": "كل أسبوع",
-    "every_month": "كل شهر",
-    "calendar": "التقويم",
-    "statistics": "إحصائيات",
-    "number_input_title": "كم أنجزت من هذه العادة؟",
-    "number_input_hint": "أدخل عدداً\u061C",
-    "number_input_number_required_error": "الرجاء إدخال العدد",
-    "number_input_positive_number_error": "الرجاء إدخال عدد صحيح",
-    "number_input_right_number_error": "العدد أكبر من الكمية المتبقية",
-    "number_input_button": "إدخال",
-    "number_input_done_button": "أتممتها",
-    "number_input_penalty_button": "قمت بتعويضها",
-    "total_count": "العدد الإجمالي ",
-    "period": "الفترة",
-    "category": "التصنيف",
-    "amount_per_period": "الكمية خلال الفترة",
-    "interval": "الفاصل الزمني",
-    "start_date": "تاريخ البداية",
-    "total_days": "مضى من الأيام",
-    "max_streak": "أطول سلسلة",
-    "current_streak": "السلسلة الحالية",
-    "completed_days_count": "أيام تحقيق الكمية",
-    "goal_args": "الهدف {}",
-    "notifications": "التنبيهات",
-    "remind_me_at": "ذكرني الساعة",
-    "reminder_message": "رسالة التذكير:",
-    "reminder": "تذكير",
-    "reminder_example": "مثال: هل شربت الماء اليوم؟",
-    "notification_saved_msg": "تم حفظ التنبيه",
-    "habit_saved_msg": "تم الحفظ",
-    "habit_deleted_msg": "تم الحذف",
-    "comments": "ملاحظات",
-    "comment": "الملاحظة",
-    "delete_comment": "حذف الملاحظة؟",
-    "chart_daily": "يومي",
-    "chart_weekly": "أسبوعي",
-    "chart_monthly": "شهري",
-    "penalty_title": "تعويض العادة"
   },
   "edit": {
     "new_title": "إضافة عادة جديدة",
@@ -352,112 +354,6 @@
     "name_is_used": "هذا الاسم مستخدم سابقاً\u061C",
     "error_happened": "حدث خطأ",
     "soon": "قريباً..."
-  },
-  "auth": {
-    "login": {
-      "phone_field": "phone Number",
-      "password_field": "password",
-      "login_button": "Login",
-      "not_have_an_account": "You don't have an account ?",
-      "go_signup_button": "سجل الآن",
-      "email_field_empty": "الرجاء إدخال البريد الإلكتروني",
-      "email_not_valid": "البريد الإلكتروني غير صحيح",
-      "password_field_empty": "الرجاء إدخال كلمة المرور"
-    },
-    "signup": {
-      "title": "إنشاء حساب",
-      "first_name_field": "الاسم الأول",
-      "last_name_field": "اسم العائلة",
-      "email_field": "البريد الإلكتروني",
-      "password_field": "كلمة المرور",
-      "confirm_password_field": "تأكيد كلمة المرور",
-      "gender_field": "الجنس",
-      "gender_field_hint": "الجنس",
-      "gender_male": "ذكر",
-      "gender_female": "أنثى",
-      "birth_date_field": "تاريخ الميلاد",
-      "signup_button": "إنشاء حساب",
-      "have_an_account": "لديك حساب؟",
-      "go_login_button": "ادخل الآن",
-      "confirm_email_title": "شكرا لتسجيلك!",
-      "confirm_email_body": "يرجى التحقق من بريدك الإلكتروني للحصول على رابط التأكيد",
-      "confirm_email_email": "بريدك الإلكتروني",
-      "confirm_email_edit": "تعديل",
-      "confirm_email_go": "الذهاب للبريد الاكتروني",
-      "confirm_email_not_sent": "لم يصلك البريد الالكتروني؟",
-      "confirm_email_resend": "إعادة إرسال",
-      "email_not_valid": "البريد الإلكتروني غير صالح",
-      "password_not_valid": "كلمة المرور ضعيفة",
-      "password_rule_1": "8 أحرف على الأقل",
-      "password_rule_2": "رقم واحد على الأقل",
-      "password_rule_3": "حرف كبير على الأقل",
-      "password_rule_4": "حرف صغير على الأقل",
-      "password_rule_5": "رمز واحد على الأقل",
-      "password_confirmation_not_match": "كلمة المرور غير مطابقة"
-    },
-    "password": {
-      "email_page_title": "هل نسيت كلمة المرور؟",
-      "email_page_description": "يرجى إدخال بريدك الإلكتروني حتى نتمكن من مساعدتك في استعادة كلمة المرور الخاصة بك.",
-      "email_field": "البريد الإلكتروني",
-      "email_not_valid": "البريد الإلكتروني غير صالح",
-      "send_button": "إرسال",
-      "confirm_email_title": "تم ارسال رابط للبريد الاكتروني",
-      "confirm_email_body": "{}\nيرجى التحقق من بريدك الإلكتروني للحصول على رابط التأكيد",
-      "reset_password_page_title": "إعادة تعيين كلمة المرور",
-      "reset_password_page_description": "أدخل كلمة المرور الجديدة الخاصة بك وقم بتأكيدها.",
-      "password_field": "كلمة المرور",
-      "confirm_password_field": "تأكيد كلمة المرور",
-      "confirm_button": "تأكيد",
-      "password_changed_title": "تهنئة!",
-      "password_changed_description": "تم إعادة تعيين كلمة المرور الخاصة بك بالكامل ، قم بتسجيل الدخول واستخدام التطبيق"
-    }
-  },
-  "profile": {
-    "title": "حسابي",
-    "edit_account": {
-      "title": "حسابي",
-      "button": "تعديل",
-      "first_name": "الاسم الأول",
-      "last_name": "اسم العائلة",
-      "email": "البريد الالكتروني",
-      "mobile": "رقم الهاتف",
-      "country": "الدولة",
-      "country_search": "بحث",
-      "gender": "الجنس",
-      "gender_male": "ذكر",
-      "gender_female": "أنثى",
-      "birth_date": "تاريخ الميلاد",
-      "day": "اليوم",
-      "month": "الشهر",
-      "year": "السنة",
-      "save": "حفظ",
-      "error": "بعض المعلومات غير صحيحة",
-      "phone_error": "رقم الهاتف غير صحيح"
-    },
-    "password_edit": {
-      "title": "كلمة المرور",
-      "button": "تعديل",
-      "default": "كلمة المرور",
-      "current": "كلمة السر الحالية*",
-      "current_hint": "كلمة السر الحالية",
-      "new": "كلمه السر الجديدة*",
-      "new_hint": "كلمة السر",
-      "confirm": "تأكيد كلمه السر الجديدة*",
-      "confirm_hint": "تأكيد كلمة السر",
-      "save": "حفظ"
-    },
-    "delete_account": {
-      "button": "حذف حسابي",
-      "title": "هل أنت متأكد",
-      "subtitle": "حذف الحساب سيؤدي إلى حذف كل المعلومات الخاصة بك",
-      "message": "يرجى كتابة كلمة \"حذف حسابي\" للتأكيد",
-      "hint": "اكتب الكلمة هنا",
-      "confirm": "حذف",
-      "cancel": "إلغاء",
-      "confirmation_phrase": "حذف حسابي"
-    },
-    "logout": "تسجيل الخروج",
-    "login_button": "تسجيل الدخول"
   },
   "groups": {
     "title": "المجموعات",

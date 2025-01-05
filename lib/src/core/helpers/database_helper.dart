@@ -58,9 +58,13 @@ class DatabaseHelperImpl implements DatabaseHelper {
   static FutureOr<void> onCreate(Database db, int version) async {
     await db.execute(
       """CREATE TABLE $cartTable(
-      id                TEXT                                  NOT NULL,
-      name              TEXT                                  NOT NULL
-    )""",
+          id          INTEGER PRIMARY KEY       NOT NULL,
+          storeId     INTEGER                   NOT NULL, 
+          categoryId  INTEGER                   NOT NULL,
+          quantity    INTEGER                   NOT NULL,
+          price       REAL                      NOT NULL,
+          name        TEXT                      NOT NULL
+      )""",
     );
   }
 }

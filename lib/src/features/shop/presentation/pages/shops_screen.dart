@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/components/screens/empty_shops_screen.dart';
 import '../../../../core/components/screens/error_screen.dart';
 import '../../../../core/service_locator/service_locator.dart';
-import '../../../home/presentation/manger/cubit/main_cubit.dart';
+import '../../../home/presentation/manger/cubit/main/main_cubit.dart';
 import '../widgets/categories_list.dart';
 import '../manger/shop_bloc.dart';
 import '../widgets/shops_list.dart';
