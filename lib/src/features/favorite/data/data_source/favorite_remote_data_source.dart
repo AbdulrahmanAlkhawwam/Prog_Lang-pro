@@ -16,6 +16,6 @@ class FavoriteRemoteDataSourceImpl extends FavoriteRemoteDataSource {
     final response = await http.handleApiCall(
       () async => await http.get("/favorite"),
     ) as List<dynamic>;
-    return response.map((e) => ProductModel.fromMap(e)).toList();
+    return response.map((e) => ProductModel.fromMap(e, false)).toList();
   }
 }

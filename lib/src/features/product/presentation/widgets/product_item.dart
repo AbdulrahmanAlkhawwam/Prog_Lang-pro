@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:program_language_project/src/core/utils/app_image.dart';
 import 'package:program_language_project/src/features/product/presentation/pages/product_details_screen.dart';
 
 import '../../../../core/constants/styles.dart';
@@ -49,8 +50,9 @@ class ProductItem extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(4),
-              child: Image.network(
-                context.read<MainCubit>().image(product.image),
+              child: AppImage(
+                context.read<MainCubit>().image(product.image ?? ''),
+                placeholderHeight: 75,
                 height: 140,
                 width: 140,
                 fit: BoxFit.cover,
@@ -96,7 +98,9 @@ class ProductItem extends StatelessWidget {
                       children: [
                         Icon(Icons.attach_money),
                         const SizedBox(width: 8),
-                        Text(product.price.toString())
+                        Text(inShop
+                            ? product.price.toString()
+                            : "${product.price} × ${product.quantity}")
                       ],
                     ),
                   ],

@@ -42,6 +42,6 @@ class MainRemoteDatasourceImpl extends MainRemoteDatasource {
         body: {"product_name": searchText},
       );
     }) as List<dynamic>;
-    return response.map((e) => ProductModel.fromMap(e)).toList();
+    return response.map((e) => ProductModel.fromMap(e,false)).toList();
   }
 }

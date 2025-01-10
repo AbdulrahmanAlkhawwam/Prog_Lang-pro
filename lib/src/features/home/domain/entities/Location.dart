@@ -1,8 +1,8 @@
-class Location {
-  final double longitude;
-  final double latitude;
+class LocalLocation {
+  final double? longitude;
+  final double? latitude;
 
-  Location({
+  LocalLocation({
     required this.latitude,
     required this.longitude,
   });

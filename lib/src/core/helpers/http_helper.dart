@@ -10,35 +10,30 @@ import '../errors/exceptions.dart';
 import './storage_helper.dart';
 
 abstract class HttpHelper {
-  Future get(
-    String path, {
+  Future get(String path, {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
   });
 
-  Future post(
-    String path, {
+  Future post(String path, {
     Map<String, String>? queryParameters,
-    Map<String, dynamic>? body,
+    dynamic body,
     Map<String, String>? headers,
   });
 
-  Future put(
-    String path, {
+  Future put(String path, {
     Map<String, String>? queryParameters,
     Map<String, dynamic>? body,
     Map<String, String>? headers,
   });
 
-  Future patch(
-    String path, {
+  Future patch(String path, {
     Map<String, String>? queryParameters,
     Map<String, dynamic>? body,
     Map<String, String>? headers,
   });
 
-  Future delete(
-    String path, {
+  Future delete(String path, {
     Map<String, String>? queryParameters,
     Map<String, dynamic>? body,
     Map<String, String>? headers,
@@ -67,8 +62,7 @@ class HttpHelperImpl extends HttpHelper {
   });
 
   @override
-  Future get(
-    String path, {
+  Future get(String path, {
     Map<String, String>? queryParameters,
     Map<String, String>? headers,
   }) =>
@@ -76,18 +70,16 @@ class HttpHelperImpl extends HttpHelper {
           queryParameters: queryParameters, headers: headers);
 
   @override
-  Future post(
-    String path, {
+  Future post(String path, {
     Map<String, String>? queryParameters,
-    Map<String, dynamic>? body,
+    dynamic body,
     Map<String, String>? headers,
   }) =>
       _sendRequest(_Verb.post, path,
           queryParameters: queryParameters, body: body, headers: headers);
 
   @override
-  Future put(
-    String path, {
+  Future put(String path, {
     Map<String, String>? queryParameters,
     Map<String, dynamic>? body,
     Map<String, String>? headers,
@@ -96,8 +88,7 @@ class HttpHelperImpl extends HttpHelper {
           queryParameters: queryParameters, body: body, headers: headers);
 
   @override
-  Future patch(
-    String path, {
+  Future patch(String path, {
     Map<String, String>? queryParameters,
     Map<String, dynamic>? body,
     Map<String, String>? headers,
@@ -106,8 +97,7 @@ class HttpHelperImpl extends HttpHelper {
           queryParameters: queryParameters, body: body, headers: headers);
 
   @override
-  Future delete(
-    String path, {
+  Future delete(String path, {
     Map<String, String>? queryParameters,
     Map<String, dynamic>? body,
     Map<String, String>? headers,
@@ -136,13 +126,12 @@ class HttpHelperImpl extends HttpHelper {
     }
   }
 
-  Future _sendRequest(
-    _Verb verb,
-    String path, {
-    Map<String, String>? queryParameters,
-    Map<String, dynamic>? body,
-    Map<String, String>? headers,
-  }) async {
+  Future _sendRequest(_Verb verb,
+      String path, {
+        Map<String, String>? queryParameters,
+        dynamic body,
+        Map<String, String>? headers,
+      }) async {
     final uri = makeUri(path, queryParameters: queryParameters);
     final h = _makeHeaders(extraHeaders: headers);
     final b = body != null ? jsonEncode(body) : body;
@@ -177,7 +166,8 @@ class HttpHelperImpl extends HttpHelper {
     }
   }
 
-  Map<String, String> _makeHeaders({Map? extraHeaders}) => {
+  Map<String, String> _makeHeaders({Map? extraHeaders}) =>
+      {
         "Content-Type": "application/json",
         if (token.isNotEmpty) "Authorization": "Bearer $token",
         ...?extraHeaders,

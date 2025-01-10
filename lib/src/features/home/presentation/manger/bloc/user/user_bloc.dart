@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 
-import '../../../../../core/utils/message.dart';
-import '../../../domain/entities/user.dart';
-import '../../../domain/use_cases/delete_account_uc.dart';
-import '../../../domain/use_cases/edit_account_uc.dart';
-import '../../../domain/use_cases/get_account_uc.dart';
+import '../../../../../../core/utils/message.dart';
+import '../../../../domain/entities/user.dart';
+import '../../../../domain/use_cases/delete_account_uc.dart';
+import '../../../../domain/use_cases/edit_account_uc.dart';
+import '../../../../domain/use_cases/get_account_uc.dart';
 
 part 'user_event.dart';
 

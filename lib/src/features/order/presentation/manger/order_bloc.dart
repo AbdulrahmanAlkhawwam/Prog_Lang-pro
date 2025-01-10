@@ -31,7 +31,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         status: OrderStatus.success,
         completedOrders: orders.where((e) => e.status == "COMPLETED").toList(),
         inCompletedOrders: orders.where((e) => e.status == "PENDING").toList(),
-        canceledOrders: orders.where((e) => e.status == "CANCELED").toList(),
+        canceledOrders: orders.where((e) => e.status == "CANCELLED").toList(),
       )),
     );
   }

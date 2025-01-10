@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:program_language_project/src/core/components/screens/empty_shops_screen.dart';
 import 'package:program_language_project/src/core/constants/styles.dart';
+import 'package:program_language_project/src/core/utils/app_image.dart';
 
 import '../../../../core/components/screens/error_screen.dart';
 import '../../../../core/components/screens/loading_screen.dart';
@@ -68,7 +69,7 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen>
                                 child: SizedBox(
                                   height: 200,
                                   width: double.infinity,
-                                  child: Image.network(
+                                  child: AppImage(
                                     context
                                         .read<MainCubit>()
                                         .image(state.shop!.imagePath),

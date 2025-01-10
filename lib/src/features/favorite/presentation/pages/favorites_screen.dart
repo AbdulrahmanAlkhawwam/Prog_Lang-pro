@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:program_language_project/src/core/constants/styles.dart';
+import 'package:program_language_project/src/features/home/presentation/manger/cubit/main/main_cubit.dart';
 
 import '../../../../core/components/screens/empty_favorite_screen.dart';
 import '../../../../core/components/screens/error_screen.dart';
@@ -13,8 +15,15 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl.get<FavoriteBloc>()..add(GetFavorites()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => sl.get<FavoriteBloc>()..add(GetFavorites()),
+        ),
+        BlocProvider(
+          create: (context) => sl.get<MainCubit>(),
+        ),
+      ],
       child: BlocBuilder<FavoriteBloc, FavoriteState>(
         builder: (context, state) {
           return switch (state.status) {
@@ -27,10 +36,13 @@ class FavoritesScreen extends StatelessWidget {
                     onPressed: () => context.pop(),
                     icon: Icon(Icons.arrow_back_ios_new),
                   ),
+                  title: Text("Favorite"),
+                  centerTitle: true,
                 ),
                 body: state.favorites.isEmpty
                     ? EmptyFavoritesScreen()
                     : ListView.separated(
+                        padding: EdgeInsets.symmetric(horizontal: appBor),
                         itemBuilder: (context, index) => ProductItem(
                           product: state.favorites[index],
                           inShop: true,

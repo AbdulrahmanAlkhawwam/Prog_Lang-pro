@@ -6,7 +6,8 @@ import 'package:flutter_svg/svg.dart';
 
 // import 'package:location/location.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:program_language_project/src/features/home/presentation/manger/bloc/user_bloc.dart';
+import 'package:program_language_project/src/core/utils/app_image.dart';
+import 'package:program_language_project/src/features/home/presentation/manger/bloc/user/user_bloc.dart';
 import 'package:program_language_project/src/features/home/presentation/pages/map_screen.dart';
 
 import '../../../../core/components/app_button.dart';
@@ -178,6 +179,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 radius: 60,
                                 backgroundImage: state.user?.imagePath == null
                                     ? null
+                                    // todo : don't forget to change this to app image
                                     : Image.network(
                                             cubit.image(state.user!.imagePath!))
                                         .image,
@@ -255,7 +257,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           ),
                                         ),
                                       )
-                                    : Image.network(
+                                    // todo : don't forget to fix this
+                                    : AppImage(
                                         'https://api.tomtom.com/map/1/staticimage?layer=basic&style=main&format=png&zoom=6&center=${state.user?.location?.longitude}%2C%20${state.user?.location?.latitude}&width=1024&height=512&view=Unified&key=${Env.map}')),
                           ),
                           SizedBox(height: 24),

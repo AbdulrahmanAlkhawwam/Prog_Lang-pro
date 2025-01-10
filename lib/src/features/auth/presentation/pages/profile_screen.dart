@@ -4,8 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:program_language_project/src/core/components/screens/error_screen.dart';
 import 'package:program_language_project/src/core/localization/keys.g.dart';
+import 'package:program_language_project/src/core/utils/app_image.dart';
 import 'package:program_language_project/src/features/favorite/presentation/pages/favorites_screen.dart';
-import 'package:program_language_project/src/features/home/presentation/manger/bloc/user_bloc.dart';
+import 'package:program_language_project/src/features/home/presentation/manger/bloc/user/user_bloc.dart';
 
 import '../../../../core/components/app_button.dart';
 import '../../../../core/components/bounded_list_view.dart';
@@ -171,7 +172,7 @@ class ProfileScreen extends StatelessWidget {
                                     ? Res.unknownUserLight
                                     : Res.unknownUserDark,
                               )
-                            : Image.network(
+                            : AppImage(
                                 context
                                     .read<MainCubit>()
                                     .image(state.user!.imagePath!),
@@ -260,12 +261,13 @@ class ProfileScreen extends StatelessWidget {
                                         ),
                                       ),
                                     )
-                                  : Image.network(
+                              // TODO : don't forget to fix this
+                                  : AppImage(
                                       'https://api.tomtom.com/map/1/staticimage?layer=basic&style=main&format=png&zoom=6&center=${state.user?.location?.longitude}%2C%20${state.user?.location?.latitude}&width=1024&height=512&view=Unified&key=${Env.map}')),
                         ),
                         SizedBox(height: 24),
                         AppButton(
-                          isLoading: state.status == AuthStatus.loading,
+                          isLoading: state.status == UserStatus.loading,
                           text: LocaleKeys.profile_logout.tr(),
                           background: context.colors.errorContainer,
                           textColor: context.colors.onErrorContainer,

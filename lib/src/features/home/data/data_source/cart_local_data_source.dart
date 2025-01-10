@@ -7,6 +7,8 @@ abstract class CartLocalDataSource {
   Future<void> addToCart(ProductModel product);
 
   Future<List<ProductModel>> getCart();
+
+  Future<void> emptyCart();
 }
 
 class CartLocalDataSourceImpl extends CartLocalDataSource {
@@ -16,6 +18,7 @@ class CartLocalDataSourceImpl extends CartLocalDataSource {
 
   @override
   Future<void> addToCart(ProductModel product) async {
+    // todo : don't forget to fix this error for add quantity without add new id
     print(product);
     await database.insert(cartTable, product.toJson());
     final data = await database.getData(cartTable);
@@ -26,6 +29,13 @@ class CartLocalDataSourceImpl extends CartLocalDataSource {
   Future<List<ProductModel>> getCart() async {
     final data = await database.getData(cartTable) as List<dynamic>?;
     print("000000000 ${data.toString()}");
-    return data?.map((e) => ProductModel.fromMap(e)).toList() ?? [];
+    return data?.map((e) => ProductModel.fromMap(e, false)).toList() ?? [];
+  }
+
+  @override
+  Future<void> emptyCart() async {
+    await database.delete(cartTable);
+    final data = await database.getData(cartTable);
+    print("0000 ${data.toList().toString()}");
   }
 }

@@ -11,7 +11,7 @@ import '../../features/home/data/repositories/user_repository_impl.dart';
 import '../../features/home/domain/use_cases/delete_account_uc.dart';
 import '../../features/home/domain/use_cases/edit_account_uc.dart';
 import '../../features/home/domain/use_cases/get_account_uc.dart';
-import '../../features/home/presentation/manger/bloc/user_bloc.dart';
+import '../../features/home/presentation/manger/bloc/user/user_bloc.dart';
 
 Future<void> initializeFavoriteServices(GetIt sl) async {
   ///Data Source

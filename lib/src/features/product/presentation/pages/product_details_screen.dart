@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:program_language_project/src/core/utils/app_image.dart';
+import 'package:program_language_project/src/features/home/presentation/manger/bloc/cart/cart_bloc.dart';
 
 import '../../../../core/components/app_button.dart';
 import '../../../../core/constants/styles.dart';
 import '../../../../core/service_locator/service_locator.dart';
 import '../../../../core/utils/app_context.dart';
-import '../../../home/presentation/manger/cubit/cart/cart_cubit.dart';
 import '../../../home/presentation/manger/cubit/main/main_cubit.dart';
 import '../../domain/entities/product.dart';
 import '../manger/product_bloc.dart';
@@ -20,7 +21,7 @@ class ProductDetailsScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => sl.get<MainCubit>()),
-        BlocProvider(create: (context) => sl.get<CartCubit>()),
+        BlocProvider(create: (context) => sl.get<CartBloc>()),
       ],
       child: BlocConsumer<MainCubit, MainState>(
         listener: (context, state) {
@@ -55,8 +56,8 @@ class ProductDetailsScreen extends StatelessWidget {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(appBor),
-                      child: Image.network(
-                          context.read<MainCubit>().image(product.image)),
+                      child: AppImage(
+                          context.read<MainCubit>().image(product.image ?? '')),
                     ),
                     const SizedBox(height: 16),
                     Text(
@@ -65,7 +66,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      product.description,
+                      product.description ?? "",
                       style: context.textTheme.labelMedium,
                     ),
                     const SizedBox(height: appBor),
@@ -103,7 +104,7 @@ class ProductDetailsScreen extends StatelessWidget {
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: BlocConsumer<CartCubit, CartState>(
+            floatingActionButton: BlocConsumer<CartBloc, CartState>(
               listener: (context, state) {
                 if (state.status == CartStatus.error) {
                   context.showErrorSnackBar(massage: state.message);
@@ -116,7 +117,9 @@ class ProductDetailsScreen extends StatelessWidget {
                   isLoading: state.status == CartStatus.loading,
                   onPressed: product.quantity == 0
                       ? null
-                      : () => context.read<CartCubit>().addToCart(product),
+                      : () => context
+                          .read<CartBloc>()
+                          .add(AddToCart(product: product)),
                   text: '',
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),

@@ -13,11 +13,13 @@ class OrderModel extends Order {
 
   factory OrderModel.fromJson(Map<String, dynamic> json) => OrderModel(
       id: json["id"],
-      price: double.parse(json["total_price"]),
+      price: double.parse(json["total_price"].toString()),
       status: json["status"],
       createdAt: DateTime.parse(json["created_at"]),
       updatedAt: DateTime.parse(json["updated_at"]),
-      products: (json["products"] as List)
-          .map((e) => ProductModel.fromMap(e))
-          .toList());
+      products: json["products"] == null
+          ? null
+          : (json["products"] as List)
+              .map((e) => ProductModel.fromMap(e, true))
+              .toList());
 }

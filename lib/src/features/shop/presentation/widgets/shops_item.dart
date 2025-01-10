@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:program_language_project/src/core/utils/app_image.dart';
 
 import '../../../../core/constants/styles.dart';
 import '../../../../core/utils/app_context.dart';
@@ -28,23 +29,37 @@ class ShopsItem extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: Container(
-                decoration: BoxDecoration(
+              child: Stack(alignment: Alignment.bottomCenter, children: [
+                ClipRRect(
                   borderRadius: BorderRadius.circular(appBor),
-                  color: context.colors.outline,
+                  child: AppImage(
+                    context.read<MainCubit>().image(shop.imagePath),
+                    placeholderHeight: 50,
+                  ),
                 ),
-                child: Image.network(
-                    context.read<MainCubit>().image(shop.imagePath)),
-              ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(appBor),
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.transparent,
+                        Colors.black,
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 9),
+                  child: Text(
+                    shop.name.toUpperCase(),
+                    style: context.textTheme.titleSmall
+                        ?.copyWith(color: Colors.white),
+                  ),
+                )
+              ]),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 9),
-              child: Text(
-                shop.name.toUpperCase(),
-                style: context.textTheme.labelSmall
-                    ?.copyWith(color: context.colors.onPrimaryContainer),
-              ),
-            )
           ],
         ),
       ),

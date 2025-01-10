@@ -1,4 +1,4 @@
-part of 'cart_cubit.dart';
+part of 'cart_bloc.dart';
 
 enum CartStatus {
   init,

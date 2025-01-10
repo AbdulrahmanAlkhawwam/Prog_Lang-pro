@@ -4,7 +4,7 @@ class Order {
   final int id;
   final String status;
   final double price;
-  final List<Product> products;
+  final List<Product>? products;
   final DateTime createdAt;
   final DateTime updatedAt;
 

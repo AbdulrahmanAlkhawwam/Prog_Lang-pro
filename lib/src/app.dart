@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:program_language_project/src/features/home/presentation/manger/cubit/cart/cart_cubit.dart';
+import 'package:program_language_project/src/features/home/presentation/manger/bloc/cart/cart_bloc.dart';
 import 'package:provider/provider.dart';
 
 import 'core/components/screens/loading_screen.dart';
@@ -10,7 +10,7 @@ import 'core/service_locator/service_locator.dart';
 import 'features/auth/presentation/manger/bloc/auth_bloc.dart';
 import 'features/auth/presentation/manger/cubit/auth_pres_cubit.dart';
 import 'features/files/presentation/bloc/file_bloc.dart';
-import 'features/home/presentation/manger/bloc/user_bloc.dart';
+import 'features/home/presentation/manger/bloc/user/user_bloc.dart';
 import 'features/home/presentation/manger/theme_notifier.dart';
 import 'features/order/presentation/manger/order_bloc.dart';
 import 'features/product/presentation/manger/product_bloc.dart';
@@ -33,7 +33,7 @@ class App extends StatelessWidget {
         BlocProvider(create: (_) => sl.get<ProductBloc>(), lazy: false),
         BlocProvider(create: (_) => sl.get<ShopBloc>(), lazy: false),
         BlocProvider(create: (_) => sl.get<FileBloc>(), lazy: false),
-        BlocProvider(create: (_) => sl.get<CartCubit>(), lazy: false),
+        BlocProvider(create: (_) => sl.get<CartBloc>(), lazy: false),
         BlocProvider(create: (_) => sl.get<AuthPresCubit>()),
       ],
       child: MultiBlocListener(
@@ -46,7 +46,7 @@ class App extends StatelessWidget {
                 context.read<ShopBloc>().add(GetShops());
                 context.read<ShopBloc>().add(GetShopsCategories());
                 context.read<ProductBloc>().add(GetProductsCategories());
-                context.read<CartCubit>().getCart();
+                context.read<CartBloc>().add(GetCart());
               }
             },
           ),

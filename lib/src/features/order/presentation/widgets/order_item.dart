@@ -71,7 +71,7 @@ class PurchaseItem extends StatelessWidget {
                         ),
                       )
                     : Text(
-                        "${order.products.length} products",
+                        "${order.products!.length} products",
                         style: context.textTheme.bodySmall,
                       ),
               ],

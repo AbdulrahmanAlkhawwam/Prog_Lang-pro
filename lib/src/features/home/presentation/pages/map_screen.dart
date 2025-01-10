@@ -51,7 +51,7 @@
 //               onPressed: () async {
 //                 GeoPoint location = await controller.centerMap;
 //                 Navigator.of(context).pop(
-//                   Location(
+//                   LocalLocation(
 //                     latitude: location.latitude,
 //                     longitude: location.longitude,
 //                   ),

@@ -88,10 +88,10 @@ class OrderDetailsScreen extends StatelessWidget {
               padding: EdgeInsets.all(16),
               itemBuilder: (context, index) => ProductItem(
                 inShop: false,
-                product: order.products[index],
+                product: order.products![index],
               ),
               separatorBuilder: (context, index) => const SizedBox(height: 8),
-              itemCount: order.products.length,
+              itemCount: order.products!.length,
             ))
           ],
         ),

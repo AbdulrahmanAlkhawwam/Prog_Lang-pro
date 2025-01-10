@@ -67,7 +67,7 @@ class SearchScreen extends StatelessWidget {
                                                     .imagePath
                                                 : state
                                                     .searchProductResult[index]
-                                                    .image,
+                                                    .image??'',
                                           )),
                                 ),
                                 title: Text(
@@ -80,7 +80,8 @@ class SearchScreen extends StatelessWidget {
                                   i == 0
                                       ? state.searchStoreResult[index].address
                                       : state.searchProductResult[index]
-                                          .description,
+                                              .description ??
+                                          '',
                                   style: context.textTheme.bodySmall,
                                 ),
                               ),
