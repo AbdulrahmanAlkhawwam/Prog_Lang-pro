@@ -11,7 +11,7 @@ class LocalFile extends Equatable {
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
-  LocalFile({
+  const LocalFile({
     required this.uid,
     required this.filename,
     required this.path,

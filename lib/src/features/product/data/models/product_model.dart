@@ -12,14 +12,15 @@ class ProductModel extends Product {
     required super.quantity,
   });
 
-  factory ProductModel.fromMap(Map<String, dynamic> json,bool isOrder) => ProductModel(
+  factory ProductModel.fromMap(Map<String, dynamic> json, bool isOrder) =>
+      ProductModel(
         id: json["id"],
         storeId: json["store_Id"],
         categoryId: json["category_Id"],
         price: double.parse(json["price"]),
         name: json["product_name"],
         description: json["description"],
-        quantity: isOrder ? json["pivot"]["quantity"]:json["quantity"],
+        quantity: isOrder ? json["pivot"]["quantity"] : json["quantity"],
         image: json["image"],
       );
 
@@ -39,6 +40,7 @@ class ProductModel extends Product {
         "store_Id": storeId,
         "category_Id": categoryId,
         "quantity": 1,
+        "imageUrl": image,
         "price": price.toString(),
         "product_name": name,
       };

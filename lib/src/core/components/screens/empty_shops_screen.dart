@@ -1,31 +1,36 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../constants/res.dart';
 import '../../constants/styles.dart';
+import '../../localization/keys.g.dart';
 import '../../utils/app_context.dart';
 
-class EmptyScreen extends StatelessWidget {
-  final bool isShopScreen;
+class EmptyShopsScreen extends StatelessWidget {
+  final Future<void> Function() onRefresh;
 
-  const EmptyScreen({super.key, required this.isShopScreen});
+  const EmptyShopsScreen({super.key, required this.onRefresh});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SvgPicture.asset(Res.emptyShops),
-            Padding(
-              padding: const EdgeInsets.all(appBor),
-              child: Text(
-                isShopScreen ? "There are no Shops" : "There are no Product",
-                style: context.textTheme.labelMedium,
+      body: RefreshIndicator(
+        onRefresh: onRefresh,
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SvgPicture.asset(Res.emptyShops),
+              Padding(
+                padding: const EdgeInsets.all(appBor),
+                child: Text(
+                  LocaleKeys.empty_shop.tr(),
+                  style: context.textTheme.labelMedium,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -10,7 +10,11 @@ import '../../features/files/presentation/bloc/file_bloc.dart';
 Future<void> initializeFileServices(GetIt sl) async {
   ///Data Source
   sl.registerLazySingleton<FilesRemoteDataSource>(
-      () => FilesRemoteDataSourceImpl(http: sl(), multipartHttp: sl()));
+      () => FilesRemoteDataSourceImpl(
+            http: sl(),
+            storage: sl(),
+            multipartHttp: sl(),
+          ));
 
   /// Repository
   sl.registerLazySingleton<FilesRepository>(

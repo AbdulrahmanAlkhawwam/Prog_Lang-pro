@@ -2,13 +2,9 @@ import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 // import 'package:location/location.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:program_language_project/src/core/utils/app_image.dart';
-import 'package:program_language_project/src/features/home/presentation/manger/bloc/user/user_bloc.dart';
-import 'package:program_language_project/src/features/home/presentation/pages/map_screen.dart';
 
 import '../../../../core/components/app_button.dart';
 import '../../../../core/components/app_input.dart';
@@ -19,13 +15,18 @@ import '../../../../core/constants/res.dart';
 import '../../../../core/constants/styles.dart';
 import '../../../../core/service_locator/service_locator.dart';
 import '../../../../core/utils/app_context.dart';
+import '../../../../core/utils/app_image.dart';
 import '../../../files/presentation/bloc/file_bloc.dart';
 import '../../../home/domain/entities/Location.dart';
 import '../../../home/domain/use_cases/edit_account_uc.dart';
+import '../../../home/presentation/manger/bloc/user/user_bloc.dart';
 import '../../../home/presentation/manger/cubit/main/main_cubit.dart';
+import '../../../home/presentation/pages/map_screen.dart';
 import '../manger/bloc/auth_bloc.dart';
 import '../manger/cubit/auth_pres_cubit.dart';
 import './login_screen.dart';
+
+enum ImageEdit { none, deleted, uploaded }
 
 class EditProfileScreen extends StatefulWidget {
   final TextEditingController fNameController;
@@ -46,6 +47,7 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
+  ImageEdit _imageState = ImageEdit.none;
   late TextEditingController fNameController;
   late TextEditingController lNameController;
   late LocalLocation? location;
@@ -61,6 +63,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     if (pickedFile != null) {
       setState(() => _image = File(pickedFile.path));
     }
+    _imageState = ImageEdit.uploaded;
   }
 
   // Future<void> _getCurrentLocation() async {
@@ -102,6 +105,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(
+        "location is : long ${location?.longitude} , lat ${location?.latitude} ");
     return BlocProvider(
       create: (context) => sl.get<MainCubit>(),
       child: MultiBlocListener(
@@ -123,6 +128,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               }
               if (state.status == FileStatus.loaded ||
                   state.status == FileStatus.deleted) {
+                context.read<UserBloc>().add(GetAccount());
                 context.pop();
               }
             },
@@ -143,25 +149,29 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             ),
                           ),
                         );
-
-                    context.read<FileBloc>().add(
-                          _image == null
-                              ? DeleteImage()
-                              : UploadImage(image: _image!),
-                        );
+                    switch (_imageState) {
+                      case ImageEdit.uploaded:
+                        context
+                            .read<FileBloc>()
+                            .add(UploadImage(image: _image!));
+                      case ImageEdit.deleted:
+                        context.read<FileBloc>().add(DeleteImage());
+                      default:
+                        null;
+                    }
                   }
                 },
                 icon: Icon(Icons.done),
               ),
             ],
           ),
-          body: BlocBuilder<AuthBloc, AuthState>(
+          body: BlocBuilder<UserBloc, UserState>(
             builder: (context, state) {
               final cubit = context.read<MainCubit>();
               return switch (state.status) {
-                AuthStatus.error =>
+                UserStatus.error =>
                   Center(child: Text(state.message.toString())),
-                AuthStatus.loading =>
+                UserStatus.loading =>
                   Center(child: CircularProgressIndicator()),
                 _ => SafeArea(
                     child: Form(
@@ -170,29 +180,41 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         padding: EdgeInsets.all(36),
                         children: [
                           InkWell(
-                              hoverColor: Colors.white,
-                              borderRadius: BorderRadius.circular(100),
-                              onTap: () => _pickImage(),
-                              onLongPress: () => setState(() => _image = null),
-                              // todo : don't forget to fix this
-                              child: CircleAvatar(
-                                radius: 60,
-                                backgroundImage: state.user?.imagePath == null
-                                    ? null
-                                    // todo : don't forget to change this to app image
-                                    : Image.network(
-                                            cubit.image(state.user!.imagePath!))
-                                        .image,
-                                foregroundImage: _image == null
-                                    ? null
-                                    : Image.file(_image!).image,
-                                child: SvgPicture.asset(
-                                  Theme.of(context).brightness ==
-                                          Brightness.light
-                                      ? Res.unknownUserLight
-                                      : Res.unknownUserDark,
-                                ),
-                              )),
+                            hoverColor: Colors.white,
+                            borderRadius: BorderRadius.circular(100),
+                            onTap: () => _pickImage(),
+                            onLongPress: () {
+                              setState(() {
+                                _image = null;
+                                _imageState = ImageEdit.deleted;
+                              });
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(60),
+                              child: _image != null
+                                  ? Image.file(
+                                      _image!,
+                                      height: 120,
+                                      width: 120,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : AppImage(
+                                      height: 120,
+                                      width: 120,
+                                      fit: BoxFit.cover,
+                                      cubit.image(state.user!.imagePath ?? ''),
+                                      errorWidget: AppImage(
+                                        Theme.of(context).brightness ==
+                                                Brightness.light
+                                            ? Res.unknownUserLight
+                                            : Res.unknownUserDark,
+                                        height: 120,
+                                        width: 120,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                            ),
+                          ),
                           SizedBox(height: 42),
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 12),
@@ -236,8 +258,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 child: state.user?.location == null
                                     ? InkWell(
                                         onLongPress: () => location = null,
-                                        // onTap: () async => location =
-                                        // await context.push(MapScreen()),
+                                        onTap: () async => setState(() async =>
+                                            location = await context
+                                                .push(MapScreen())),
                                         child: Container(
                                           padding: EdgeInsets.all(24),
                                           height: context.height / 5,

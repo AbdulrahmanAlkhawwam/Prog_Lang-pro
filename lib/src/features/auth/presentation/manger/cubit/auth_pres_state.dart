@@ -4,3 +4,5 @@ part of 'auth_pres_cubit.dart';
 sealed class AuthPresState {}
 
 final class InitialState extends AuthPresState {}
+
+final class ChangeState extends AuthPresState {}

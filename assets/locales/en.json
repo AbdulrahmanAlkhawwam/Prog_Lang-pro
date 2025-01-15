@@ -1,5 +1,5 @@
 {
-  "app_name": "Talabatak",
+  "app_name": "FlashyCart",
   "dialog": {
     "delete": {
       "title": "Do you want to delete ? ",
@@ -18,6 +18,10 @@
       "dark": "Dark mode",
       "system": "system mode"
     }
+  },
+  "empty": {
+    "order": "There are no Orders",
+    "shop": "There are no Shops"
   },
   "auth": {
     "login": {
@@ -64,21 +68,23 @@
       "favorite": "Favorites"
     },
     "logout": "Logout",
-    "delete_account": "حذف الحساب"
-  },
-  "setting": {
-    "logout": "Logout",
     "delete_account": "Delete Account"
   },
   "home": {
-    "search": "بحث",
-    "today": "اليوم",
-    "yesterday": "البارحة",
-    "filter": "التصفية",
-    "filter_by_period": "حسب الفترات",
-    "filter_by_category": "حسب التصنيفات",
-    "filter_by_group": "حسب المجموعات",
-    "filter_today_only": "إظهار عادات اليوم فقط",
+    "search": "Search",
+    "shop_category": "Shop Category",
+    "product_category": "Product Category",
+    "status": {
+      "shop": {
+        "OPEN": "open",
+        "CLOSE": "closed"
+      },
+      "order": {
+        "CANCELLED": "cancelled",
+        "COMPLETED": "completed",
+        "UNCOMPLETED": "uncompleted"
+      }
+    },
     "help": "المساعدة",
     "help_app_menu": "قائمة التطبيق",
     "help_app_menu_description": "من هنا يمكنك تحديد الفترات والتصنيفات، تغيير إعدادات التطبيق، المساعدة ومعلومات عن التطبيق وغيرها",
@@ -110,6 +116,13 @@
     "total_count": "عدد المرات المنتهية",
     "goal": "الهدف",
     "new_message": "رسالة جديدة"
+  },
+  "order": {
+    "tabs": {
+      "completed": "Completed",
+      "unComplete": "UnCompleted",
+      "canceled": "Canceled"
+    }
   },
   "edit": {
     "new_title": "إضافة عادة جديدة",

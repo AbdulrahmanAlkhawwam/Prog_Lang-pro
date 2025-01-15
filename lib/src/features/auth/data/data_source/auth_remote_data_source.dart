@@ -1,7 +1,7 @@
 import '../../../../core/helpers/http_helper.dart';
+import '../../../home/data/models/user_model.dart';
 import '../../domain/use_cases/login_uc.dart';
 import '../../domain/use_cases/register_uc.dart';
-import '../../../home/data/models/user_model.dart';
 
 abstract class AuthRemoteDataSource {
   Future<UserModel> login(LoginParam param);

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:program_language_project/src/core/utils/app_image.dart';
+import 'package:program_language_project/src/core/utils/message.dart';
+import 'package:program_language_project/src/features/favorite/presentation/manger/favorite_bloc.dart';
 import 'package:program_language_project/src/features/home/presentation/manger/bloc/cart/cart_bloc.dart';
 
 import '../../../../core/components/app_button.dart';
@@ -20,8 +22,13 @@ class ProductDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => sl.get<MainCubit>()),
-        BlocProvider(create: (context) => sl.get<CartBloc>()),
+        BlocProvider(
+          create: (context) =>
+              sl.get<FavoriteBloc>()..add(GetFavorite(id: product.id)),
+          lazy: false,
+        ),
+        BlocProvider(create: (context) => sl.get<MainCubit>(), lazy: false),
+        BlocProvider(create: (context) => sl.get<CartBloc>(), lazy: false),
       ],
       child: BlocConsumer<MainCubit, MainState>(
         listener: (context, state) {
@@ -39,12 +46,24 @@ class ProductDetailsScreen extends StatelessWidget {
               title: Text(product.name),
               centerTitle: true,
               actions: [
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.favorite,
-                    color: context.colors.secondary,
-                  ),
+                BlocBuilder<FavoriteBloc, FavoriteState>(
+                  builder: (context, state) {
+                    print(state.isFavorite);
+                    return IconButton(
+                      onPressed: state.status == FavoriteStatus.loading
+                          ? null
+                          : () => context.read<FavoriteBloc>().add(
+                              state.isFavorite ?? false
+                                  ? DeleteFavorite(id: product.id)
+                                  : SetFavorite(id: product.id)),
+                      icon: Icon(
+                        state.isFavorite ?? false
+                            ? Icons.favorite
+                            : Icons.favorite_border_rounded,
+                        color: context.colors.secondary,
+                      ),
+                    );
+                  },
                 )
               ],
             ),
@@ -116,7 +135,8 @@ class ProductDetailsScreen extends StatelessWidget {
                   splash: context.colors.secondary,
                   isLoading: state.status == CartStatus.loading,
                   onPressed: product.quantity == 0
-                      ? null
+                      ? () => context.showErrorSnackBar(
+                          massage: Message("You can't get this product"))
                       : () => context
                           .read<CartBloc>()
                           .add(AddToCart(product: product)),

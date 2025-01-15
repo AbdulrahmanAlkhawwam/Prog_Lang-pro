@@ -11,11 +11,13 @@ import '../../domain/entities/product.dart';
 import '../manger/product_bloc.dart';
 
 class ProductItem extends StatelessWidget {
+  final Function()? onLongPress;
   final Product product;
   final bool inShop;
 
   const ProductItem({
     super.key,
+    this.onLongPress,
     required this.product,
     required this.inShop,
   });
@@ -40,6 +42,7 @@ class ProductItem extends StatelessWidget {
       onTap: () => context.push(ProductDetailsScreen(
         product: product,
       )),
+      onLongPress: onLongPress,
       child: Container(
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(

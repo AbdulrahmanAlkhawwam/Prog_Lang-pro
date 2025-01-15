@@ -1,8 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:program_language_project/src/core/utils/app_image.dart';
 
 import '../../../../core/components/app_button.dart';
@@ -19,11 +17,18 @@ import '../manger/cubit/auth_pres_cubit.dart';
 import './otp_screen.dart';
 import './register_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final phoneController = TextEditingController();
+
   final passwordController = TextEditingController();
+
   final globalKey = GlobalKey<FormState>();
 
   @override
@@ -65,6 +70,7 @@ class LoginScreen extends StatelessWidget {
                   child: BoundedListView(
                     padding: const EdgeInsets.symmetric(horizontal: 36),
                     children: [
+                      const SizedBox(height: 8),
                       const Spacer(),
                       AppInput(
                         isEnabled: true,
@@ -77,12 +83,21 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(height: 16),
                       AppInput(
                         isEnabled: true,
+                        isAppear: context.read<AuthPresCubit>().isAppear,
+                        suffixIconButton: IconButton(
+                          onPressed: () => setState(() =>
+                              context.read<AuthPresCubit>().changeAppear()),
+                          icon: !context.read<AuthPresCubit>().isAppear
+                              ? Icon(Icons.visibility_off_outlined)
+                              : Icon(Icons.visibility_outlined),
+                        ),
                         hint: LocaleKeys.auth_login_password_field.tr(),
                         controller: passwordController,
                         validator: (value) => context
                             .read<AuthPresCubit>()
                             .passwordValidate(value),
                       ),
+                      const SizedBox(height: 8),
                       const Spacer(),
                       AppButton(
                         isLoading: state.status == AuthStatus.loading,

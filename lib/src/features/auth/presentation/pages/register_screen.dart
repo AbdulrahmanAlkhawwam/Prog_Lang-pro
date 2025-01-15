@@ -78,6 +78,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       const SizedBox(height: 16),
                       AppInput(
+                        keyboardType: TextInputType.phone,
                         controller: phoneController,
                         isEnabled: true,
                         hint: LocaleKeys.auth_register_phone_field.tr(),
@@ -87,6 +88,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       const SizedBox(height: 16),
                       AppInput(
                         controller: passwordController,
+                        isAppear: context.read<AuthPresCubit>().isAppear,
+                        suffixIconButton: IconButton(
+                          onPressed: () => setState(() =>
+                              context.read<AuthPresCubit>().changeAppear()),
+                          icon: !context.read<AuthPresCubit>().isAppear
+                              ? Icon(Icons.visibility_off_outlined)
+                              : Icon(Icons.visibility_outlined),
+                        ),
                         onChanged: (value) =>
                             value == confirmPasswordController.text
                                 ? setState(() => confirm = true)
@@ -99,6 +108,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       const SizedBox(height: 16),
                       AppInput(
+                        isAppear: context.read<AuthPresCubit>().isAppear,
+                        suffixIconButton: IconButton(
+                          onPressed: () => setState(() =>
+                              context.read<AuthPresCubit>().changeAppear()),
+                          icon: !context.read<AuthPresCubit>().isAppear
+                              ? Icon(Icons.visibility_off_outlined)
+                              : Icon(Icons.visibility_outlined),
+                        ),
                         controller: confirmPasswordController,
                         isEnabled: passwordController.text != '',
                         hint: LocaleKeys.auth_register_confirm_password_field

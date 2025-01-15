@@ -1,19 +1,18 @@
 import 'dart:developer' as dev;
+import 'dart:io';
+
 import 'package:http/http.dart';
-import 'package:http_parser/http_parser.dart';
-import 'package:mime/mime.dart';
 
 import '../constants/strings.dart';
 import 'storage_helper.dart';
 
 abstract class MultipartHttpHelper {
-  Future<Response> postFile(String path, {
-    required List<int> file,
+  Future<Response> postFile(
+    String path, {
+    required File file,
     required String fileField,
-    required String filename,
     Map<String, String>? fields,
     Map<String, String>? headers,
-    bool auth = true,
   });
 }
 
@@ -29,27 +28,23 @@ class MultipartHttpHelperImpl extends MultipartHttpHelper {
   });
 
   @override
-  Future<Response> postFile(String path, {
-    required List<int> file,
+  Future<Response> postFile(
+    String path, {
+    required File file,
     required String fileField,
-    required String filename,
     Map<String, String>? fields,
     Map<String, String>? headers,
-    bool auth = true,
   }) async {
     final uri = _makeUri(path);
     final request = MultipartRequest("POST", uri);
     request.files.add(
-      MultipartFile.fromBytes(
+      await MultipartFile.fromPath(
         fileField,
-        file,
-        filename: filename,
-        contentType: MediaType.parse(
-            lookupMimeType(filename) ?? "application/octet-stream"),
+        file.path,
       ),
     );
     request.fields.addAll(fields ?? {});
-    request.headers.addAll(_makeHeaders(extraHeaders: headers, auth: auth));
+    request.headers.addAll(_makeHeaders(extraHeaders: headers));
     dev.log(uri.toString(), name: "HttpHelper.postFile");
     dev.log(request.files.map((e) => e.field).toString(),
         name: "HttpHelper.postFile.files");
@@ -69,20 +64,16 @@ class MultipartHttpHelperImpl extends MultipartHttpHelper {
 
   Map<String, String> _makeHeaders({
     Map? extraHeaders,
-    bool auth = true,
   }) {
     return {
       "Accept": "application/json",
       "Content-Type": "multipart/form-data",
-      if (auth) "Authorization": "Bearer $token",
+      if (token.isNotEmpty) "Authorization": "Bearer $token",
       ...?extraHeaders,
     };
   }
 
-
   String get token {
     return storage.getString(accessTokenKey) ?? "";
   }
-
 }
-

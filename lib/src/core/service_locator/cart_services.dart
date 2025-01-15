@@ -18,5 +18,5 @@ Future<void> initializeCartServices(GetIt sl) async {
     () => CartRepositoryImpl(dataSource: sl(), remote: sl()),
   );
 
-  sl.registerLazySingleton<CartBloc>(() => CartBloc(repository: sl()));
+  sl.registerFactory<CartBloc>(() => CartBloc(repository: sl()));
 }

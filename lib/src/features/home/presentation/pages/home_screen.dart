@@ -1,5 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:program_language_project/src/core/localization/keys.g.dart';
+import 'package:program_language_project/src/features/home/presentation/manger/cubit/home/home_cubit.dart';
 import 'package:program_language_project/src/features/product/presentation/manger/product_bloc.dart';
 
 import '../../../../core/components/search_input.dart';
@@ -21,7 +24,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               SearchInput(
                 onTap: () => context.push(SearchScreen()),
-                hint: "Search",
+                hint: LocaleKeys.home_search.tr(),
                 onChanged: null,
                 controller: null,
               ),
@@ -31,18 +34,21 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Shop Categories"),
+                    Text(LocaleKeys.home_shop_category.tr()),
                     const SizedBox(height: 16),
                     CategoriesList(
                       onTap: (select) {
                         context.read<ShopBloc>().add(GetShops(typeId: select));
-                        context.push(ShopsScreen());
+                        context.read<HomeCubit>().setScreen(
+                          screen: Screens.shops,
+                          args: {"index": select},
+                        );
                       },
                       categories: state.categories,
                       select: null,
                     ),
                     const SizedBox(height: 32),
-                    Text("Product Categories"),
+                    Text(LocaleKeys.home_product_category.tr()),
                     const SizedBox(height: 16),
                     CategoriesList(
                       onTap: (select) {},

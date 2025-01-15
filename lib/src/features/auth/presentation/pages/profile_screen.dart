@@ -39,6 +39,7 @@ class ProfileScreen extends StatelessWidget {
         },
         child: BlocBuilder<UserBloc, UserState>(
           builder: (context, state) {
+            final cubit = context.read<MainCubit>();
             return Scaffold(
               appBar: AppBar(
                 actions: [
@@ -166,19 +167,24 @@ class ProfileScreen extends StatelessWidget {
                     child: BoundedListView(
                       padding: EdgeInsets.all(36),
                       children: [
-                        state.user?.imagePath == null
-                            ? SvgPicture.asset(
-                                Theme.of(context).brightness == Brightness.light
-                                    ? Res.unknownUserLight
-                                    : Res.unknownUserDark,
-                              )
-                            : AppImage(
-                                context
-                                    .read<MainCubit>()
-                                    .image(state.user!.imagePath!),
-                                height: 80,
-                                width: 80,
-                              ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(60),
+                          child:  AppImage(
+                            height: 120,
+                            width: 120,
+                            fit: BoxFit.cover,
+                            cubit.image(state.user!.imagePath ?? ''),
+                            errorWidget: AppImage(
+                              Theme.of(context).brightness ==
+                                  Brightness.light
+                                  ? Res.unknownUserLight
+                                  : Res.unknownUserDark,
+                              height: 120,
+                              width: 120,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                         SizedBox(height: 42),
                         Container(
                           height: 56,

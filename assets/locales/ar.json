@@ -1,5 +1,5 @@
 {
-  "app_name": "طلباتك",
+  "app_name": "FlashyCart",
   "dialog": {
     "delete": {
       "title": "هل تريد الحذف ؟",
@@ -18,6 +18,10 @@
       "dark": "الوضع الليلي",
       "system": "على وضع الجهاز"
     }
+  },
+  "empty": {
+    "order" : "ما من طلبات",
+    "shop": "ما من متاجر"
   },
   "auth": {
     "login": {
@@ -68,13 +72,19 @@
   },
   "home": {
     "search": "بحث",
-    "today": "اليوم",
-    "yesterday": "البارحة",
-    "filter": "التصفية",
-    "filter_by_period": "حسب الفترات",
-    "filter_by_category": "حسب التصنيفات",
-    "filter_by_group": "حسب المجموعات",
-    "filter_today_only": "إظهار عادات اليوم فقط",
+    "shop_category": "تصنيفات المتاجر",
+    "product_category": "تصنيفات المنتجات",
+    "status": {
+      "shop": {
+        "OPEN": "مفتوح",
+        "CLOSE": "مغلق"
+      },
+      "order": {
+        "CANCELLED": "ملغية",
+        "COMPLETED": "منتهية",
+        "UNCOMPLETED": "غير منتهية"
+      }
+    },
     "help": "المساعدة",
     "help_app_menu": "قائمة التطبيق",
     "help_app_menu_description": "من هنا يمكنك تحديد الفترات والتصنيفات، تغيير إعدادات التطبيق، المساعدة ومعلومات عن التطبيق وغيرها",
@@ -106,6 +116,17 @@
     "total_count": "عدد المرات المنتهية",
     "goal": "الهدف",
     "new_message": "رسالة جديدة"
+  },
+  "order": {
+    "tabs": {
+      "completed": "مكتملة",
+      "unComplete": "غير مكتملة",
+      "canceled": "ملغية"
+    }
+  },
+
+  "cart": {
+
   },
   "edit": {
     "new_title": "إضافة عادة جديدة",

@@ -1,9 +1,7 @@
 import 'package:program_language_project/src/features/product/data/models/product_model.dart';
-import 'package:program_language_project/src/features/product/domain/entities/product.dart';
 
 import '../../../../core/helpers/http_helper.dart';
 import '../../../shop/data/models/shop_model.dart';
-import '../../../shop/domain/entities/shop.dart';
 
 abstract class MainRemoteDatasource {
   Future<List<ShopModel>> searchStore(String searchText);

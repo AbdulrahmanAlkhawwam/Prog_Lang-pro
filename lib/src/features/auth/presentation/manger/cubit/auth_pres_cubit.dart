@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../../core/localization/keys.g.dart';
@@ -8,6 +9,12 @@ part 'auth_pres_state.dart';
 
 class AuthPresCubit extends Cubit<AuthPresState> {
   AuthPresCubit() : super(InitialState());
+  bool isAppear = true;
+
+
+  changeAppear() {
+    isAppear = !isAppear;
+  }
 
   String? phoneValidate(value) {
     if (value!.isEmpty) {

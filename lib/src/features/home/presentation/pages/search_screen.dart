@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:program_language_project/src/core/utils/app_image.dart';
 import 'package:program_language_project/src/features/product/presentation/pages/product_details_screen.dart';
 import 'package:program_language_project/src/features/shop/presentation/pages/shop_details_screen.dart';
 
@@ -59,16 +60,21 @@ class SearchScreen extends StatelessWidget {
                                           product: state
                                               .searchProductResult[index]));
                                 },
-                                leading: CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      context.read<MainCubit>().image(
-                                            i == 0
-                                                ? state.searchStoreResult[index]
-                                                    .imagePath
-                                                : state
-                                                    .searchProductResult[index]
-                                                    .image??'',
-                                          )),
+                                leading: ClipRRect(
+                                  borderRadius: BorderRadius.circular(30),
+                                  child: AppImage(
+                                    context.read<MainCubit>().image(
+                                          i == 0
+                                              ? state.searchStoreResult[index]
+                                                  .imagePath
+                                              : state.searchProductResult[index]
+                                                      .image ??
+                                                  '',
+                                        ),
+                                    height: 48,
+                                    width: 48,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                                 title: Text(
                                   i == 0

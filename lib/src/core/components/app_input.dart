@@ -16,6 +16,7 @@ class AppInput extends StatelessWidget {
   final String? hint;
   final String? helperText;
   final bool isEnabled;
+  final bool isAppear;
 
   const AppInput({
     super.key,
@@ -32,12 +33,14 @@ class AppInput extends StatelessWidget {
     this.keyboardType,
     this.helperText,
     this.validator,
+    this.isAppear = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       cursorHeight: 25,
+      obscureText: isAppear,
       keyboardType: keyboardType ?? TextInputType.text,
       validator: isEnabled ? validator : null,
       autocorrect: true,

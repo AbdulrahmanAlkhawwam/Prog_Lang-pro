@@ -44,6 +44,11 @@ class FavoritesScreen extends StatelessWidget {
                     : ListView.separated(
                         padding: EdgeInsets.symmetric(horizontal: appBor),
                         itemBuilder: (context, index) => ProductItem(
+                          onLongPress: state.status == FavoriteStatus.loading
+                              ? null
+                              : () => context.read<FavoriteBloc>().add(
+                                  DeleteFavorite(
+                                      id: state.favorites[index].id)),
                           product: state.favorites[index],
                           inShop: true,
                         ),

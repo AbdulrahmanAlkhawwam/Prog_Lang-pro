@@ -1,7 +1,7 @@
 import '../../domain/entities/local_file.dart';
 
 class LocalFileModel extends LocalFile {
-  LocalFileModel({
+  const LocalFileModel({
     required super.uid,
     required super.filename,
     required super.path,
