@@ -12,3 +12,14 @@ class AddToCart extends CartEvent {
 class CreateOrder extends CartEvent {}
 
 class GetCart extends CartEvent {}
+
+class DeleteProduct extends CartEvent {
+  final int id;
+
+  final bool allAmount;
+
+  DeleteProduct({
+    required this.id,
+    required this.allAmount,
+  });
+}

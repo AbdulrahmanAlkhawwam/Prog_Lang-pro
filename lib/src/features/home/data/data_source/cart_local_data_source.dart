@@ -9,6 +9,8 @@ abstract class CartLocalDataSource {
   Future<List<ProductModel>> getCart();
 
   Future<void> emptyCart();
+
+  Future<void> deleteProduct(int id, bool allAmount);
 }
 
 class CartLocalDataSourceImpl extends CartLocalDataSource {
@@ -18,11 +20,16 @@ class CartLocalDataSourceImpl extends CartLocalDataSource {
 
   @override
   Future<void> addToCart(ProductModel product) async {
-    // todo : don't forget to fix this error for add quantity without add new id
-    print(product);
-    await database.insert(cartTable, product.toJson());
-    final data = await database.getData(cartTable);
-    print("000000000 ${data.toList().toString()}");
+    var data =
+        await database.getData(cartTable, where: "id = ? ", args: [product.id]);
+    if (data.isEmpty) {
+      await database.insert(cartTable, product.toJson());
+    } else {
+      await database.update(cartTable, {
+        "id": product.id,
+        "quantity": ProductModel.fromMap(data.first, false).quantity + 1,
+      });
+    }
   }
 
   @override
@@ -37,5 +44,18 @@ class CartLocalDataSourceImpl extends CartLocalDataSource {
     await database.delete(cartTable);
     final data = await database.getData(cartTable);
     print("0000 ${data.toList().toString()}");
+  }
+
+  @override
+  Future<void> deleteProduct(int id, bool allAmount) async {
+    var data = await database.getData(cartTable, where: "id = ? ", args: [id]);
+    if (allAmount || data.first["quantity"] == 1) {
+      database.delete(cartTable, where: "id = ?", args: [id]);
+    } else {
+      await database.update(cartTable, {
+        "id": id,
+        "quantity": ProductModel.fromMap(data.first, false).quantity - 1,
+      });
+    }
   }
 }

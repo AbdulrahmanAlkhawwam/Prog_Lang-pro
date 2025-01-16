@@ -62,7 +62,7 @@ class DatabaseHelperImpl implements DatabaseHelper {
           store_Id      INTEGER                   NOT NULL, 
           category_Id   INTEGER                   NOT NULL,
           quantity      INTEGER                   NOT NULL,
-          imageUrl      TEXT                      NOT NULL,
+          image         TEXT                      NOT NULL,
           price         TEXT                      NOT NULL,
           product_name  TEXT                      NOT NULL
       )""",

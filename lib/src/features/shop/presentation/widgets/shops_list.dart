@@ -19,6 +19,7 @@ class ShopsList extends StatelessWidget {
         ? GridView.builder(
             itemCount: shops.length,
             itemBuilder: (context, index) => ShopsItem(
+              isVertical: true,
               shop: shops[index],
             ),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -29,7 +30,10 @@ class ShopsList extends StatelessWidget {
             height: 100,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => ShopsItem(shop: shops[index]),
+              itemBuilder: (context, index) => ShopsItem(
+                isVertical: false,
+                shop: shops[index],
+              ),
               separatorBuilder: (context, index) => const SizedBox(width: 8),
               itemCount: shops.length,
             ),

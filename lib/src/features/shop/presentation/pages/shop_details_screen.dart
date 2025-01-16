@@ -207,6 +207,7 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen>
                                                     itemBuilder:
                                                         (context, index) {
                                                       return ProductItem(
+                                                        inCartScreen: false,
                                                         inShop: true,
                                                         product: product[index],
                                                       );

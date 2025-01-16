@@ -1,11 +1,19 @@
 {
   "app_name": "FlashyCart",
   "dialog": {
+    "cancelled": {
+      "title" : "Do you want to cancel or Edit?",
+      "content": "You can modify and cancel the order, but you cannot reverse your decision later.",
+      "cancelled": "Cancel order",
+      "edit": "Edit order"
+    },
     "delete": {
       "title": "Do you want to delete ? ",
       "content_user": "The user will be deleted and cannot be returned to later.",
       "back_button": "Cancel",
-      "accept_button": "Delete"
+      "accept_button": "Delete",
+      "all": "Delete All",
+      "once": "Delete one"
     },
     "lang": {
       "title": "Choose the language that suits you :",

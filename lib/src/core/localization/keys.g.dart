@@ -2,10 +2,16 @@
 
 abstract class  LocaleKeys {
   static const app_name = 'app_name';
+  static const dialog_cancelled_title = 'dialog.cancelled.title';
+  static const dialog_cancelled_content = 'dialog.cancelled.content';
+  static const dialog_cancelled_cancelled = 'dialog.cancelled.cancelled';
+  static const dialog_cancelled_edit = 'dialog.cancelled.edit';
   static const dialog_delete_title = 'dialog.delete.title';
   static const dialog_delete_content_user = 'dialog.delete.content_user';
   static const dialog_delete_back_button = 'dialog.delete.back_button';
   static const dialog_delete_accept_button = 'dialog.delete.accept_button';
+  static const dialog_delete_all = 'dialog.delete.all';
+  static const dialog_delete_once = 'dialog.delete.once';
   static const dialog_lang_title = 'dialog.lang.title';
   static const dialog_lang_ar = 'dialog.lang.ar';
   static const dialog_lang_en = 'dialog.lang.en';

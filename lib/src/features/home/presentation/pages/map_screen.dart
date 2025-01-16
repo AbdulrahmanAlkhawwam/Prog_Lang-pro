@@ -5,9 +5,12 @@ import '../../../../core/utils/app_context.dart';
 import '../../domain/entities/Location.dart';
 
 class MapScreen extends StatefulWidget {
-  const MapScreen({super.key, this.isSelecting = true});
+  const MapScreen({
+    super.key,
+    /*this.isSelecting = true*/
+  });
 
-  final bool isSelecting;
+  // final bool isSelecting;
 
   @override
   State<MapScreen> createState() => _MapScreenState();
@@ -43,24 +46,25 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text(widget.isSelecting ? 'Pick your Location' : 'Your Location'),
+        title: Text(
+          'Pick your Location',
+          style: context.textTheme.bodyMedium,
+        ),
         actions: [
-          if (widget.isSelecting)
-            IconButton(
-              icon: const Icon(Icons.done),
-              onPressed: () async {
-                GeoPoint location = await controller.centerMap;
-                print("12345 ${location.latitude}");
-                print("12345 ${location.longitude}");
-                context.pop(
-                  LocalLocation(
-                    latitude: location.latitude,
-                    longitude: location.longitude,
-                  ),
-                );
-              },
-            ),
+          IconButton(
+            icon: const Icon(Icons.done),
+            onPressed: () async {
+              GeoPoint location = await controller.centerMap;
+              print("12345 ${location.latitude}");
+              print("12345 ${location.longitude}");
+              context.pop(
+                LocalLocation(
+                  latitude: location.latitude,
+                  longitude: location.longitude,
+                ),
+              );
+            },
+          ),
         ],
       ),
       body: Stack(

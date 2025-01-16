@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:program_language_project/src/features/home/presentation/manger/bloc/cart/cart_bloc.dart';
 
 import '../../../../core/constants/styles.dart';
 import '../../../../core/service_locator/service_locator.dart';
@@ -87,6 +88,7 @@ class OrderDetailsScreen extends StatelessWidget {
                 child: ListView.separated(
               padding: EdgeInsets.all(16),
               itemBuilder: (context, index) => ProductItem(
+                inCartScreen: false,
                 inShop: false,
                 product: order.products![index],
               ),
@@ -95,6 +97,8 @@ class OrderDetailsScreen extends StatelessWidget {
             ))
           ],
         ),
+        // todo : don't forget to fix this 
+        // floatingActionButton: FloatingActionButton(onPressed: () => context.read<CartBloc>().add(SaveChange(order)),),
       ),
     );
   }

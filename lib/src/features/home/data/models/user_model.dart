@@ -13,19 +13,22 @@ class UserModel extends User {
     super.imagePath,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        id: json["user"]?["id"],
-        firstName: json["user"]?["first_name"],
-        lastName: json["user"]?["last_name"],
-        phone: json["user"]?["phone"],
-        imagePath: json["user"]?["image"],
-        isVerified: json["user"]["is_verified"] == 1 ? true : false,
-        location: json["user"]?["latitude"] == null
-            ? null
-            : LocalLocation(
-                latitude: json["user"]?["latitude"],
-                longitude: json["user"]?["longitude"],
-              ),
-        token: json["token"],
-      );
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    print(json["user"]?["latitude"]);
+    return UserModel(
+      id: json["user"]?["id"],
+      firstName: json["user"]?["first_name"],
+      lastName: json["user"]?["last_name"],
+      phone: json["user"]?["phone"],
+      imagePath: json["user"]?["image"],
+      isVerified: json["user"]["is_verified"] == 1 ? true : false,
+      location: json["user"]?["latitude"] == null
+          ? null
+          : LocalLocation(
+              latitude: double.tryParse(json["user"]?["latitude"].toString()??''),
+              longitude: double.tryParse(json["user"]?["longitude"].toString()??''),
+            ),
+      token: json["token"],
+    );
+  }
 }

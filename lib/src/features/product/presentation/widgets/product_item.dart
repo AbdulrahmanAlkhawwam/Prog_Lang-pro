@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:program_language_project/src/core/components/dialogs/delete_product_dialog.dart';
 import 'package:program_language_project/src/core/utils/app_image.dart';
+import 'package:program_language_project/src/features/home/presentation/manger/bloc/cart/cart_bloc.dart';
 import 'package:program_language_project/src/features/product/presentation/pages/product_details_screen.dart';
 
 import '../../../../core/constants/styles.dart';
@@ -13,12 +15,14 @@ import '../manger/product_bloc.dart';
 class ProductItem extends StatelessWidget {
   final Function()? onLongPress;
   final Product product;
+  final bool inCartScreen;
   final bool inShop;
 
   const ProductItem({
     super.key,
     this.onLongPress,
     required this.product,
+    required this.inCartScreen,
     required this.inShop,
   });
 
@@ -42,7 +46,18 @@ class ProductItem extends StatelessWidget {
       onTap: () => context.push(ProductDetailsScreen(
         product: product,
       )),
-      onLongPress: onLongPress,
+      onLongPress: inCartScreen
+          ? () async {
+              final result = await showDialog(
+                  context: context,
+                  builder: (context) => DeleteProductDialog());
+              if (result != null) {
+                context
+                    .read<CartBloc>()
+                    .add(DeleteProduct(id: product.id, allAmount: result));
+              }
+            }
+          : onLongPress,
       child: Container(
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(

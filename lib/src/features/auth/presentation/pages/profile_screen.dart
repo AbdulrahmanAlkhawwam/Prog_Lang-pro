@@ -169,14 +169,15 @@ class ProfileScreen extends StatelessWidget {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(60),
-                          child:  AppImage(
+                          child: AppImage(
                             height: 120,
                             width: 120,
                             fit: BoxFit.cover,
-                            cubit.image(state.user!.imagePath ?? ''),
+                            state.user?.imagePath == null
+                                ? null
+                                : cubit.image(state.user!.imagePath ?? ''),
                             errorWidget: AppImage(
-                              Theme.of(context).brightness ==
-                                  Brightness.light
+                              Theme.of(context).brightness == Brightness.light
                                   ? Res.unknownUserLight
                                   : Res.unknownUserDark,
                               height: 120,
@@ -267,8 +268,8 @@ class ProfileScreen extends StatelessWidget {
                                         ),
                                       ),
                                     )
-                              // TODO : don't forget to fix this
                                   : AppImage(
+                                      height: context.height / 5,
                                       'https://api.tomtom.com/map/1/staticimage?layer=basic&style=main&format=png&zoom=6&center=${state.user?.location?.longitude}%2C%20${state.user?.location?.latitude}&width=1024&height=512&view=Unified&key=${Env.map}')),
                         ),
                         SizedBox(height: 24),

@@ -124,6 +124,7 @@ class _CartScreenState extends State<CartScreen> {
                                 padding:
                                     EdgeInsets.symmetric(horizontal: appBor),
                                 itemBuilder: (context, index) => ProductItem(
+                                  inCartScreen: true,
                                   product: state.cart![index],
                                   inShop: false,
                                 ),

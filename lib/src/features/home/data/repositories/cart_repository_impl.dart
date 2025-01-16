@@ -42,4 +42,9 @@ class CartRepositoryImpl extends CartRepository {
       return response;
     });
   }
+
+  @override
+  Future<Either<Failure, void>> deleteProduct(int id, bool allAmount) async =>
+      await AppUtils.safeCall(
+          () async => await dataSource.deleteProduct(id, allAmount));
 }

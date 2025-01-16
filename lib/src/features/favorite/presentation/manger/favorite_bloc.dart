@@ -76,19 +76,20 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
               status: FavoriteStatus.error,
               message: Message.fromFailure(failure),
             )),
-        (_) => emit(state.copyWith(status: FavoriteStatus.success)));
+        (_) => add(GetFavorite(id: event.id)));
   }
 
   FutureOr<void> _deleteFavorite(
       DeleteFavorite event, Emitter<FavoriteState> emit) async {
-
     emit(state.copyWith(status: FavoriteStatus.loading));
     final response = await deleteFavoriteUC(param: event.id);
     response.fold(
         (failure) => emit(state.copyWith(
               status: FavoriteStatus.error,
               message: Message.fromFailure(failure),
-            )),
-        (_) => emit(state.copyWith(status: FavoriteStatus.success)));
+            )), (_) {
+      add(GetFavorites());
+      add(GetFavorite(id: event.id));
+    });
   }
 }

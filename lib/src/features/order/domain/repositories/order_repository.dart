@@ -4,4 +4,6 @@ import 'package:program_language_project/src/core/errors/failures.dart';
 import '../entities/order.dart';
 abstract class OrderRepository {
   Future<Either<Failure, List<Order>>> getOrders();
+
+  Future<Either<Failure, void>> cancelledOrder(int id);
 }

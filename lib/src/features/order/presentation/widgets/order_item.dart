@@ -1,5 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:program_language_project/src/core/components/dialogs/cancelled_dialog.dart';
+import 'package:program_language_project/src/features/home/presentation/pages/edit_cart_screen.dart';
+import 'package:program_language_project/src/features/order/presentation/manger/order_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/components/skeleton.dart';
@@ -23,6 +27,17 @@ class PurchaseItem extends StatelessWidget {
       onTap: isLoading
           ? null
           : () => context.push(OrderDetailsScreen(order: order)),
+      onLongPress: order.status == "PENDING"
+          ? () async {
+              final result = await showDialog(
+                  context: context, builder: (context) => CancelledDialog());
+              if (result == true) {
+                context.push(EditCartScreen(order: order));
+              } else if (result == false) {
+                context.read<OrderBloc>().add(CancelledOrder(id: order.id));
+              }
+            }
+          : null,
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 24),
         padding: EdgeInsets.all(16),

@@ -14,4 +14,7 @@ class OrderRepositoryImpl extends OrderRepository {
   @override
   Future<Either<Failure, List<Order>>> getOrders() async =>
       await AppUtils.safeCall(() async => await dataSource.getOrders());
+
+  @override
+  Future<Either<Failure, void>> cancelledOrder(int id) async => AppUtils.safeCall(() async => await dataSource.cancelledOrder(id));
 }

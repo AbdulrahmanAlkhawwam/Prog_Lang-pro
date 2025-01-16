@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:program_language_project/src/core/components/dialogs/delete_dialog.dart';
 import 'package:program_language_project/src/core/constants/styles.dart';
 import 'package:program_language_project/src/features/home/presentation/manger/cubit/main/main_cubit.dart';
 
@@ -44,11 +45,19 @@ class FavoritesScreen extends StatelessWidget {
                     : ListView.separated(
                         padding: EdgeInsets.symmetric(horizontal: appBor),
                         itemBuilder: (context, index) => ProductItem(
+                          inCartScreen: false,
                           onLongPress: state.status == FavoriteStatus.loading
                               ? null
-                              : () => context.read<FavoriteBloc>().add(
-                                  DeleteFavorite(
-                                      id: state.favorites[index].id)),
+                              : () async {
+                                  final result = await showDialog(
+                                      context: context,
+                                      builder: (context) => DeleteDialog());
+                                  if (result == true) {
+                                    context.read<FavoriteBloc>().add(
+                                        DeleteFavorite(
+                                            id: state.favorites[index].id));
+                                  }
+                                },
                           product: state.favorites[index],
                           inShop: true,
                         ),

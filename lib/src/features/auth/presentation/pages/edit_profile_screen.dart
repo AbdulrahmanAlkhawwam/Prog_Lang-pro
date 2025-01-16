@@ -133,6 +133,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               }
             },
           ),
+          BlocListener<UserBloc, UserState>(
+            listener: (context, state) {
+              if (state.status == UserStatus.error) {
+                context.showErrorSnackBar(massage: state.message);
+              }
+              if (state.status == UserStatus.success) {
+                context.read<UserBloc>().add(GetAccount());
+                context.pop();
+              }
+            },
+          ),
         ],
         child: Scaffold(
           appBar: AppBar(
@@ -145,7 +156,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             data: EditAccountParam(
                               firstName: fNameController.text,
                               lastName: lNameController.text,
-                              location: null,
+                              location: location,
                             ),
                           ),
                         );
@@ -182,7 +193,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           InkWell(
                             hoverColor: Colors.white,
                             borderRadius: BorderRadius.circular(100),
-                            onTap: () => _pickImage(),
+                            onTap: () => _pickImage,
                             onLongPress: () {
                               setState(() {
                                 _image = null;
@@ -202,7 +213,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       height: 120,
                                       width: 120,
                                       fit: BoxFit.cover,
-                                      cubit.image(state.user!.imagePath ?? ''),
+                                      state.user?.imagePath == null
+                                          ? null
+                                          : cubit.image(
+                                              state.user!.imagePath ?? ''),
                                       errorWidget: AppImage(
                                         Theme.of(context).brightness ==
                                                 Brightness.light
@@ -246,22 +260,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   .phoneValidate(value),
                             ),
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: context.colors.surfaceContainer,
-                              borderRadius: BorderRadius.circular(appBor),
-                            ),
-                            padding: EdgeInsets.all(8),
-                            margin: EdgeInsets.symmetric(vertical: 12),
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(4),
-                                child: state.user?.location == null
-                                    ? InkWell(
-                                        onLongPress: () => location = null,
-                                        onTap: () async => setState(() async =>
-                                            location = await context
-                                                .push(MapScreen())),
-                                        child: Container(
+                          InkWell(
+                            onLongPress: () => setState(() => location = null),
+                            onTap: () async {
+                              final result = await context.push(MapScreen());
+                              if (result != null) {
+                                setState(() => location = result);
+                              }
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: context.colors.surfaceContainer,
+                                borderRadius: BorderRadius.circular(appBor),
+                              ),
+                              padding: EdgeInsets.all(8),
+                              margin: EdgeInsets.symmetric(vertical: 12),
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(4),
+                                  child: location == null
+                                      ? Container(
                                           padding: EdgeInsets.all(24),
                                           height: context.height / 5,
                                           color: context
@@ -278,11 +295,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      )
-                                    // todo : don't forget to fix this
-                                    : AppImage(
-                                        'https://api.tomtom.com/map/1/staticimage?layer=basic&style=main&format=png&zoom=6&center=${state.user?.location?.longitude}%2C%20${state.user?.location?.latitude}&width=1024&height=512&view=Unified&key=${Env.map}')),
+                                        )
+                                      : AppImage(
+                                          height: context.height / 5,
+                                          'https://api.tomtom.com/map/1/staticimage?layer=basic&style=main&format=png&zoom=6&center=${location?.longitude}%2C%20${location?.latitude}&width=1024&height=512&view=Unified&key=${Env.map}')),
+                            ),
                           ),
                           SizedBox(height: 24),
                           AppButton(

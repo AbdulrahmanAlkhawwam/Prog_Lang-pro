@@ -40,7 +40,7 @@ class ProductModel extends Product {
         "store_Id": storeId,
         "category_Id": categoryId,
         "quantity": 1,
-        "imageUrl": image,
+        "image": image,
         "price": price.toString(),
         "product_name": name,
       };

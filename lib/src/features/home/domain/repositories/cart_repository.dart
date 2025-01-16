@@ -10,4 +10,6 @@ abstract class CartRepository {
   Future<Either<Failure, List<Product>>> getCart();
 
   Future<Either<Failure, Order>> createOrder();
+
+  Future<Either<Failure,void>> deleteProduct(int id , bool allAmount);
 }
