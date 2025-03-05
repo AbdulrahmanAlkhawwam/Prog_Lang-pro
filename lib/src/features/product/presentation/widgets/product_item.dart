@@ -43,9 +43,12 @@ class ProductItem extends StatelessWidget {
         .firstOrNull
         ?.name;
     return InkWell(
-      onTap: () => context.push(ProductDetailsScreen(
-        product: product,
-      )),
+      onTap: () async {
+        await context.push(ProductDetailsScreen(
+          product: product,
+        ));
+        context.read<CartBloc>().add(GetCart());
+      },
       onLongPress: inCartScreen
           ? () async {
               final result = await showDialog(

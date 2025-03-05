@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:program_language_project/src/core/localization/keys.g.dart';
 
 import '../../constants/res.dart';
 import '../../constants/styles.dart';
@@ -18,8 +20,7 @@ class EmptyFavoritesScreen extends StatelessWidget {
             SvgPicture.asset(Res.emptyFavourite),
             Padding(
               padding: const EdgeInsets.all(appBor),
-              child: Text(
-                "There are no Favorites",
+              child: Text(LocaleKeys.empty_favorite.tr(),
                 style: context.textTheme.labelMedium,
               ),
             ),

@@ -138,6 +138,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               if (state.status == UserStatus.error) {
                 context.showErrorSnackBar(massage: state.message);
               }
+              if (state.status == UserStatus.deleted){
+                context.pushReplacement(LoginScreen());
+              }
               if (state.status == UserStatus.success) {
                 context.read<UserBloc>().add(GetAccount());
                 context.pop();
@@ -193,7 +196,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           InkWell(
                             hoverColor: Colors.white,
                             borderRadius: BorderRadius.circular(100),
-                            onTap: () => _pickImage,
+                            onTap: _pickImage,
                             onLongPress: () {
                               setState(() {
                                 _image = null;

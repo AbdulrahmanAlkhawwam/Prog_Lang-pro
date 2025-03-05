@@ -35,6 +35,7 @@ class CartLocalDataSourceImpl extends CartLocalDataSource {
   @override
   Future<List<ProductModel>> getCart() async {
     final data = await database.getData(cartTable) as List<dynamic>?;
+    // todo : fix this
     print("000000000 ${data.toString()}");
     return data?.map((e) => ProductModel.fromMap(e, false)).toList() ?? [];
   }

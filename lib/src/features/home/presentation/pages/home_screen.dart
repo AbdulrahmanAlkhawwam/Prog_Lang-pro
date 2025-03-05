@@ -21,7 +21,6 @@ import '../pages/search_screen.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: SafeArea(
@@ -75,7 +74,7 @@ class HomeScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Shops"),
+                    Text(LocaleKeys.home_shops.tr()),
                     BlocBuilder<ShopBloc, ShopState>(
                       builder: (context, state) {
                         return ShopsList(
@@ -94,7 +93,7 @@ class HomeScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("My Favorites"),
+                    Text(LocaleKeys.home_favorite.tr()),
                     FavoriteList(),
                   ],
                 ),

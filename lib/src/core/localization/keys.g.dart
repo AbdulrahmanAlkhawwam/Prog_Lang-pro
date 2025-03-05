@@ -21,6 +21,8 @@ abstract class  LocaleKeys {
   static const dialog_theme_system = 'dialog.theme.system';
   static const empty_order = 'empty.order';
   static const empty_shop = 'empty.shop';
+  static const empty_product = 'empty.product';
+  static const empty_favorite = 'empty.favorite';
   static const auth_login_phone_field = 'auth.login.phone_field';
   static const auth_login_password_field = 'auth.login.password_field';
   static const auth_login_login_button = 'auth.login.login_button';
@@ -51,6 +53,10 @@ abstract class  LocaleKeys {
   static const home_search = 'home.search';
   static const home_shop_category = 'home.shop_category';
   static const home_product_category = 'home.product_category';
+  static const home_shops = 'home.shops';
+  static const home_favorite = 'home.favorite';
+  static const home_searchTabs_product = 'home.searchTabs.product';
+  static const home_searchTabs_shop = 'home.searchTabs.shop';
   static const home_status_shop_OPEN = 'home.status.shop.OPEN';
   static const home_status_shop_CLOSE = 'home.status.shop.CLOSE';
   static const home_status_order_CANCELLED = 'home.status.order.CANCELLED';

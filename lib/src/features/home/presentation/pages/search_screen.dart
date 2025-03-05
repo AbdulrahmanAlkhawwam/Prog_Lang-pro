@@ -28,8 +28,8 @@ class SearchScreen extends StatelessWidget {
               appBar: AppBar(
                 leadingWidth: double.infinity,
                 leading: TabBar(tabs: [
-                  Tab(text: "Stores"),
-                  Tab(text: "products"),
+                  Tab(text: LocaleKeys.home_searchTabs_shop.tr()),
+                  Tab(text: LocaleKeys.home_searchTabs_product.tr()),
                 ]),
               ),
               body: SafeArea(

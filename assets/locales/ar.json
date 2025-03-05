@@ -29,7 +29,9 @@
   },
   "empty": {
     "order" : "ما من طلبات",
-    "shop": "ما من متاجر"
+    "shop": "ما من متاجر",
+    "product": "ما من منتجات",
+    "favorite": "لا يوجد مفضلات"
   },
   "auth": {
     "login": {
@@ -82,6 +84,12 @@
     "search": "بحث",
     "shop_category": "تصنيفات المتاجر",
     "product_category": "تصنيفات المنتجات",
+    "shops": "متاجر",
+    "favorite": "مفضلاتي",
+    "searchTabs": {
+      "product": "منتجات",
+      "shop": "متاجر"
+    },
     "status": {
       "shop": {
         "OPEN": "مفتوح",

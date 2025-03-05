@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:program_language_project/src/core/components/dialogs/delete_dialog.dart';
 import 'package:program_language_project/src/core/components/screens/empty_orders_screen.dart';
 import 'package:program_language_project/src/core/utils/app_context.dart';
 import 'package:program_language_project/src/features/home/presentation/manger/bloc/cart/cart_bloc.dart';
@@ -8,7 +9,6 @@ import 'package:program_language_project/src/features/home/presentation/manger/c
 import 'package:program_language_project/src/features/product/domain/entities/product.dart';
 
 import '../../../../core/components/app_button.dart';
-import '../../../../core/components/screens/empty_shops_screen.dart';
 import '../../../../core/constants/styles.dart';
 import '../../../../core/service_locator/service_locator.dart';
 import '../../../product/presentation/widgets/product_item.dart';
@@ -56,6 +56,12 @@ class _CartScreenState extends State<CartScreen> {
         },
         builder: (context, state) {
           return Scaffold(
+            // appBar: AppBar(actions: [IconButton(onPressed: ()async{
+            //   final result = await showDialog(context: context, builder: (context) => DeleteDialog());
+            //   if (result == true){
+            //     context.read<CartBloc>().add();
+            //   }
+            // },)],),
             body: SafeArea(
               child: RefreshIndicator(
                 onRefresh: _refresh,

@@ -2,7 +2,7 @@
   "app_name": "FlashyCart",
   "dialog": {
     "cancelled": {
-      "title" : "Do you want to cancel or Edit?",
+      "title": "Do you want to cancel or Edit?",
       "content": "You can modify and cancel the order, but you cannot reverse your decision later.",
       "cancelled": "Cancel order",
       "edit": "Edit order"
@@ -29,7 +29,9 @@
   },
   "empty": {
     "order": "There are no Orders",
-    "shop": "There are no Shops"
+    "shop": "There are no Shops",
+    "product": "There are no Product",
+    "favorite": "There are no Favorite"
   },
   "auth": {
     "login": {
@@ -82,6 +84,12 @@
     "search": "Search",
     "shop_category": "Shop Category",
     "product_category": "Product Category",
+    "shops": "shops",
+    "favorite": "My Favorites",
+    "searchTabs": {
+      "product": "Product",
+      "shop": "Shop"
+    },
     "status": {
       "shop": {
         "OPEN": "open",
